@@ -1,0 +1,6 @@
+name: SMPvp
+version: ${project.version}
+main: smpvp.smpvp.SMPvp
+api-version: 1.16
+authors: [czerwcuu, koloksk]
+website: stylowamc.pl
