@@ -12,7 +12,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerKickEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -29,11 +29,10 @@ public class Events implements Listener {
             Player p = event.getPlayer();
             Block b = event.getClickedBlock();
             if (b.getState() instanceof Sign) {
+                event.setCancelled(true);
                 PlayerInventory inv = p.getInventory();
 
-                if (!inv.isEmpty()) { // sprawdza czy nie masz pustego ekwipunku
-                    p.sendMessage("Nie możesz odebrać więcej kitów");
-                } else {
+                if (inv.isEmpty()) {
                     Sign sign = (Sign) b.getState();
                     String line1 = sign.getLine(1);
 
@@ -92,7 +91,6 @@ public class Events implements Listener {
                             inv.setLeggings(new ItemStack(Material.LEATHER_LEGGINGS));
                             inv.addItem(new ItemStack(EnchantItem(Material.STICK, Enchantment.KNOCKBACK, 3)));
                             inv.addItem(new ItemStack(EnchantItem(Material.STICK, Enchantment.DAMAGE_ALL, 1)));
-                            inv.addItem(new ItemStack(CreatePotion(PotionType.INSTANT_DAMAGE, 1, true).toItemStack(10)));
                             inv.addItem(new ItemStack(CreatePotion(PotionType.INSTANT_HEAL, 2, true).toItemStack(5)));
                             inv.addItem(new ItemStack(CreatePotion(PotionType.POISON, 1, true).toItemStack(3)));
                             inv.addItem(new ItemStack(CreatePotion(PotionType.SLOWNESS, 1, true).toItemStack(3)));
@@ -127,12 +125,6 @@ public class Events implements Listener {
         return potion;
     }
 
-    @EventHandler
-    public void PlayerDeath(PlayerDeathEvent e) {
-        Player p = e.getEntity();
-        Bukkit.broadcastMessage("§7Gracz §b" + p.getName() + " §7został zabity przez §b" + p.getKiller().getName());
-        resetplayer(p);
-    }
 
     //@EventHandler
     //public void onDamage(EntityDamageByEntityEvent event){
@@ -147,15 +139,24 @@ public class Events implements Listener {
     // }
     // }
     //}
+    @EventHandler
+    public void pde(PlayerDeathEvent e) {
+        Player p = e.getEntity();
+        Bukkit.broadcastMessage("§7Gracz §b" + p.getName() + " §7został zabity przez §b" + p.getKiller().getName());
+    }
+    @EventHandler
+    public void playerrespawnevent(PlayerRespawnEvent e) {
+        Player p = e.getPlayer();
+        resetplayer(p);
+    }
 
     @EventHandler
     public void PlayerJoin(PlayerJoinEvent e) {
-        resetplayer(e.getPlayer());
+        Player p = e.getPlayer();
 
+        resetplayer(p);
     }
-
-    public void resetplayer(Player p) {
-
+    public void resetplayer(Player p){
         p.setHealth(20);
         p.setFoodLevel(20);
         p.getInventory().clear();
@@ -166,8 +167,8 @@ public class Events implements Listener {
         loc.setYaw(180);
         p.teleport(loc);
 
-
     }
+
     //@EventHandler
     //public void Blood(EntityDamageByEntityEvent e){
     //  if (e.isCancelled())
