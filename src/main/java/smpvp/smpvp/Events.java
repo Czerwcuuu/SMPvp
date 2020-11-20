@@ -37,68 +37,89 @@ public class Events implements Listener {
                     String line1 = sign.getLine(1);
 
                     switch (line1) { //wybór kitów
-                        case "Paladyn":
+                        case "Bestia":
 
 
-                            inv.setChestplate(new ItemStack(Material.GOLDEN_CHESTPLATE));
-                            inv.setBoots(new ItemStack(Material.GOLDEN_BOOTS));
-                            inv.setLeggings(new ItemStack(Material.GOLDEN_LEGGINGS));
-                            inv.setHelmet(new ItemStack(EnchantItem(Material.LEATHER_HELMET, Enchantment.PROTECTION_ENVIRONMENTAL, 3)));
-                            inv.addItem(new ItemStack(EnchantItem(Material.STONE_SWORD, Enchantment.DAMAGE_ALL, 1)));
+                            inv.setChestplate(new ItemStack(EnchantItem(Material.DIAMOND_CHESTPLATE,Enchantment.PROTECTION_ENVIRONMENTAL,1)));
+                            inv.setBoots(new ItemStack(EnchantItem(Material.DIAMOND_BOOTS,Enchantment.PROTECTION_ENVIRONMENTAL,1)));
+                            inv.setLeggings(new ItemStack(EnchantItem(Material.DIAMOND_LEGGINGS,Enchantment.PROTECTION_ENVIRONMENTAL,1)));
+                            inv.setHelmet(new ItemStack(EnchantItem(Material.DIAMOND_HELMET,Enchantment.PROTECTION_ENVIRONMENTAL,1)));
+                            inv.addItem(new ItemStack(Material.DIAMOND_SWORD));
+                            inv.addItem(new ItemStack(Material.GOLDEN_APPLE,3));
                             inv.addItem(new ItemStack(Material.BREAD, 30));
                             p.teleport(pvplocation);
 
                             break;
-                        case "Lowca":
+                        case "Lucznik":
 
 
-                            inv.setBoots(new ItemStack(Material.LEATHER_BOOTS));
-                            inv.setChestplate(new ItemStack(Material.LEATHER_CHESTPLATE));
-                            inv.setHelmet(new ItemStack(Material.LEATHER_HELMET));
-                            inv.setLeggings(new ItemStack(Material.LEATHER_LEGGINGS));
-                            inv.addItem(new ItemStack(EnchantItem(Material.BOW, Enchantment.ARROW_INFINITE, 1)));
+                            inv.setBoots(new ItemStack(EnchantItem(Material.LEATHER_BOOTS,Enchantment.PROTECTION_ENVIRONMENTAL,3)));
+                            inv.setChestplate(new ItemStack(EnchantItem(Material.LEATHER_CHESTPLATE,Enchantment.PROTECTION_ENVIRONMENTAL,3)));
+                            inv.setHelmet(new ItemStack(EnchantItem(Material.LEATHER_HELMET,Enchantment.PROTECTION_ENVIRONMENTAL,3)));
+                            inv.setLeggings(new ItemStack(EnchantItem(Material.LEATHER_BOOTS,Enchantment.PROTECTION_ENVIRONMENTAL,3)));
+                            inv.addItem(new ItemStack(EnchantItem(Material.BOW, Enchantment.ARROW_DAMAGE, 3)));
                             inv.addItem(new ItemStack(Material.BREAD, 30));
-                            inv.addItem(new ItemStack(Material.ARROW));
+                            inv.addItem(new ItemStack(Material.ARROW,64));
+                            inv.addItem(new ItemStack(Material.GOLDEN_APPLE,3));
                             p.teleport(pvplocation);
                             break;
                         case "Drwal":
 
-                            inv.setBoots(new ItemStack(Material.LEATHER_BOOTS));
-                            inv.setChestplate(new ItemStack(Material.LEATHER_CHESTPLATE));
-                            inv.setLeggings(new ItemStack(Material.LEATHER_LEGGINGS));
-                            inv.addItem(new ItemStack(Material.STONE_AXE));
-                            inv.addItem(new ItemStack(Material.GOLDEN_APPLE, 1));
-                            inv.addItem(new ItemStack(Material.BREAD, 30));
-                            p.teleport(pvplocation);
-
-                            break;
-                        case "Niszczyciel":
-
-                            inv.setBoots(new ItemStack(Material.DIAMOND_BOOTS));
+                            inv.setBoots(new ItemStack(Material.IRON_BOOTS));
                             inv.setChestplate(new ItemStack(Material.DIAMOND_CHESTPLATE));
-                            inv.setHelmet(new ItemStack(Material.DIAMOND_HELMET));
-                            inv.setLeggings(new ItemStack(Material.DIAMOND_LEGGINGS));
-                            inv.addItem(new ItemStack(Material.WOODEN_SWORD));
-                            inv.addItem(new ItemStack(Material.MILK_BUCKET));
+                            inv.setLeggings(new ItemStack(EnchantItem(Material.IRON_LEGGINGS,Enchantment.PROTECTION_ENVIRONMENTAL,3)));
+                            inv.addItem(new ItemStack(Material.IRON_AXE));
+                            inv.addItem(new ItemStack(EnchantItem(Material.WOODEN_SWORD,Enchantment.KNOCKBACK,1)));
+                            inv.addItem(new ItemStack(Material.SHIELD));
+                            inv.addItem(new ItemStack(Material.GOLDEN_APPLE, 3));
+                            inv.addItem(new ItemStack(Material.BREAD, 30));
                             p.teleport(pvplocation);
 
                             break;
                         case "Mag":
 
-                            inv.setBoots(new ItemStack(Material.LEATHER_BOOTS));
-                            inv.setChestplate(new ItemStack(Material.LEATHER_CHESTPLATE));
-                            inv.setHelmet(new ItemStack(Material.GOLDEN_HELMET));
-                            inv.setLeggings(new ItemStack(Material.LEATHER_LEGGINGS));
-                            inv.addItem(new ItemStack(EnchantItem(Material.STICK, Enchantment.KNOCKBACK, 3)));
-                            inv.addItem(new ItemStack(EnchantItem(Material.STICK, Enchantment.DAMAGE_ALL, 1)));
-                            inv.addItem(new ItemStack(CreatePotion(PotionType.INSTANT_HEAL, 2, true).toItemStack(5)));
-                            inv.addItem(new ItemStack(CreatePotion(PotionType.POISON, 1, true).toItemStack(3)));
-                            inv.addItem(new ItemStack(CreatePotion(PotionType.SLOWNESS, 1, true).toItemStack(3)));
-                            inv.addItem(new ItemStack(CreatePotion(PotionType.REGEN, 1, false).toItemStack(3)));
+                            inv.setBoots(new ItemStack(EnchantItem(Material.LEATHER_BOOTS,Enchantment.PROTECTION_ENVIRONMENTAL,3)));
+                            inv.setChestplate(new ItemStack(EnchantItem(Material.LEATHER_CHESTPLATE,Enchantment.PROTECTION_ENVIRONMENTAL,3)));
+                            inv.setHelmet(new ItemStack(EnchantItem(Material.LEATHER_HELMET,Enchantment.PROTECTION_ENVIRONMENTAL,3)));
+                            inv.setLeggings(new ItemStack(EnchantItem(Material.LEATHER_LEGGINGS,Enchantment.PROTECTION_ENVIRONMENTAL,3)));
+                            inv.addItem(new ItemStack(EnchantItem(Material.IRON_SWORD,Enchantment.DAMAGE_ALL,1)));
+                            inv.addItem(new ItemStack(Material.MILK_BUCKET));
+                            inv.addItem(new ItemStack(CreatePotion(PotionType.POISON, 3, true).toItemStack(1)));
+                            inv.addItem(new ItemStack(CreatePotion(PotionType.STRENGTH, 2, false).toItemStack(1)));
+                            inv.addItem(new ItemStack(CreatePotion(PotionType.INSTANT_HEAL, 3, true).toItemStack(1)));
+                            inv.addItem(new ItemStack(CreatePotion(PotionType.SPEED, 2, false).toItemStack(3)));
+                            inv.addItem(new ItemStack(CreatePotion(PotionType.REGEN, 1, false).toItemStack(2)));
+                            inv.addItem(new ItemStack(Material.GOLDEN_APPLE, 1));
                             inv.addItem(new ItemStack(Material.BREAD, 30));
                             p.teleport(pvplocation);
 
                             break;
+                        case "Wojownik":
+
+                            inv.setBoots(new ItemStack(Material.DIAMOND_BOOTS));
+                            inv.setChestplate(new ItemStack(Material.DIAMOND_CHESTPLATE));
+                            inv.setHelmet(new ItemStack(Material.DIAMOND_HELMET));
+                            inv.setLeggings(new ItemStack(Material.DIAMOND_LEGGINGS));
+                            inv.addItem(new ItemStack(EnchantItem(Material.DIAMOND_SWORD,Enchantment.DAMAGE_ALL,2)));
+                            inv.addItem(new ItemStack(Material.BREAD, 30));
+                            inv.addItem(new ItemStack(Material.GOLDEN_APPLE, 3));
+                            p.teleport(pvplocation);
+
+                            break;
+                        case "Samuraj":
+
+                            inv.setBoots(new ItemStack(EnchantItem(Material.DIAMOND_BOOTS,Enchantment.PROTECTION_ENVIRONMENTAL,3)));
+                            inv.setChestplate(new ItemStack(EnchantItem(Material.LEATHER_CHESTPLATE,Enchantment.PROTECTION_ENVIRONMENTAL,3)));
+                            inv.setHelmet(new ItemStack(Material.LEATHER_HELMET));
+                            inv.addItem(new ItemStack(EnchantItem(Material.DIAMOND_SWORD,Enchantment.KNOCKBACK,2)));
+                            inv.addItem(new ItemStack(EnchantItem(Material.DIAMOND_SWORD,Enchantment.DAMAGE_ALL,2)));
+                            inv.addItem(new ItemStack(CreatePotion(PotionType.SPEED, 2, false).toItemStack(3)));
+                            inv.addItem(new ItemStack(Material.BREAD, 30));
+                            inv.addItem(new ItemStack(Material.GOLDEN_APPLE, 3));
+                            p.teleport(pvplocation);
+
+                            break;
+
                     }
                 }
             }
