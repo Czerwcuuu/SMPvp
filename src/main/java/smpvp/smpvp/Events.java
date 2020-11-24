@@ -20,12 +20,13 @@ import org.bukkit.potion.Potion;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionType;
 
+import java.util.ArrayList;
+
 public class Events implements Listener {
 
     @EventHandler
     public void SignClickEvent(PlayerInteractEvent event) {
         try {
-            Location pvplocation = new Location(event.getPlayer().getWorld(), 164, 102, -249); //gdzie ma teleportować po wybraniu kitu
             Location lobby_all_location = new Location(event.getPlayer().getWorld(), 113, 134, -309); //lokalizacja lobby kazdy na kazdego
             Location start_lobby_location = new Location(event.getPlayer().getWorld(), 101, 135, -310); //lokalizacja spawnu
             Player p = event.getPlayer();
@@ -59,8 +60,8 @@ public class Events implements Listener {
                             inv.setLeggings(new ItemStack(EnchantItem(Material.DIAMOND_LEGGINGS,Enchantment.PROTECTION_ENVIRONMENTAL,1)));
                             inv.setHelmet(new ItemStack(EnchantItem(Material.DIAMOND_HELMET,Enchantment.PROTECTION_ENVIRONMENTAL,1)));
                             inv.addItem(new ItemStack(Material.DIAMOND_SWORD));
-                            inv.addItem(new ItemStack(Material.GOLDEN_APPLE,3));
-                            p.teleport(pvplocation);
+                            //inv.addItem(new ItemStack(Material.GOLDEN_APPLE,3));
+                            RandomTeleport(p);
 
                             break;
                         case "ŁUCZNIK":
@@ -73,8 +74,8 @@ public class Events implements Listener {
                             inv.addItem(new ItemStack(EnchantItem(Material.BOW, Enchantment.ARROW_DAMAGE, 3)));
                             inv.addItem(new ItemStack(EnchantItem(Material.IRON_SWORD, Enchantment.KNOCKBACK, 1)));
                             inv.addItem(new ItemStack(Material.ARROW,64));
-                            inv.addItem(new ItemStack(Material.GOLDEN_APPLE,3));
-                            p.teleport(pvplocation);
+                            //inv.addItem(new ItemStack(Material.GOLDEN_APPLE,3));
+                            RandomTeleport(p);
                             break;
                         case "DRWAL":
 
@@ -84,8 +85,8 @@ public class Events implements Listener {
                             inv.addItem(new ItemStack(Material.IRON_AXE));
                             inv.addItem(new ItemStack(EnchantItem(Material.WOODEN_SWORD,Enchantment.KNOCKBACK,1)));
                             inv.addItem(new ItemStack(Material.SHIELD));
-                            inv.addItem(new ItemStack(Material.GOLDEN_APPLE, 3));
-                            p.teleport(pvplocation);
+                            //inv.addItem(new ItemStack(Material.GOLDEN_APPLE, 3));
+                            RandomTeleport(p);
 
                             break;
                         case "MAG":
@@ -102,7 +103,7 @@ public class Events implements Listener {
                             inv.addItem(new ItemStack(CreatePotion(PotionType.POISON, 2, true).toItemStack(1)));
                             inv.addItem(new ItemStack(CreatePotion(PotionType.INSTANT_DAMAGE, 1, true).toItemStack(3)));
                             inv.addItem(new ItemStack(Material.GOLDEN_APPLE, 1));
-                            p.teleport(pvplocation);
+                            RandomTeleport(p);
 
                             break;
                         case "WOJOWNIK":
@@ -112,19 +113,20 @@ public class Events implements Listener {
                             inv.setHelmet(new ItemStack(Material.DIAMOND_HELMET));
                             inv.setLeggings(new ItemStack(Material.DIAMOND_LEGGINGS));
                             inv.addItem(new ItemStack(EnchantItem(Material.DIAMOND_SWORD,Enchantment.DAMAGE_ALL,2)));
-                            inv.addItem(new ItemStack(Material.GOLDEN_APPLE, 3));
-                            p.teleport(pvplocation);
+                            //inv.addItem(new ItemStack(Material.GOLDEN_APPLE, 3));
+                            RandomTeleport(p);
 
                             break;
                         case "SAMURAJ":
 
                             inv.setBoots(new ItemStack(EnchantItem(Material.DIAMOND_BOOTS,Enchantment.PROTECTION_ENVIRONMENTAL,3)));
                             inv.setChestplate(new ItemStack(EnchantItem(Material.DIAMOND_CHESTPLATE,Enchantment.PROTECTION_ENVIRONMENTAL,3)));
-                            inv.setHelmet(new ItemStack(Material.LEATHER_HELMET));
+                            inv.setHelmet(new ItemStack(Material.IRON_HELMET));
                             inv.addItem(new ItemStack(TwoEnchants(Material.DIAMOND_SWORD,Enchantment.KNOCKBACK,Enchantment.DAMAGE_ALL,1,2)));
+                            inv.addItem(new ItemStack(TwoEnchants(Material.FISHING_ROD,Enchantment.LURE,Enchantment.DURABILITY,3,3)));
                             inv.addItem(new ItemStack(CreatePotion(PotionType.SPEED, 2, false).toItemStack(3)));
-                            inv.addItem(new ItemStack(Material.GOLDEN_APPLE, 3));
-                            p.teleport(pvplocation);
+                            //inv.addItem(new ItemStack(Material.GOLDEN_APPLE, 3));
+                            RandomTeleport(p);
 
                             break;
 
@@ -134,6 +136,17 @@ public class Events implements Listener {
         } catch (NullPointerException ex) {
             return;
         }
+    }
+    public void RandomTeleport(Player p){
+        int rand =  (int) (Math.random() * (3 - 0 + 1) + 0);
+        ArrayList<Location> locations = new ArrayList<>();
+        locations.add(new Location(p.getWorld(), 160, 101, -288));//lokalizacja 0
+        locations.add(new Location(p.getWorld(), 213, 101, -240));//lokalizacja 1
+        locations.add(new Location(p.getWorld(), 130, 102, -200));//lokalizacja 2
+        locations.add(new Location(p.getWorld(), 165, 102, -247));//lokalizacja 3
+
+        p.teleport(locations.get(rand));
+         //gdzie ma teleportować po wybraniu kitu
     }
 
     public ItemStack EnchantItem(Material item, Enchantment ench, int level) {
