@@ -106,6 +106,19 @@ public class Events implements Listener {
                             RandomTeleport(p);
 
                             break;
+                        case "POSEJDON":
+
+                            inv.setBoots(new ItemStack(TwoEnchants(Material.CHAINMAIL_BOOTS,Enchantment.PROTECTION_ENVIRONMENTAL,Enchantment.DURABILITY,3,3)));
+                            inv.setChestplate(new ItemStack(TwoEnchants(Material.CHAINMAIL_CHESTPLATE,Enchantment.PROTECTION_ENVIRONMENTAL,Enchantment.DURABILITY,3,3)));
+                            inv.setHelmet(new ItemStack(TwoEnchants(Material.CHAINMAIL_HELMET,Enchantment.PROTECTION_ENVIRONMENTAL,Enchantment.DURABILITY,3,3)));
+                            inv.setLeggings(new ItemStack(TwoEnchants(Material.CHAINMAIL_LEGGINGS,Enchantment.PROTECTION_ENVIRONMENTAL,Enchantment.DURABILITY,3,3)));
+                            inv.addItem(new ItemStack(TwoEnchants(Material.TRIDENT,Enchantment.DURABILITY,Enchantment.LOYALTY,3,3)));
+                            inv.addItem(new ItemStack(CreatePotion(PotionType.SPEED, 1, false).toItemStack(3)));
+                            inv.addItem(new ItemStack(CreatePotion(PotionType.JUMP, 2, false).toItemStack(3)));
+                            //inv.addItem(new ItemStack(Material.GOLDEN_APPLE, 3));
+                            RandomTeleport(p);
+
+                            break;
                         case "WOJOWNIK":
 
                             inv.setBoots(new ItemStack(Material.DIAMOND_BOOTS));
