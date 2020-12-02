@@ -25,32 +25,37 @@ import smpvp.smpvp.kits.Kits;
 public class GroupFight implements Listener {
 
     @EventHandler
-    public void SignClickEvent(PlayerInteractEvent event) {
+    public void signClickEvent(PlayerInteractEvent event) {
         try {
-            Location pvplocation = new Location(event.getPlayer().getWorld(), 164, 102, -249); //gdzie ma teleportować po wybraniu kitu
-            Location lobby_all_location = new Location(event.getPlayer().getWorld(), 113, 134, -309); //lokalizacja lobby kazdy na kazdego
-            Location start_lobby_location = new Location(event.getPlayer().getWorld(), 101, 135, -310); //lokalizacja spawnu
+            Location pvpLocation = new Location(event.getPlayer().getWorld(), 2, 90, 2); //gdzie ma teleportować po wybraniu kitu
+            Location lobbyAllLocation = new Location(event.getPlayer().getWorld(), 113, 134, -309); //lokalizacja lobby kazdy na kazdego
+            Location startLobbyLocation = new Location(event.getPlayer().getWorld(), 101, 135, -310); //lokalizacja spawnu
             Player p = event.getPlayer();
             Block b = event.getClickedBlock();
             if (b.getState() instanceof Sign) {
                 event.setCancelled(true);
                 PlayerInventory inv = p.getInventory();
                 Sign sign = (Sign) b.getState();
+
                 String line0 = sign.getLine(0);
                 String line1 = sign.getLine(1);
                 String line2 = sign.getLine(2);
+
                 if(line0.equals("Powrót") && line1.equals("[Wcisnij]")){
-                    resetplayer(p);
-                    p.teleport(start_lobby_location);
+                    resetPlayer(p);
+                    p.teleport(startLobbyLocation);
                 }
                 if (inv.isEmpty()) {
 
                     if(line0.equals("KAZDY") && line1.equals("NA KAZDEGO") && line2.equals("[WCISNIJ]")){
-                        p.teleport(lobby_all_location);
+                        p.teleport(lobbyAllLocation);
                     }
                     switch (line1) { //wybór kitów
                         case "TEST":
-                            ArenaManager.JoinArena(p,"Arena1");
+                            String players = ArenaManager.joinArena(p,"Arena1",pvpLocation,sign);
+                            Kits.testKit(inv);
+                            sign.setLine(2,players);
+                            sign.update();
                             break;
                     }
                 }
@@ -64,22 +69,22 @@ public class GroupFight implements Listener {
     @EventHandler
     public void pde(PlayerDeathEvent e) {
         Player p = e.getEntity();
-        /*if(p.getKiller()!=null)*/ ArenaManager.CheckPlayerArenaAndRemove(p, p);
+        /*if(p.getKiller()!=null)*/ ArenaManager.checkPlayerArenaAndRemove(p, p);
         Bukkit.broadcastMessage("§7Gracz §b" + p.getName() + " §7został zabity przez §b" + p.getKiller().getName());
     }
     @EventHandler
-    public void playerrespawnevent(PlayerRespawnEvent e) {
+    public void playerRespawnevent(PlayerRespawnEvent e) {
         Player p = e.getPlayer();
-        resetplayer(p);
+        resetPlayer(p);
     }
 
     @EventHandler
-    public void PlayerJoin(PlayerJoinEvent e) {
+    public void playerJoin(PlayerJoinEvent e) {
         Player p = e.getPlayer();
 
-        resetplayer(p);
+        resetPlayer(p);
     }
-    public void resetplayer(Player p){
+    public void resetPlayer(Player p){
         p.setHealth(20);
         p.setFoodLevel(20);
         p.getInventory().clear();

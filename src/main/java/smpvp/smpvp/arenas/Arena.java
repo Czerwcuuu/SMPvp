@@ -16,7 +16,7 @@ public class Arena {
         this.arenaName = Name;
     }
 
-    public void Reset(){
+    public void reset(){
         this.currentPlayers = 0;
         players.clear();
     }

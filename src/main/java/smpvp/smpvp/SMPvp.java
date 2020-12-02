@@ -12,7 +12,7 @@ public final class SMPvp extends JavaPlugin implements Listener {
     public void onEnable() {
         // Plugin startup logic
         Bukkit.getPluginManager().registerEvents(new GroupFight(), this);
-        ArenaManager.CreateArena("Arena1",2);
+        ArenaManager.createArena("Arena1",2);
 
 
     }
