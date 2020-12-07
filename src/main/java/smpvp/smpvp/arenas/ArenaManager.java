@@ -27,6 +27,7 @@ public class ArenaManager {
             PlayerInventory inv = p.getInventory();
             playersInArenas.put(p.getName(),arena);
             p.teleport(loc);
+            p.setHealth(20);
             arena.currentPlayers++;
             Bukkit.broadcastMessage("§b"+p.getName()+"§7 dołączył do §b"+arenaName+"§4 "+arena.currentPlayers+"/"+arena.maxPlayers);
             sign.setLine(2,arena.currentPlayers+"/"+arena.maxPlayers);

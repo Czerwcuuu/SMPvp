@@ -110,7 +110,7 @@ public class Kits {
         inv.setLeggings(new ItemStack(enchantItem(Material.DIAMOND_LEGGINGS,Enchantment.PROTECTION_ENVIRONMENTAL,3)));
         inv.addItem(new ItemStack(enchantItem(Material.DIAMOND_SWORD,Enchantment.DAMAGE_ALL,5)));
         for(int i=0; i<17; i++){
-            inv.addItem(new ItemStack(createPotion(PotionType.REGEN, 2, false).toItemStack(1)));
+            inv.addItem(new ItemStack(createPotion(PotionType.INSTANT_HEAL, 2, true).toItemStack(1)));
         }
     }
 
@@ -121,7 +121,7 @@ public class Kits {
         inv.setLeggings(new ItemStack(enchantItem(Material.IRON_LEGGINGS,Enchantment.PROTECTION_ENVIRONMENTAL,4)));
         inv.addItem(new ItemStack(enchantItem(Material.DIAMOND_SWORD,Enchantment.DAMAGE_ALL,5)));
         inv.addItem(new ItemStack(Material.ENCHANTED_GOLDEN_APPLE,5));
-        inv.addItem(new ItemStack(Material.PORKCHOP,16));
+        inv.addItem(new ItemStack(Material.COOKED_BEEF,16));
         inv.addItem(new ItemStack(createPotion(PotionType.STRENGTH, 2, false).toItemStack(4)));
         inv.addItem(new ItemStack(enchantItem(Material.IRON_BOOTS,Enchantment.PROTECTION_ENVIRONMENTAL,4)));
         inv.addItem(new ItemStack(enchantItem(Material.IRON_CHESTPLATE,Enchantment.PROTECTION_ENVIRONMENTAL,4)));
@@ -140,9 +140,9 @@ public class Kits {
         inv.addItem(new ItemStack(createPotion(PotionType.SPEED, 2, false).toItemStack(3)));
         inv.addItem(new ItemStack(createPotion(PotionType.STRENGTH, 2, false).toItemStack(3)));
         inv.addItem(new ItemStack(createPotion(PotionType.POISON, 1, true).toItemStack(2)));
-        inv.addItem(new ItemStack(Material.PORKCHOP,64));
+        inv.addItem(new ItemStack(Material.COOKED_BEEF,64));
         for(int i=0; i<22; i++){
-            inv.addItem(new ItemStack(createPotion(PotionType.REGEN, 2, false).toItemStack(1)));
+            inv.addItem(new ItemStack(createPotion(PotionType.INSTANT_HEAL, 2, true).toItemStack(1)));
         }
         inv.addItem(new ItemStack(createPotion(PotionType.FIRE_RESISTANCE, 1, false).toItemStack(2)));
 
@@ -154,7 +154,7 @@ public class Kits {
         inv.setLeggings(new ItemStack(enchantItem(Material.DIAMOND_LEGGINGS,Enchantment.PROTECTION_ENVIRONMENTAL,3)));
         inv.addItem(new ItemStack(enchantItem(Material.DIAMOND_SWORD,Enchantment.DAMAGE_ALL,5)));
         inv.addItem(new ItemStack(Material.ENCHANTED_GOLDEN_APPLE,1));
-        inv.addItem(new ItemStack(Material.PORKCHOP,32));
+        inv.addItem(new ItemStack(Material.COOKED_BEEF,32));
         inv.addItem(new ItemStack(Material.ENDER_PEARL,16));
         inv.addItem(new ItemStack(createPotion(PotionType.SPEED, 2, false).toItemStack(2)));
         inv.addItem(new ItemStack(createPotion(PotionType.STRENGTH, 2, false).toItemStack(2)));
