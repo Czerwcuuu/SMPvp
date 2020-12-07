@@ -12,14 +12,17 @@ public final class SMPvp extends JavaPlugin implements Listener {
     public void onEnable() {
         // Plugin startup logic
         Bukkit.getPluginManager().registerEvents(new GroupFight(), this);
-        ArenaManager.createArena("areny Drwala",2);
-        ArenaManager.createArena("areny Lucznika",2);
-        ArenaManager.createArena("areny Bestii",2);
-        ArenaManager.createArena("areny Magów",2);
+        ArenaManager.createArena("areny Łowcy",2);
+        ArenaManager.createArena("areny Szlachcica",2);
+        ArenaManager.createArena("areny Paladynów",2);
+        ArenaManager.createArena("areny Litwinów",2);
         //ArenaManager.createArena("areny Posejdona",2);
-        ArenaManager.createArena("areny Wojownika",2);
+        ArenaManager.createArena("areny Egzorcysty",2);
+        ArenaManager.createArena("areny Tytanów",2);
         ArenaManager.createArena("areny Samuraja",2);
-        ArenaManager.createArena("areny Zniwiarza",2);
+        ArenaManager.createArena("areny Drwala",2);
+        ArenaManager.createArena("areny Bestii",2);
+        ArenaManager.createArena("areny Wojowników",2);
 
 
     }
