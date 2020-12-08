@@ -99,52 +99,52 @@ public class GroupFight implements Listener {
                             if(joined)Kits.zniwiarz(inv);
                             break;*/
                         case "ŁOWCA 1v1":
-                            Location location = new Location(event.getPlayer().getWorld(), 24, 101, -312);
+                            Location location = new Location(event.getPlayer().getWorld(), 151, 100, -395);
                             boolean joined = ArenaManager.joinArena(p,"areny Łowcy",location,sign);
                             if(joined)Kits.lowca(inv);
                             break;
                         case "SZLACHCIC 1v1":
-                            location = new Location(event.getPlayer().getWorld(), 25, 101, -256);
+                            location = new Location(event.getPlayer().getWorld(), 151, 100, -466);
                             joined = ArenaManager.joinArena(p,"areny Szlachcica",location,sign);
                             if(joined)Kits.szlachic(inv);
                             break;
                         case "PALADYN 1v1":
-                            location = new Location(event.getPlayer().getWorld(), 25, 101, -197);
+                            location = new Location(event.getPlayer().getWorld(), 151, 100, -531);
                             joined = ArenaManager.joinArena(p,"areny Paladynów",location,sign);
                             if(joined)Kits.paladyn(inv);
                             break;
                         case "LITWIN 1v1":
-                            location = new Location(event.getPlayer().getWorld(), 25, 101, -141);
+                            location = new Location(event.getPlayer().getWorld(), 238, 100, -395);
                             joined = ArenaManager.joinArena(p,"areny Litwinów",location,sign);
                             if(joined)Kits.litwin(inv);
                             break;
                         case "EGZOR 1v1":
-                            location = new Location(event.getPlayer().getWorld(), -34, 101, -256);
+                            location = new Location(event.getPlayer().getWorld(), 238, 100, -466);
                             joined = ArenaManager.joinArena(p,"areny Egzorcysty",location,sign);
                             if(joined)Kits.egzorcysta(inv);
                             break;
                         case "TYTAN 1v1":
-                            location = new Location(event.getPlayer().getWorld(), -34, 101, -197);
+                            location = new Location(event.getPlayer().getWorld(), 238, 100, -531);
                             joined = ArenaManager.joinArena(p,"areny Tytanów",location,sign);
                             if(joined)Kits.tytan(inv);
                             break;
                         case "SAMURAJ 1v1":
-                            location = new Location(event.getPlayer().getWorld(), -34, 101, -141);
+                            location = new Location(event.getPlayer().getWorld(), 339, 100, -395);
                             joined = ArenaManager.joinArena(p,"areny Samuraja",location,sign);
                             if(joined)Kits.samuraj(inv);
                             break;
                         case "DRWAL 1v1":
-                            location = new Location(event.getPlayer().getWorld(), -91, 101, -312);
+                            location = new Location(event.getPlayer().getWorld(), 339, 100, -466);
                             joined = ArenaManager.joinArena(p,"areny Drwala",location,sign);
                             if(joined)Kits.drwal(inv);
                             break;
                         case "BESTIA 1v1":
-                            location = new Location(event.getPlayer().getWorld(), -91, 101, -256);
+                            location = new Location(event.getPlayer().getWorld(), 339, 100, -531);
                             joined = ArenaManager.joinArena(p,"areny Bestii",location,sign);
                             if(joined)Kits.bestia(inv);
                             break;
                         case "WOJOWNIK 1v1":
-                            location = new Location(event.getPlayer().getWorld(), -91, 101, -141);
+                            location = new Location(event.getPlayer().getWorld(), 424, 100, -395);
                             joined = ArenaManager.joinArena(p,"areny Wojowników",location,sign);
                             if(joined)Kits.wojownik(inv);
                             break;

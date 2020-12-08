@@ -35,7 +35,7 @@ public class ArenaManager {
             return true;
         }
         else{
-            p.sendMessage("§4&lNie udało się dołączyć do areny! :c");
+            p.sendMessage("§4§lNie udało się dołączyć do areny! :c");
             sign.setLine(2,"PEŁNA");
             sign.update();
             return false;
