@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.PlayerInventory;
+import smpvp.smpvp.kits.Kit;
 import smpvp.smpvp.kits.Kits;
 import org.bukkit.block.Sign;
 import java.util.HashMap;

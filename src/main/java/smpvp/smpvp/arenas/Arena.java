@@ -2,6 +2,7 @@ package smpvp.smpvp.arenas;
 
 
 import org.bukkit.entity.Player;
+import smpvp.smpvp.kits.Kits;
 
 import java.util.HashMap;
 

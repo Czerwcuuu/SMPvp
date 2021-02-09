@@ -58,46 +58,6 @@ public class GroupFight implements Listener {
                         p.teleport(lobbyAllLocation);
                     }
                     switch (line1) { //wybór kitów
-                        /*case "DRWAL 1v1":
-                            Location location = new Location(event.getPlayer().getWorld(), 24, 101, -312);
-                            boolean joined = ArenaManager.joinArena(p,"areny Drwala",location,sign);
-                            if(joined)Kits.drwal(inv);
-                            break;
-                        case "LUCZNIK 1v1":
-                            location = new Location(event.getPlayer().getWorld(), 25, 101, -256);
-                            joined = ArenaManager.joinArena(p,"areny Lucznika",location,sign);
-                            if(joined)Kits.lucznik(inv);
-                            break;
-                        case "BESTIA 1v1":
-                            location = new Location(event.getPlayer().getWorld(), 25, 101, -197);
-                            joined = ArenaManager.joinArena(p,"areny Bestii",location,sign);
-                            if(joined)Kits.bestia(inv);
-                            break;
-                        case "MAG 1v1":
-                            location = new Location(event.getPlayer().getWorld(), 25, 101, -141);
-                            joined = ArenaManager.joinArena(p,"areny Magów",location,sign);
-                            if(joined)Kits.mag(inv);
-                            break;
-                        case "POSEJDON 1v1":
-                            location = new Location(event.getPlayer().getWorld(), -34, 101, -256);
-                            joined = ArenaManager.joinArena(p,"areny Posejdona",location,sign);
-                            if(joined)Kits.posejdon(inv);
-                            break;
-                        case "WOJOWNIK 1v1":
-                            location = new Location(event.getPlayer().getWorld(), -34, 101, -197);
-                            joined = ArenaManager.joinArena(p,"areny Wojownika",location,sign);
-                            if(joined)Kits.wojownik(inv);
-                            break;
-                        case "SAMURAJ 1v1":
-                            location = new Location(event.getPlayer().getWorld(), -34, 101, -141);
-                            joined = ArenaManager.joinArena(p,"areny Samuraja",location,sign);
-                            if(joined)Kits.samuraj(inv);
-                            break;
-                        case "ZNIWIARZ 1v1":
-                            location = new Location(event.getPlayer().getWorld(), -34, 101, -256);
-                            joined = ArenaManager.joinArena(p,"areny Zniwiarza",location,sign);
-                            if(joined)Kits.zniwiarz(inv);
-                            break;*/
                         case "ŁOWCA 1v1":
                             Location location = new Location(event.getPlayer().getWorld(), 151, 100, -395);
                             boolean joined = ArenaManager.joinArena(p,"areny Łowcy",location,sign);
@@ -122,11 +82,6 @@ public class GroupFight implements Listener {
                             location = new Location(event.getPlayer().getWorld(), 238, 100, -466);
                             joined = ArenaManager.joinArena(p,"areny Egzorcysty",location,sign);
                             if(joined)Kits.egzorcysta(inv);
-                            break;
-                        case "TYTAN 1v1":
-                            location = new Location(event.getPlayer().getWorld(), 238, 100, -531);
-                            joined = ArenaManager.joinArena(p,"areny Tytanów",location,sign);
-                            if(joined)Kits.tytan(inv);
                             break;
                         case "SAMURAJ 1v1":
                             location = new Location(event.getPlayer().getWorld(), 339, 100, -395);
@@ -159,28 +114,13 @@ public class GroupFight implements Listener {
                         case "DRWAL":
                             Kits.drwal(inv);
                             RandomTeleport(p);
-
                             break;
-                        case "MAG":
-                            Kits.mag(inv);
-                            RandomTeleport(p);
-
-                            break;
-                        /*case "POSEJDON":
-                            Kits.posejdon(inv);
-                            RandomTeleport(p);
-
-                            break;*/
                         case "WOJOWNIK":
                             Kits.wojownik(inv);
                             RandomTeleport(p);
                             break;
                         case "SAMURAJ":
                             Kits.samuraj(inv);
-                            RandomTeleport(p);
-                            break;
-                        case "ZNIWIARZ":
-                            Kits.zniwiarz(inv);
                             RandomTeleport(p);
                             break;
                     }
@@ -211,8 +151,9 @@ public class GroupFight implements Listener {
 
             }
         }
+        Bukkit.broadcastMessage("§7Gracz §b" + p.getName() + " §7został zabity przez §b" + p.getKiller().getName() + "§4§l ["+(int)p.getKiller().getHealth()+"]");
         resetPlayer(p.getKiller());
-        Bukkit.broadcastMessage("§7Gracz §b" + p.getName() + " §7został zabity przez §b" + p.getKiller().getName());
+
     }
     @EventHandler
     public void playerRespawnevent(PlayerRespawnEvent e) {

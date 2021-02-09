@@ -11,154 +11,216 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.Potion;
 import org.bukkit.potion.PotionType;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Kits {
-    public static void bestia(PlayerInventory inv){
-        inv.setChestplate(new ItemStack(enchantItem(Material.DIAMOND_CHESTPLATE, Enchantment.PROTECTION_ENVIRONMENTAL,1)));
-        inv.setBoots(new ItemStack(enchantItem(Material.DIAMOND_BOOTS,Enchantment.PROTECTION_ENVIRONMENTAL,1)));
-        inv.setLeggings(new ItemStack(enchantItem(Material.DIAMOND_LEGGINGS,Enchantment.PROTECTION_ENVIRONMENTAL,1)));
-        inv.setHelmet(new ItemStack(enchantItem(Material.DIAMOND_HELMET,Enchantment.PROTECTION_ENVIRONMENTAL,1)));
-        inv.addItem(new ItemStack(Material.DIAMOND_SWORD));
+    public static Kit bestia(PlayerInventory inv){
+
+        List<ItemStack> list = new ArrayList<>();
+
+        return new Kit(inv,
+                //Główne sety
+                new ItemStack(enchantItem(Material.DIAMOND_BOOTS,Enchantment.PROTECTION_ENVIRONMENTAL,1)),
+                new ItemStack(enchantItem(Material.DIAMOND_HELMET,Enchantment.PROTECTION_ENVIRONMENTAL,1)),
+                new ItemStack(enchantItem(Material.DIAMOND_CHESTPLATE, Enchantment.PROTECTION_ENVIRONMENTAL,1)),
+                new ItemStack(enchantItem(Material.DIAMOND_LEGGINGS,Enchantment.PROTECTION_ENVIRONMENTAL,1)),
+                new ItemStack(Material.DIAMOND_SWORD),//miecz
+                list);
     }
-    public static void lucznik(PlayerInventory inv){
-        inv.setBoots(new ItemStack(enchantItem(Material.IRON_BOOTS,Enchantment.PROTECTION_ENVIRONMENTAL,2)));
-        inv.setChestplate(new ItemStack(enchantItem(Material.IRON_CHESTPLATE,Enchantment.PROTECTION_ENVIRONMENTAL,2)));
-        inv.setHelmet(new ItemStack(enchantItem(Material.IRON_HELMET,Enchantment.PROTECTION_ENVIRONMENTAL,2)));
-        inv.setLeggings(new ItemStack(enchantItem(Material.IRON_LEGGINGS,Enchantment.PROTECTION_ENVIRONMENTAL,2)));
-        inv.addItem(new ItemStack(enchantItem(Material.BOW, Enchantment.ARROW_DAMAGE, 3)));
-        inv.addItem(new ItemStack(enchantItem(Material.IRON_SWORD, Enchantment.KNOCKBACK, 1)));
-        inv.addItem(new ItemStack(Material.ARROW,64));
+    public static Kit lucznik(PlayerInventory inv){
+
+        List<ItemStack> list = new ArrayList<>();
+
+        list.add(new ItemStack(enchantItem(Material.IRON_SWORD, Enchantment.KNOCKBACK, 1)));
+        list.add(new ItemStack(Material.ARROW,64));
+
+        return new Kit(inv,
+                //Główne sety
+                new ItemStack(enchantItem(Material.IRON_BOOTS,Enchantment.PROTECTION_ENVIRONMENTAL,2)),
+                new ItemStack(enchantItem(Material.IRON_HELMET,Enchantment.PROTECTION_ENVIRONMENTAL,2)),
+                new ItemStack(enchantItem(Material.IRON_CHESTPLATE,Enchantment.PROTECTION_ENVIRONMENTAL,2)),
+                new ItemStack(enchantItem(Material.IRON_LEGGINGS,Enchantment.PROTECTION_ENVIRONMENTAL,2)),
+                new ItemStack(enchantItem(Material.BOW, Enchantment.ARROW_DAMAGE, 3)),//miecz
+                list);
     }
-    public static void drwal(PlayerInventory inv){
-        inv.setBoots(new ItemStack(Material.IRON_BOOTS));
-        inv.setChestplate(new ItemStack(Material.DIAMOND_CHESTPLATE));
-        inv.setLeggings(new ItemStack(enchantItem(Material.IRON_LEGGINGS,Enchantment.PROTECTION_ENVIRONMENTAL,3)));
-        inv.addItem(new ItemStack(Material.IRON_AXE));
-        inv.addItem(new ItemStack(enchantItem(Material.WOODEN_SWORD,Enchantment.KNOCKBACK,1)));
-        inv.addItem(new ItemStack(Material.SHIELD));
+    public static Kit drwal(PlayerInventory inv){
+
+        List<ItemStack> list = new ArrayList<>();
+
+        return new Kit(inv,
+                //Główne sety
+                new ItemStack(Material.IRON_BOOTS),
+                new ItemStack(Material.DIAMOND_HELMET),
+                new ItemStack(Material.DIAMOND_CHESTPLATE),
+                new ItemStack(enchantItem(Material.IRON_LEGGINGS,Enchantment.PROTECTION_ENVIRONMENTAL,3)),
+                new ItemStack(Material.IRON_AXE),
+                list);
     }
-    public static void mag(PlayerInventory inv){
-        inv.setBoots(new ItemStack(enchantItem(Material.LEATHER_BOOTS,Enchantment.PROTECTION_ENVIRONMENTAL,3)));
-        inv.setChestplate(new ItemStack(enchantItem(Material.LEATHER_CHESTPLATE,Enchantment.PROTECTION_ENVIRONMENTAL,3)));
-        inv.setHelmet(new ItemStack(enchantItem(Material.LEATHER_HELMET,Enchantment.PROTECTION_ENVIRONMENTAL,3)));
-        inv.setLeggings(new ItemStack(enchantItem(Material.LEATHER_LEGGINGS,Enchantment.PROTECTION_ENVIRONMENTAL,3)));
-        inv.addItem(new ItemStack(enchantItem(Material.IRON_SWORD,Enchantment.DAMAGE_ALL,1)));
-        inv.addItem(new ItemStack(createPotion(PotionType.STRENGTH, 1, false).toItemStack(1)));
-        inv.addItem(new ItemStack(createPotion(PotionType.INSTANT_HEAL, 1, true).toItemStack(2)));
-        inv.addItem(new ItemStack(createPotion(PotionType.SPEED, 2, false).toItemStack(3)));
-        inv.addItem(new ItemStack(createPotion(PotionType.REGEN, 1, false).toItemStack(2)));
-        inv.addItem(new ItemStack(createPotion(PotionType.POISON, 2, true).toItemStack(1)));
-        inv.addItem(new ItemStack(Material.GOLDEN_APPLE, 1));
-    }
-    /*public static void posejdon(PlayerInventory inv){
-        inv.setBoots(new ItemStack(twoEnchants(Material.CHAINMAIL_BOOTS,Enchantment.PROTECTION_ENVIRONMENTAL,Enchantment.DURABILITY,3,3)));
-        inv.setChestplate(new ItemStack(twoEnchants(Material.CHAINMAIL_CHESTPLATE,Enchantment.PROTECTION_ENVIRONMENTAL,Enchantment.DURABILITY,3,3)));
-        inv.setHelmet(new ItemStack(twoEnchants(Material.CHAINMAIL_HELMET,Enchantment.PROTECTION_ENVIRONMENTAL,Enchantment.DURABILITY,3,3)));
-        inv.setLeggings(new ItemStack(twoEnchants(Material.CHAINMAIL_LEGGINGS,Enchantment.PROTECTION_ENVIRONMENTAL,Enchantment.DURABILITY,3,3)));
-        inv.addItem(new ItemStack(twoEnchants(Material.TRIDENT,Enchantment.DURABILITY,Enchantment.LOYALTY,3,3)));
-        inv.addItem(new ItemStack(createPotion(PotionType.SPEED, 1, false).toItemStack(3)));
-        inv.addItem(new ItemStack(createPotion(PotionType.JUMP, 2, false).toItemStack(3)));
-    }*/
-    public static void wojownik(PlayerInventory inv){
-        inv.setBoots(new ItemStack(Material.DIAMOND_BOOTS));
-        inv.setChestplate(new ItemStack(Material.DIAMOND_CHESTPLATE));
-        inv.setHelmet(new ItemStack(Material.DIAMOND_HELMET));
-        inv.setLeggings(new ItemStack(Material.DIAMOND_LEGGINGS));
-        inv.addItem(new ItemStack(enchantItem(Material.DIAMOND_SWORD,Enchantment.DAMAGE_ALL,2)));
+    public static Kit wojownik(PlayerInventory inv){
+        List<ItemStack> list = new ArrayList<>();
+
+        return new Kit(inv,
+                //Główne sety
+                new ItemStack(Material.DIAMOND_BOOTS),
+                new ItemStack(Material.DIAMOND_HELMET),
+                new ItemStack(Material.DIAMOND_CHESTPLATE),
+                new ItemStack(Material.DIAMOND_LEGGINGS),
+                new ItemStack(enchantItem(Material.DIAMOND_SWORD,Enchantment.DAMAGE_ALL,2)),//miecz
+                list);
 
     }
-    public static void samuraj(PlayerInventory inv){
-        inv.setBoots(new ItemStack(enchantItem(Material.DIAMOND_BOOTS,Enchantment.PROTECTION_ENVIRONMENTAL,3)));
-        inv.setChestplate(new ItemStack(enchantItem(Material.DIAMOND_CHESTPLATE,Enchantment.PROTECTION_ENVIRONMENTAL,3)));
-        inv.setHelmet(new ItemStack(Material.IRON_HELMET));
-        inv.addItem(new ItemStack(twoEnchants(Material.DIAMOND_SWORD,Enchantment.KNOCKBACK,Enchantment.DAMAGE_ALL,1,2)));
-        inv.addItem(new ItemStack(twoEnchants(Material.FISHING_ROD,Enchantment.LURE,Enchantment.DURABILITY,3,3)));
-        inv.addItem(new ItemStack(createPotion(PotionType.SPEED, 2, false).toItemStack(3)));
-    }
-    public static void zniwiarz(PlayerInventory inv){
-        inv.setBoots(new ItemStack(enchantItem(Material.IRON_BOOTS,Enchantment.PROTECTION_ENVIRONMENTAL,3)));
-        inv.setChestplate(new ItemStack(enchantItem(Material.IRON_CHESTPLATE,Enchantment.PROTECTION_ENVIRONMENTAL,3)));
-        inv.setHelmet(new ItemStack(twoEnchants(Material.GOLDEN_HELMET,Enchantment.PROTECTION_ENVIRONMENTAL,Enchantment.DURABILITY,3,4)));
-        inv.setLeggings(new ItemStack(enchantItem(Material.IRON_LEGGINGS,Enchantment.PROTECTION_ENVIRONMENTAL,3)));
-        inv.addItem(new ItemStack(enchantItem(Material.NETHERITE_HOE,Enchantment.DAMAGE_ALL,5)));
-        inv.addItem(new ItemStack(createPotion(PotionType.SPEED, 2, true).toItemStack(3)));
-    }
-    public static void lowca(PlayerInventory inv){
-        inv.setBoots(new ItemStack(enchantItem(Material.DIAMOND_BOOTS,Enchantment.PROTECTION_ENVIRONMENTAL,1)));
-        inv.setChestplate(new ItemStack(enchantItem(Material.DIAMOND_CHESTPLATE,Enchantment.PROTECTION_ENVIRONMENTAL,1)));
-        inv.setHelmet(new ItemStack(enchantItem(Material.DIAMOND_HELMET,Enchantment.PROTECTION_ENVIRONMENTAL,1)));
-        inv.setLeggings(new ItemStack(enchantItem(Material.DIAMOND_LEGGINGS,Enchantment.PROTECTION_ENVIRONMENTAL,1)));
-        inv.addItem(new ItemStack(enchantItem(Material.IRON_SWORD,Enchantment.DAMAGE_ALL,2)));
-        inv.addItem(new ItemStack(enchantItem(Material.BOW, Enchantment.ARROW_DAMAGE, 2)));
-        inv.addItem(new ItemStack(Material.ARROW,32));
-        inv.addItem(new ItemStack(Material.GOLDEN_APPLE,2));
-    }
-    public static void szlachic(PlayerInventory inv){
-        inv.setBoots(new ItemStack(Material.DIAMOND_BOOTS));
-        inv.setChestplate(new ItemStack(Material.DIAMOND_CHESTPLATE));
-        inv.setLeggings(new ItemStack(Material.DIAMOND_LEGGINGS));
-        inv.setHelmet(new ItemStack(Material.DIAMOND_HELMET));
-        inv.addItem(new ItemStack(createPotion(PotionType.SPEED, 1, false).toItemStack(2)));
-        inv.addItem(new ItemStack(twoEnchants(Material.BOW,Enchantment.ARROW_INFINITE,Enchantment.ARROW_DAMAGE,1,3)));
-        inv.addItem(new ItemStack(Material.GOLDEN_APPLE,1));
-        inv.addItem(new ItemStack(Material.ARROW,1));
-    }
+    public static Kit samuraj(PlayerInventory inv){
 
-    public static void paladyn(PlayerInventory inv){
-        inv.setBoots(new ItemStack(enchantItem(Material.DIAMOND_BOOTS,Enchantment.PROTECTION_ENVIRONMENTAL,3)));
-        inv.setChestplate(new ItemStack(enchantItem(Material.DIAMOND_CHESTPLATE,Enchantment.PROTECTION_ENVIRONMENTAL,3)));
-        inv.setHelmet(new ItemStack(enchantItem(Material.DIAMOND_HELMET,Enchantment.PROTECTION_ENVIRONMENTAL,3)));
-        inv.setLeggings(new ItemStack(enchantItem(Material.DIAMOND_LEGGINGS,Enchantment.PROTECTION_ENVIRONMENTAL,3)));
-        inv.addItem(new ItemStack(enchantItem(Material.DIAMOND_SWORD,Enchantment.DAMAGE_ALL,5)));
+        List<ItemStack> list = new ArrayList<>();
+        list.add(new ItemStack(twoEnchants(Material.FISHING_ROD,Enchantment.LURE,Enchantment.DURABILITY,3,3)));
+        list.add(new ItemStack(createPotion(PotionType.SPEED, 2, false).toItemStack(3)));
+
+        return new Kit(inv,
+                //Główne sety
+                new ItemStack(enchantItem(Material.DIAMOND_BOOTS,Enchantment.PROTECTION_ENVIRONMENTAL,3)),//buty
+                new ItemStack(twoEnchants(Material.GOLDEN_HELMET,Enchantment.PROTECTION_ENVIRONMENTAL,Enchantment.DURABILITY,3,4)),
+                new ItemStack(enchantItem(Material.DIAMOND_CHESTPLATE,Enchantment.PROTECTION_ENVIRONMENTAL,3)),//hełm
+                new ItemStack(Material.LEATHER_LEGGINGS),//spodnie
+                new ItemStack(twoEnchants(Material.DIAMOND_SWORD,Enchantment.KNOCKBACK,Enchantment.DAMAGE_ALL,1,2)),//miecz
+                list);
+
+
+    }
+    public static Kit lowca(PlayerInventory inv){
+
+        List<ItemStack> list = new ArrayList<>();
+
+        list.add(new ItemStack(enchantItem(Material.BOW, Enchantment.ARROW_DAMAGE, 2)));
+        list.add(new ItemStack(Material.ARROW,32));
+        list.add(new ItemStack(Material.GOLDEN_APPLE,2));
+
+        //Reszta itemków
+
+        return new Kit(inv,
+                //Główne sety
+                new ItemStack(enchantItem(Material.DIAMOND_BOOTS,Enchantment.PROTECTION_ENVIRONMENTAL,1)),
+                new ItemStack(enchantItem(Material.DIAMOND_HELMET,Enchantment.PROTECTION_ENVIRONMENTAL,1)),
+                new ItemStack(enchantItem(Material.DIAMOND_CHESTPLATE,Enchantment.PROTECTION_ENVIRONMENTAL,1)),
+                new ItemStack(enchantItem(Material.DIAMOND_LEGGINGS,Enchantment.PROTECTION_ENVIRONMENTAL,1)),
+                new ItemStack(enchantItem(Material.IRON_SWORD,Enchantment.DAMAGE_ALL,2)),
+                list);
+
+    }
+    public static Kit szlachic(PlayerInventory inv){
+        List<ItemStack> list = new ArrayList<>();
+
+        list.add(new ItemStack(createPotion(PotionType.SPEED, 1, false).toItemStack(2)));
+        list.add(new ItemStack(Material.GOLDEN_APPLE,1));
+        list.add(new ItemStack(Material.ARROW,1));
+
+        //Reszta itemków
+
+        return new Kit(inv,
+                //Główne sety
+                new ItemStack(Material.DIAMOND_BOOTS),
+                new ItemStack(Material.DIAMOND_HELMET),
+                new ItemStack(Material.DIAMOND_CHESTPLATE),
+                new ItemStack(Material.DIAMOND_LEGGINGS),
+                new ItemStack(twoEnchants(Material.BOW,Enchantment.ARROW_INFINITE,Enchantment.ARROW_DAMAGE,1,3)),//miecz
+                list);
+
+
+    }
+    public static Kit paladyn(PlayerInventory inv){
+        List<ItemStack> list = new ArrayList<>();
+
+        //Reszta itemków
+        list.add(new ItemStack(enchantItem(Material.DIAMOND_SWORD,Enchantment.DAMAGE_ALL,5)));
         for(int i=0; i<17; i++){
-            inv.addItem(new ItemStack(createPotion(PotionType.INSTANT_HEAL, 2, true).toItemStack(1)));
+            list.add(new ItemStack(createPotion(PotionType.INSTANT_HEAL, 2, true).toItemStack(1)));
         }
-    }
+        return new Kit(inv,
+                //Główne sety
+                new ItemStack(enchantItem(Material.DIAMOND_BOOTS,Enchantment.PROTECTION_ENVIRONMENTAL,3)),
+                new ItemStack(enchantItem(Material.DIAMOND_HELMET,Enchantment.PROTECTION_ENVIRONMENTAL,3)),
+                new ItemStack(enchantItem(Material.DIAMOND_CHESTPLATE,Enchantment.PROTECTION_ENVIRONMENTAL,3)),
+                new ItemStack(enchantItem(Material.DIAMOND_LEGGINGS,Enchantment.PROTECTION_ENVIRONMENTAL,3)),
+                new ItemStack(twoEnchants(Material.NETHERITE_SWORD,Enchantment.DAMAGE_ALL,Enchantment.FIRE_ASPECT,5,2)),//miecz
+                list);
 
-    public static void litwin(PlayerInventory inv){
-        inv.setBoots(new ItemStack(enchantItem(Material.IRON_BOOTS,Enchantment.PROTECTION_ENVIRONMENTAL,4)));
-        inv.setChestplate(new ItemStack(enchantItem(Material.IRON_CHESTPLATE,Enchantment.PROTECTION_ENVIRONMENTAL,4)));
-        inv.setHelmet(new ItemStack(enchantItem(Material.IRON_HELMET,Enchantment.PROTECTION_ENVIRONMENTAL,4)));
-        inv.setLeggings(new ItemStack(enchantItem(Material.IRON_LEGGINGS,Enchantment.PROTECTION_ENVIRONMENTAL,4)));
-        inv.addItem(new ItemStack(enchantItem(Material.DIAMOND_SWORD,Enchantment.DAMAGE_ALL,5)));
-        inv.addItem(new ItemStack(Material.ENCHANTED_GOLDEN_APPLE,5));
-        inv.addItem(new ItemStack(Material.COOKED_BEEF,16));
-        inv.addItem(new ItemStack(createPotion(PotionType.STRENGTH, 2, false).toItemStack(4)));
-        inv.addItem(new ItemStack(enchantItem(Material.IRON_BOOTS,Enchantment.PROTECTION_ENVIRONMENTAL,4)));
-        inv.addItem(new ItemStack(enchantItem(Material.IRON_CHESTPLATE,Enchantment.PROTECTION_ENVIRONMENTAL,4)));
-        inv.addItem(new ItemStack(enchantItem(Material.IRON_HELMET,Enchantment.PROTECTION_ENVIRONMENTAL,4)));
-        inv.addItem(new ItemStack(enchantItem(Material.IRON_LEGGINGS,Enchantment.PROTECTION_ENVIRONMENTAL,4)));
-    }
 
-    public static void egzorcysta(PlayerInventory inv){
-        inv.setBoots(new ItemStack(twoEnchants(Material.NETHERITE_BOOTS,Enchantment.PROTECTION_ENVIRONMENTAL,Enchantment.DURABILITY,4,3)));
-        inv.setHelmet(new ItemStack(twoEnchants(Material.NETHERITE_HELMET,Enchantment.PROTECTION_ENVIRONMENTAL,Enchantment.DURABILITY,4,3)));
-        inv.setLeggings(new ItemStack(twoEnchants(Material.NETHERITE_LEGGINGS,Enchantment.PROTECTION_ENVIRONMENTAL,Enchantment.DURABILITY,4,3)));
-        inv.setChestplate(new ItemStack(twoEnchants(Material.NETHERITE_CHESTPLATE,Enchantment.PROTECTION_ENVIRONMENTAL,Enchantment.DURABILITY,4,3)));
-        inv.addItem(new ItemStack(twoEnchants(Material.NETHERITE_SWORD,Enchantment.DAMAGE_ALL,Enchantment.FIRE_ASPECT,5,2)));
-        inv.addItem(new ItemStack(Material.GOLDEN_APPLE,3));
-        inv.addItem(new ItemStack(Material.ENDER_PEARL,16));
-        inv.addItem(new ItemStack(createPotion(PotionType.SPEED, 2, false).toItemStack(3)));
-        inv.addItem(new ItemStack(createPotion(PotionType.STRENGTH, 2, false).toItemStack(3)));
-        inv.addItem(new ItemStack(createPotion(PotionType.POISON, 1, true).toItemStack(2)));
-        inv.addItem(new ItemStack(Material.COOKED_BEEF,64));
+
+    }
+    public static Kit litwin(PlayerInventory inv){
+        List<ItemStack> list = new ArrayList<>();
+
+        //Reszta itemków
+
+        list.add(new ItemStack(enchantItem(Material.DIAMOND_SWORD,Enchantment.DAMAGE_ALL,5)));
+        list.add(new ItemStack(Material.ENCHANTED_GOLDEN_APPLE,5));
+        list.add(new ItemStack(Material.COOKED_BEEF,16));
+        list.add(new ItemStack(createPotion(PotionType.STRENGTH, 2, false).toItemStack(4)));
+
+        return new Kit(inv,
+                //Główne sety
+                new ItemStack(enchantItem(Material.IRON_BOOTS,Enchantment.PROTECTION_ENVIRONMENTAL,4)),
+                new ItemStack(enchantItem(Material.IRON_HELMET,Enchantment.PROTECTION_ENVIRONMENTAL,4)),
+                new ItemStack(enchantItem(Material.IRON_CHESTPLATE,Enchantment.PROTECTION_ENVIRONMENTAL,4)),
+                new ItemStack(enchantItem(Material.IRON_LEGGINGS,Enchantment.PROTECTION_ENVIRONMENTAL,4)),
+                new ItemStack(twoEnchants(Material.NETHERITE_SWORD,Enchantment.DAMAGE_ALL,Enchantment.FIRE_ASPECT,5,2)),//miecz
+                list);
+
+
+    }
+    public static Kit egzorcysta(PlayerInventory inv){
+        List<ItemStack> list = new ArrayList<>();
+
+        //Reszta itemków
+        list.add(new ItemStack(Material.GOLDEN_APPLE,3));
+        list.add(new ItemStack(Material.ENDER_PEARL,16));
+        list.add(new ItemStack(createPotion(PotionType.SPEED, 2, false).toItemStack(3)));
+        list.add(new ItemStack(createPotion(PotionType.STRENGTH, 2, false).toItemStack(3)));
+        list.add(new ItemStack(createPotion(PotionType.POISON, 1, true).toItemStack(2)));
+        list.add(new ItemStack(Material.COOKED_BEEF,64));
         for(int i=0; i<22; i++){
-            inv.addItem(new ItemStack(createPotion(PotionType.INSTANT_HEAL, 2, true).toItemStack(1)));
+            list.add(new ItemStack(createPotion(PotionType.INSTANT_HEAL, 2, true).toItemStack(1)));
         }
-        inv.addItem(new ItemStack(createPotion(PotionType.FIRE_RESISTANCE, 1, false).toItemStack(2)));
+        list.add(new ItemStack(createPotion(PotionType.FIRE_RESISTANCE, 1, false).toItemStack(2)));
+
+
+        return new Kit(inv,
+                //Główne sety
+                new ItemStack(twoEnchants(Material.NETHERITE_BOOTS,Enchantment.PROTECTION_ENVIRONMENTAL,Enchantment.DURABILITY,4,3)),//buty
+                new ItemStack(twoEnchants(Material.NETHERITE_HELMET,Enchantment.PROTECTION_ENVIRONMENTAL,Enchantment.DURABILITY,4,3)),//hełm
+                new ItemStack(twoEnchants(Material.NETHERITE_CHESTPLATE,Enchantment.PROTECTION_ENVIRONMENTAL,Enchantment.DURABILITY,4,3)),//klata
+                new ItemStack(twoEnchants(Material.NETHERITE_LEGGINGS,Enchantment.PROTECTION_ENVIRONMENTAL,Enchantment.DURABILITY,4,3)),//spodnie
+                new ItemStack(twoEnchants(Material.NETHERITE_SWORD,Enchantment.DAMAGE_ALL,Enchantment.FIRE_ASPECT,5,2)),//miecz
+                list);
 
     }
-    public static void tytan(PlayerInventory inv){
-        inv.setBoots(new ItemStack(enchantItem(Material.DIAMOND_BOOTS,Enchantment.PROTECTION_ENVIRONMENTAL,3)));
-        inv.setChestplate(new ItemStack(enchantItem(Material.DIAMOND_CHESTPLATE,Enchantment.PROTECTION_ENVIRONMENTAL,3)));
-        inv.setHelmet(new ItemStack(enchantItem(Material.DIAMOND_HELMET,Enchantment.PROTECTION_ENVIRONMENTAL,3)));
-        inv.setLeggings(new ItemStack(enchantItem(Material.DIAMOND_LEGGINGS,Enchantment.PROTECTION_ENVIRONMENTAL,3)));
-        inv.addItem(new ItemStack(enchantItem(Material.DIAMOND_SWORD,Enchantment.DAMAGE_ALL,5)));
-        inv.addItem(new ItemStack(Material.ENCHANTED_GOLDEN_APPLE,1));
-        inv.addItem(new ItemStack(Material.COOKED_BEEF,32));
-        inv.addItem(new ItemStack(Material.ENDER_PEARL,16));
-        inv.addItem(new ItemStack(createPotion(PotionType.SPEED, 2, false).toItemStack(2)));
-        inv.addItem(new ItemStack(createPotion(PotionType.STRENGTH, 2, false).toItemStack(2)));
+
+    public static Kit getKit(String kitName,PlayerInventory inv){
+        switch(kitName){
+            case "lucznik":
+                return lucznik(inv);
+            case "bestia":
+                return bestia(inv);
+            case "wojownik":
+                return wojownik(inv);
+            case "samuraj":
+                return samuraj(inv);
+            case "szlachic":
+                return szlachic(inv);
+            case "lowca":
+                return lowca(inv);
+            case "litwin":
+                return litwin(inv);
+            case "egzorcysta":
+                return egzorcysta(inv);
+            case "paladyn":
+                return paladyn(inv);
+            default:
+                return bestia(inv);
+        }
     }
+
+
 
 
 

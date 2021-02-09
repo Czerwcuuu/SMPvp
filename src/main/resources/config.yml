@@ -1,0 +1,36 @@
+0:
+  name: 'areny Łowcy'
+  kit:
+  maxplayers: 2
+1:
+  name: 'areny Szlachcica'
+  kit:
+  maxplayers: 2
+2:
+  name: 'areny Paladynów'
+  kit:
+  maxplayers: 2
+3:
+  name: 'areny Litwinów'
+  kit:
+  maxplayers: 2
+4:
+  name: 'areny Egzorcysty'
+  kit:
+  maxplayers: 2
+5:
+  name: 'areny Samuraja'
+  kit:
+  maxplayers: 2
+6:
+  name: 'areny Drwala'
+  kit:
+  maxplayers: 2
+7:
+  name: 'areny Bestii'
+  kit:
+  maxplayers: 2
+8:
+  name: 'areny Wojowników'
+  kit:
+  maxplayers: 2
