@@ -8,6 +8,7 @@ import smpvp.smpvp.kits.Kit;
 import smpvp.smpvp.kits.Kits;
 import org.bukkit.block.Sign;
 import java.util.HashMap;
+import java.util.List;
 
 public class ArenaManager {
     //dostepne areny
@@ -20,8 +21,8 @@ public class ArenaManager {
     //public static Player thisPlayer;
 
     //Tworzenie areny
-    public static Arena createArena(String name,int maxPlayers,Location loc,String kit){
-        Arena arena = new Arena(name,maxPlayers,loc,kit);
+    public static Arena createArena(int ID,String name, int maxPlayers, List<Location> loc, String kit){
+        Arena arena = new Arena(ID,name,maxPlayers,loc,kit);
         arenas.put(name,arena);
         return arena;
     }
@@ -36,7 +37,13 @@ public class ArenaManager {
             PlayerInventory inv = p.getInventory();
             Kits.getKit(arena.kitName,p.getInventory());
             playersInArenas.put(p.getName(),arena); //Dodaj gracza do listy osób na arenie
-            p.teleport(arena.loc); //teleport na wybrany spawn
+            if(arena.spawnLocations.size()<arena.maxPlayers-1){
+                p.sendMessage(String.valueOf(arena.spawnLocations.size()));
+                p.sendMessage("Brak dostępnych spawnów");
+                return false;
+            }
+            p.teleport(arena.spawnLocations.get(arena.currentPlayers));
+             //teleport na wybrany spawn
             p.setHealth(20); //ustawia zycie na 20
             arena.currentPlayers++; //dodaje 1 do zmiennej currentPlayers
             Bukkit.broadcastMessage("§b"+p.getName()+"§7 dołączył do §b"+arenaName+"§4 "+arena.currentPlayers+"/"+arena.maxPlayers);

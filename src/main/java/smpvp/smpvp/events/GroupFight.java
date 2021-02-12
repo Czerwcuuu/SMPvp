@@ -99,7 +99,7 @@ public class GroupFight implements Listener {
                 ArenaManager.checkPlayerArenaAndRemove(p, p);
             }
             catch(NullPointerException ex){
-
+                Bukkit.broadcastMessage("§7 "+p.getName() + " §7popełnił §b samobójstwo");
             }
         }
         Bukkit.broadcastMessage("§7Gracz §b" + p.getName() + " §7został zabity przez §b" + p.getKiller().getName() + "§4§l ["+(int)p.getKiller().getHealth()+"]");
