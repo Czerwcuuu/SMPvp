@@ -1,36 +1,72 @@
 0:
-  name: 'areny Łowcy'
-  kit:
+  name: 'PALADYN 1v1'
+  kit: 'paladyn'
+  location:
+    - 151
+    - 100
+    - -531
   maxplayers: 2
 1:
-  name: 'areny Szlachcica'
-  kit:
+  name: 'SZLACHCIC 1v1'
+  kit: 'szlachcic'
+  location:
+    - 151
+    - 100
+    - -395
   maxplayers: 2
 2:
-  name: 'areny Paladynów'
-  kit:
+  name: 'LITWIN 1v1'
+  kit: 'litwin'
+  location:
+    - 238
+    - 100
+    - -395
   maxplayers: 2
 3:
-  name: 'areny Litwinów'
-  kit:
+  name: 'EGZOR 1v1'
+  kit: 'egzorcysta'
+  location:
+    - 238
+    - 100
+    - -466
   maxplayers: 2
 4:
-  name: 'areny Egzorcysty'
-  kit:
+  name: 'SAMURAJ 1v1'
+  kit: 'samuraj'
+  location:
+    - 339
+    - 100
+    - -395
   maxplayers: 2
 5:
-  name: 'areny Samuraja'
-  kit:
+  name: 'DRWAL 1v1'
+  kit: 'drwal'
+  location:
+    - 339
+    - 100
+    - -466
   maxplayers: 2
 6:
-  name: 'areny Drwala'
-  kit:
+  name: 'BESTIA 1v1'
+  kit: 'bestia'
+  location:
+    - 339
+    - 100
+    - -531
   maxplayers: 2
 7:
-  name: 'areny Bestii'
-  kit:
+  name: 'WOJOWNIK 1v1'
+  kit: 'wojownik'
+  location:
+    - 424
+    - 100
+    - -395
   maxplayers: 2
 8:
-  name: 'areny Wojowników'
-  kit:
+  name: 'ŁOWCA 1v1'
+  kit: 'lowca'
+  location:
+    - 151
+    - 100
+    - -395
   maxplayers: 2

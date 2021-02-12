@@ -215,6 +215,8 @@ public class Kits {
                 return egzorcysta(inv);
             case "paladyn":
                 return paladyn(inv);
+            case "drwal":
+                return drwal(inv);
             default:
                 return bestia(inv);
         }

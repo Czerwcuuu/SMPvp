@@ -21,6 +21,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.Potion;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionType;
+import smpvp.smpvp.arenas.Arena;
 import smpvp.smpvp.arenas.ArenaManager;
 import smpvp.smpvp.kits.Kits;
 
@@ -31,9 +32,8 @@ public class GroupFight implements Listener {
     @EventHandler
     public void signClickEvent(PlayerInteractEvent event) {
         try {
-            Location pvpLocation = new Location(event.getPlayer().getWorld(), 2, 90, 2); //gdzie ma teleportować po wybraniu kitu
+
             Location lobbyAllLocation = new Location(event.getPlayer().getWorld(), 113, 134, -309);
-            Location oneVerOneLocation = new Location(event.getPlayer().getWorld(), 113, 134, -309);//lokalizacja lobby kazdy na kazdego
             Location startLobbyLocation = new Location(event.getPlayer().getWorld(), 101, 135, -310); //lokalizacja spawnu
             Player p = event.getPlayer();
             Block b = event.getClickedBlock();
@@ -57,72 +57,24 @@ public class GroupFight implements Listener {
                     if(line0.equals("1 VS 1") && line2.equals("[WCISNIJ]")){
                         p.teleport(lobbyAllLocation);
                     }
-                    switch (line1) { //wybór kitów
-                        case "ŁOWCA 1v1":
-                            Location location = new Location(event.getPlayer().getWorld(), 151, 100, -395);
-                            boolean joined = ArenaManager.joinArena(p,"areny Łowcy",location,sign);
-                            if(joined)Kits.lowca(inv);
-                            break;
-                        case "SZLACHCIC 1v1":
-                            location = new Location(event.getPlayer().getWorld(), 151, 100, -466);
-                            joined = ArenaManager.joinArena(p,"areny Szlachcica",location,sign);
-                            if(joined)Kits.szlachic(inv);
-                            break;
-                        case "PALADYN 1v1":
-                            location = new Location(event.getPlayer().getWorld(), 151, 100, -531);
-                            joined = ArenaManager.joinArena(p,"areny Paladynów",location,sign);
-                            if(joined)Kits.paladyn(inv);
-                            break;
-                        case "LITWIN 1v1":
-                            location = new Location(event.getPlayer().getWorld(), 238, 100, -395);
-                            joined = ArenaManager.joinArena(p,"areny Litwinów",location,sign);
-                            if(joined)Kits.litwin(inv);
-                            break;
-                        case "EGZOR 1v1":
-                            location = new Location(event.getPlayer().getWorld(), 238, 100, -466);
-                            joined = ArenaManager.joinArena(p,"areny Egzorcysty",location,sign);
-                            if(joined)Kits.egzorcysta(inv);
-                            break;
-                        case "SAMURAJ 1v1":
-                            location = new Location(event.getPlayer().getWorld(), 339, 100, -395);
-                            joined = ArenaManager.joinArena(p,"areny Samuraja",location,sign);
-                            if(joined)Kits.samuraj(inv);
-                            break;
-                        case "DRWAL 1v1":
-                            location = new Location(event.getPlayer().getWorld(), 339, 100, -466);
-                            joined = ArenaManager.joinArena(p,"areny Drwala",location,sign);
-                            if(joined)Kits.drwal(inv);
-                            break;
-                        case "BESTIA 1v1":
-                            location = new Location(event.getPlayer().getWorld(), 339, 100, -531);
-                            joined = ArenaManager.joinArena(p,"areny Bestii",location,sign);
-                            if(joined)Kits.bestia(inv);
-                            break;
-                        case "WOJOWNIK 1v1":
-                            location = new Location(event.getPlayer().getWorld(), 424, 100, -395);
-                            joined = ArenaManager.joinArena(p,"areny Wojowników",location,sign);
-                            if(joined)Kits.wojownik(inv);
-                            break;
-                        case "BESTIA":
-                            Kits.bestia(inv);
-                            RandomTeleport(p);
-                            break;
-                        case "ŁUCZNIK":
-                            Kits.lucznik(inv);
-                            RandomTeleport(p);
-                            break;
-                        case "DRWAL":
-                            Kits.drwal(inv);
-                            RandomTeleport(p);
-                            break;
-                        case "WOJOWNIK":
-                            Kits.wojownik(inv);
-                            RandomTeleport(p);
-                            break;
-                        case "SAMURAJ":
-                            Kits.samuraj(inv);
-                            RandomTeleport(p);
-                            break;
+                    if (ArenaManager.arenas.containsKey(line1)){ //wybór kitów
+                         boolean joined = ArenaManager.joinArena(p,line1,sign);
+                    }
+                    if (line1.equals("BESTIA")){
+                        Kits.bestia(inv);
+                        RandomTeleport(p);
+                    }
+                    if (line1.equals("ŁUCZNIK")){
+                        Kits.lucznik(inv);
+                        RandomTeleport(p);
+                    }
+                    if (line1.equals("WOJOWNIK")){
+                        Kits.wojownik(inv);
+                        RandomTeleport(p);
+                    }
+                    if (line1.equals("SAMURAJ")){
+                        Kits.samuraj(inv);
+                        RandomTeleport(p);
                     }
                 }
             }
@@ -130,7 +82,6 @@ public class GroupFight implements Listener {
             return;
         }
     }
-
 
     @EventHandler
     public void pde(PlayerDeathEvent e) {

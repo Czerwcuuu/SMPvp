@@ -22,16 +22,6 @@ public final class SMPvp extends JavaPlugin implements Listener {
 
         Config.setup();
         Bukkit.getPluginManager().registerEvents(new GroupFight(), this);
-        ArenaManager.createArena("areny Łowcy",2);
-        ArenaManager.createArena("areny Szlachcica",2);
-        ArenaManager.createArena("areny Paladynów",2);
-        ArenaManager.createArena("areny Litwinów",2);
-        ArenaManager.createArena("areny Egzorcysty",2);
-        ArenaManager.createArena("areny Samuraja",2);
-        ArenaManager.createArena("areny Drwala",2);
-        ArenaManager.createArena("areny Bestii",2);
-        ArenaManager.createArena("areny Wojowników",2);
-
 
     }
 

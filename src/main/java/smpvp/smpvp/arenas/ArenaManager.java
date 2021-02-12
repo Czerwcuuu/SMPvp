@@ -10,28 +10,37 @@ import org.bukkit.block.Sign;
 import java.util.HashMap;
 
 public class ArenaManager {
+    //dostepne areny
     public static HashMap<String,Arena> arenas = new HashMap<>();
+    //gracze ktorzy są na danej arenie
     public static HashMap<String,Arena> playersInArenas = new HashMap<>();
+    //tabliczki aren
     public static HashMap<Arena,Sign> arenasSigns = new HashMap<>();
 
-    public static Arena createArena(String name,int maxplayers){
-        Arena arena = new Arena(name,maxplayers);
+    //public static Player thisPlayer;
+
+    //Tworzenie areny
+    public static Arena createArena(String name,int maxPlayers,Location loc,String kit){
+        Arena arena = new Arena(name,maxPlayers,loc,kit);
         arenas.put(name,arena);
         return arena;
     }
 
-    public static boolean joinArena(Player p, String arenaName, Location loc, Sign sign_){
-        Arena arena = arenas.get(arenaName);
-        arenasSigns.put(arena,sign_);
+    //Dołączanie do areny
+    public static boolean joinArena(Player p, String arenaName, Sign sign_){
+        Arena arena = arenas.get(arenaName); //pobierz arene z mapy
+        arenasSigns.put(arena,sign_); //dodaj tabliczke do listy tabliczek aren
         Sign sign = sign_;
-        if(arena.currentPlayers<arena.maxPlayers){
+        //thisPlayer = p; //przypisz gracza do zmiennej na której aktualnie operujemy
+        if(arena.currentPlayers<arena.maxPlayers){ //Jeżeli graczy jest mniej niż maximum
             PlayerInventory inv = p.getInventory();
-            playersInArenas.put(p.getName(),arena);
-            p.teleport(loc);
-            p.setHealth(20);
-            arena.currentPlayers++;
+            Kits.getKit(arena.kitName,p.getInventory());
+            playersInArenas.put(p.getName(),arena); //Dodaj gracza do listy osób na arenie
+            p.teleport(arena.loc); //teleport na wybrany spawn
+            p.setHealth(20); //ustawia zycie na 20
+            arena.currentPlayers++; //dodaje 1 do zmiennej currentPlayers
             Bukkit.broadcastMessage("§b"+p.getName()+"§7 dołączył do §b"+arenaName+"§4 "+arena.currentPlayers+"/"+arena.maxPlayers);
-            sign.setLine(2,arena.currentPlayers+"/"+arena.maxPlayers);
+            sign.setLine(2,arena.currentPlayers+"/"+arena.maxPlayers); //aktualizuje tabliczke
             sign.update();
             return true;
         }
