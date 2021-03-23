@@ -5,4 +5,5 @@ smpvp\smpvp\kits\Kit.class
 smpvp\smpvp\configs\Config.class
 smpvp\smpvp\SMPvp.class
 smpvp\smpvp\commands\setupArena.class
+smpvp\smpvp\arenas\ArenaStatus.class
 smpvp\smpvp\arenas\Arena.class
