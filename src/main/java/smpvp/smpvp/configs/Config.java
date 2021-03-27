@@ -17,19 +17,22 @@ public class Config {
             String name = plugin.getConfig().getString(i + ".name");
             Bukkit.getLogger().info(name);
             String kit = plugin.getConfig().getString(i + ".kit");
+            float yaw  = (float)plugin.getConfig().getLong(i + ".look");
             Bukkit.getLogger().info(kit);
             World world = Bukkit.getWorld("world");
             List<Location> allSpawnLocations = new ArrayList();
             List<String> locationList = plugin.getConfig().getStringList(i + ".location");
             Iterator var8 = locationList.iterator();
 
+
             while(var8.hasNext()) {
                 String s = (String)var8.next();
                 String x = s.split("\\.")[0];
                 String y = s.split("\\.")[1];
                 String z = s.split("\\.")[2];
-                allSpawnLocations.add(new Location(world, (double)Integer.parseInt(x), (double)Integer.parseInt(y), (double)Integer.parseInt(z)));
+                allSpawnLocations.add(new Location(world, (double)Integer.parseInt(x), (double)Integer.parseInt(y), (double)Integer.parseInt(z),yaw,0));
                 Bukkit.getLogger().info(x + " " + y + " " + z);
+                yaw = -yaw;
             }
 
             int maxPlayers = plugin.getConfig().getInt(i + ".maxplayers");

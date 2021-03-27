@@ -36,6 +36,7 @@ public class ArenaManager {
                     p.sendMessage("Brak dostępnych spawnów");
                     return false;
                 } else {
+                    Bukkit.broadcastMessage(String.valueOf(arena.spawnLocations.get(arena.currentPlayers).getYaw()));
                     p.teleport((Location)arena.spawnLocations.get(arena.currentPlayers));
                     p.setHealth(20.0D);
                     ++arena.currentPlayers;
@@ -60,13 +61,13 @@ public class ArenaManager {
     public static String arenaUpdate(Player p) {
         Arena arena = (Arena)playersInArenas.get(p.getName());
         if (arena.currentPlayers > 1) {
-            Bukkit.getServer().broadcastMessage("wciąż na arenie" + arena.currentPlayers);
+           // Bukkit.getServer().broadcastMessage("wciąż na arenie" + arena.currentPlayers);
             --arena.currentPlayers;
             playersInArenas.remove(p.getName());
             return arena.arenaName;
         } else if (arena.currentPlayers == 1) {
             Sign sign = (Sign)arenasSigns.get(arena);
-            Bukkit.getServer().broadcastMessage("ostatni martwy " + arena.currentPlayers);
+            //Bukkit.getServer().broadcastMessage("ostatni martwy " + arena.currentPlayers);
             sign.setLine(2, "0/" + arena.maxPlayers);
             sign.update();
             arenasSigns.remove(sign);

@@ -24,8 +24,8 @@ public class GroupFight implements Listener {
     @EventHandler
     public void signClickEvent(PlayerInteractEvent event) {
         try {
-            Location lobbyAllLocation = new Location(event.getPlayer().getWorld(), 113.0D, 134.0D, -309.0D);
-            Location startLobbyLocation = new Location(event.getPlayer().getWorld(), 101.0D, 135.0D, -310.0D);
+            Location lobbyAllLocation = new Location(event.getPlayer().getWorld(), -5.0D, 151.0D, -192.0D);
+            Location startLobbyLocation = new Location(event.getPlayer().getWorld(), -5.0D, 151.0D, -192.0D);
             Player p = event.getPlayer();
             Block b = event.getClickedBlock();
             if (b.getState() instanceof Sign) {
@@ -125,10 +125,10 @@ public class GroupFight implements Listener {
     public void RandomTeleport(Player p) {
         int rand = (int)(Math.random() * 4.0D + 0.0D);
         ArrayList<Location> locations = new ArrayList();
-        locations.add(new Location(p.getWorld(), 160.0D, 101.0D, -288.0D));
-        locations.add(new Location(p.getWorld(), 213.0D, 101.0D, -240.0D));
-        locations.add(new Location(p.getWorld(), 130.0D, 102.0D, -200.0D));
-        locations.add(new Location(p.getWorld(), 165.0D, 102.0D, -247.0D));
+        locations.add(new Location(p.getWorld(), -34.0D, 121.0D, -180.0D));
+        locations.add(new Location(p.getWorld(), -105.0D, 121.0D, -181.0D));
+        locations.add(new Location(p.getWorld(), -86.0D, 121.0D, -260.0D));
+        locations.add(new Location(p.getWorld(), -29.0D, 102.0D, -251.0D));
         p.teleport((Location)locations.get(rand));
     }
 
