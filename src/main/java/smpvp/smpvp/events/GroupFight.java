@@ -16,11 +16,16 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.potion.PotionEffect;
+import smpvp.smpvp.SMPvp;
 import smpvp.smpvp.arenas.Arena;
 import smpvp.smpvp.arenas.ArenaManager;
 import smpvp.smpvp.kits.Kits;
 
 public class GroupFight implements Listener {
+
+    SMPvp plugin = SMPvp.getInstance();
+
+
     @EventHandler
     public void signClickEvent(PlayerInteractEvent event) {
         try {
@@ -74,9 +79,9 @@ public class GroupFight implements Listener {
                     }
                 }
             }
-
-        } catch (NullPointerException var12) {
+        } catch (NullPointerException var11) {
         }
+
     }
 
     @EventHandler
@@ -84,8 +89,10 @@ public class GroupFight implements Listener {
         try {
             Player p = e.getEntity();
             if (p.getKiller() != null) {
+
+                setKDA(p.getKiller(),"kills",false);
+                setKDA(p,"death",true);
                 ArenaManager.arenaUpdate(p);
-                Bukkit.broadcastMessage("§7Gracz §b" + p.getName() + " §7został zabity przez §b" + p.getKiller().getName() + "§4§l [" + (int)p.getKiller().getHealth() + "]");
                 this.resetPlayer(p);
                 if (((Arena)ArenaManager.playersInArenas.get(p.getKiller().getName())).currentPlayers < 2) {
                     this.resetPlayer(p.getKiller());
@@ -122,13 +129,46 @@ public class GroupFight implements Listener {
 
     }
 
+    void setKDA(Player p,String kod, boolean message){
+        if(kod.equals("kills") || kod.equals("death")){
+            int amount = 0;
+            if(plugin.data.getConfig().contains("kda."+p.getUniqueId().toString()+"."+kod)){
+                amount = plugin.data.getConfig().getInt("kda."+p.getUniqueId().toString()+"."+kod);
+
+            }
+            plugin.data.getConfig().set("kda."+p.getUniqueId().toString()+"."+kod,(amount +1));
+            plugin.data.saveConfig();
+            int kills = 0;
+            int death = 0;
+            int kkills = 0;
+            int kdeath = 0;
+            if(plugin.data.getConfig().contains("kda."+p.getUniqueId().toString()+".kills")){
+                kills = plugin.data.getConfig().getInt("kda."+p.getUniqueId().toString()+".kills");
+            }
+            if(plugin.data.getConfig().contains("kda."+p.getUniqueId().toString()+".death")){
+                death = plugin.data.getConfig().getInt("kda."+p.getUniqueId().toString()+".death");
+            }
+            if(plugin.data.getConfig().contains("kda."+p.getKiller().getUniqueId().toString()+".kills")){
+                kkills = plugin.data.getConfig().getInt("kda."+p.getKiller().getUniqueId().toString()+".kills");
+            }
+            if(plugin.data.getConfig().contains("kda."+p.getKiller().getUniqueId().toString()+".death")){
+                kdeath = plugin.data.getConfig().getInt("kda."+p.getKiller().getUniqueId().toString()+".death");
+            }
+
+            if(message){
+                Bukkit.broadcastMessage("§7Gracz §b" + p.getKiller().getName() +"§f§l [§a§l"+ kkills+"§f§l/§4§l"+kdeath+"§f§l]"+" §7zabija §b" + p.getName() + "§4§l [" + (int)p.getKiller().getHealth() + "HP] §f§l[§a§l"+kills+"§f§l/§4§l"+death+"§f§l]");
+            }
+
+        }
+    }
+
     public void RandomTeleport(Player p) {
         int rand = (int)(Math.random() * 4.0D + 0.0D);
         ArrayList<Location> locations = new ArrayList();
         locations.add(new Location(p.getWorld(), -34.0D, 121.0D, -180.0D));
         locations.add(new Location(p.getWorld(), -105.0D, 121.0D, -181.0D));
         locations.add(new Location(p.getWorld(), -86.0D, 121.0D, -260.0D));
-        locations.add(new Location(p.getWorld(), -29.0D, 102.0D, -251.0D));
+        locations.add(new Location(p.getWorld(), -29.0D, 121.0D, -251.0D));
         p.teleport((Location)locations.get(rand));
     }
 

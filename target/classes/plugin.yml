@@ -1,9 +1,0 @@
-name: SMPvp
-version: 1.0-SNAPSHOT
-main: smpvp.smpvp.SMPvp
-api-version: 1.16
-authors: [czerwcuu, koloksk]
-website: stylowamc.pl
-commands:
-  pvp:
-    description: Zarządzanie arenami

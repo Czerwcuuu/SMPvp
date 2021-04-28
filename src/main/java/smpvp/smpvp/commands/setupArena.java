@@ -22,7 +22,6 @@ public class setupArena implements CommandExecutor {
                     if (args[0].equals("setspawn")) {
                         if (args.length > 2) {
                             String arena = buildStringFromArgs(args, 4);
-                            //Bukkit.getLogger().info(arena);
                             Arena selectedArena = (Arena)ArenaManager.arenas.get(arena);
                             selectedArena.spawnLocations.add(new Location(Bukkit.getWorld("world"), (double)Integer.parseInt(args[1]), (double)Integer.parseInt(args[2]), (double)Integer.parseInt(args[3])));
                             List<String> locationList = this.plugin.getConfig().getStringList(selectedArena.ID + ".location");
