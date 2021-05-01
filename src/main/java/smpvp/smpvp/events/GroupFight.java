@@ -41,7 +41,7 @@ public class GroupFight implements Listener {
                 String line1 = sign.getLine(1);
                 String line2 = sign.getLine(2);
                 if (line0.equals("Powrót") && line1.equals("[Wcisnij]")) {
-                    this.resetPlayer(p);
+                    ArenaManager.resetPlayer(p);
                     p.teleport(startLobbyLocation);
                 }
 
@@ -86,43 +86,68 @@ public class GroupFight implements Listener {
 
     @EventHandler
     public void pde(PlayerDeathEvent e) {
-        try {
-            Player p = e.getEntity();
-            if (p.getKiller() != null) {
 
-                setKDA(p.getKiller(),"kills",false);
-                setKDA(p,"death",true);
-                ArenaManager.arenaUpdate(p);
-                this.resetPlayer(p);
-                if (((Arena)ArenaManager.playersInArenas.get(p.getKiller().getName())).currentPlayers < 2) {
-                    this.resetPlayer(p.getKiller());
-                    ArenaManager.arenaUpdate(p.getKiller());
-                }
-            } else {
-                ArenaManager.arenaUpdate(p);
-                Bukkit.broadcastMessage("§7 " + p.getName() + " §7popełnił §b samobójstwo");
-                this.resetPlayer(p);
+        try{
+            Player killer = e.getEntity().getKiller();
+            Player player = e.getEntity();
+            //Bukkit.broadcastMessage("Zabójca istnieje");
+
+            setKDA(killer,"kills",false);
+            setKDA(player,"death",true);
+            if(ArenaManager.playerIsInArena(player)){
+                //Bukkit.broadcastMessage("jezeli zabojca jest na arenie to restartuj wszystkich na arenie + samą arene");
+                //jezeli zabojca jest na arenie to restartuj wszystkich na arenie + samą arene
+                ArenaManager.resetPlayer(killer);
+                ArenaManager.arenaUpdate(killer);
             }
-        } catch (NullPointerException var3) {
+            else{
+                //Bukkit.broadcastMessage("jezeli zabojca nie jest na arenie to restartuj tylko zabitego");
+                //jezeli zabojca nie jest na arenie to restartuj tylko zabitego
+                ArenaManager.resetPlayer(player);
+            }
         }
+        catch (NullPointerException err){
+            //Bukkit.broadcastMessage("Zabójca nie istnieje");
+            Player player = e.getEntity();
+            if(ArenaManager.playersInArenas.get(player.getName()).currentPlayers < 2){
+                //jezeli zabojca nie istnieje, a gracz jest na arenie restartuj tylko jego i arene
+                ArenaManager.resetPlayer(player);
+                ArenaManager.arenaUpdate(player);
+            }
+            else{
+                //jezeli zabojca nie istnieje, a gracz nie jest na arenie, restartuj tylko jego
+                ArenaManager.resetPlayer(player);
+            }
 
+        }
     }
 
     @EventHandler
     public void playerRespawnevent(PlayerRespawnEvent e) {
         Player p = e.getPlayer();
-        this.resetPlayer(p);
+        if(ArenaManager.playerIsInArena(p)){
+            //Jezeli gracz byl na arenie - restart areny i gracza
+            ArenaManager.arenaUpdate(p);
+            ArenaManager.resetPlayer(p);
+        }
+        else{
+            ArenaManager.resetPlayer(p);
+        }
+
+
     }
 
     @EventHandler
     public void playerLeave(PlayerQuitEvent e) {
         Player p = e.getPlayer();
         if (ArenaManager.playerIsInArena(p)) {
-            this.resetPlayer(p);
+            Arena arena = ArenaManager.arenas.get(ArenaManager.arenaUpdate(p));
+            arena.reset();
+            ArenaManager.arenaUpdate(p);
+
         } else {
             try {
-                this.resetPlayer(p);
-                ArenaManager.arenaUpdate(p);
+                ArenaManager.resetPlayer(p);
             } catch (NullPointerException var4) {
             }
         }
@@ -130,36 +155,40 @@ public class GroupFight implements Listener {
     }
 
     void setKDA(Player p,String kod, boolean message){
-        if(kod.equals("kills") || kod.equals("death")){
-            int amount = 0;
-            if(plugin.data.getConfig().contains("kda."+p.getUniqueId().toString()+"."+kod)){
-                amount = plugin.data.getConfig().getInt("kda."+p.getUniqueId().toString()+"."+kod);
+        if(p.getKiller() != null){
+            if(kod.equals("kills") || kod.equals("death")){
+                int amount = 0;
+                //Bukkit.broadcastMessage("Zabity:"+p.getName());
+                //Bukkit.broadcastMessage("Zabójca:"+p.getKiller().getName());
+                if(plugin.data.getConfig().contains("kda."+p.getUniqueId().toString()+"."+kod)){
+                    amount = plugin.data.getConfig().getInt("kda."+p.getUniqueId().toString()+"."+kod);
 
-            }
-            plugin.data.getConfig().set("kda."+p.getUniqueId().toString()+"."+kod,(amount +1));
-            plugin.data.saveConfig();
-            int kills = 0;
-            int death = 0;
-            int kkills = 0;
-            int kdeath = 0;
-            if(plugin.data.getConfig().contains("kda."+p.getUniqueId().toString()+".kills")){
-                kills = plugin.data.getConfig().getInt("kda."+p.getUniqueId().toString()+".kills");
-            }
-            if(plugin.data.getConfig().contains("kda."+p.getUniqueId().toString()+".death")){
-                death = plugin.data.getConfig().getInt("kda."+p.getUniqueId().toString()+".death");
-            }
-            if(plugin.data.getConfig().contains("kda."+p.getKiller().getUniqueId().toString()+".kills")){
-                kkills = plugin.data.getConfig().getInt("kda."+p.getKiller().getUniqueId().toString()+".kills");
-            }
-            if(plugin.data.getConfig().contains("kda."+p.getKiller().getUniqueId().toString()+".death")){
-                kdeath = plugin.data.getConfig().getInt("kda."+p.getKiller().getUniqueId().toString()+".death");
-            }
+                }
+                plugin.data.getConfig().set("kda."+p.getUniqueId().toString()+"."+kod,(amount +1));
+                plugin.data.saveConfig();
+                int kills = 0;
+                int death = 0;
+                int kkills = 0;
+                int kdeath = 0;
+                if(plugin.data.getConfig().contains("kda."+p.getUniqueId().toString()+".kills")){
+                    kills = plugin.data.getConfig().getInt("kda."+p.getUniqueId().toString()+".kills");
+                }
+                if(plugin.data.getConfig().contains("kda."+p.getUniqueId().toString()+".death")){
+                    death = plugin.data.getConfig().getInt("kda."+p.getUniqueId().toString()+".death");
+                }
+                if(plugin.data.getConfig().contains("kda."+p.getKiller().getUniqueId().toString()+".kills")){
+                    kkills = plugin.data.getConfig().getInt("kda."+p.getKiller().getUniqueId().toString()+".kills");
+                }
+                if(plugin.data.getConfig().contains("kda."+p.getKiller().getUniqueId().toString()+".death")){
+                    kdeath = plugin.data.getConfig().getInt("kda."+p.getKiller().getUniqueId().toString()+".death");
+                }
 
-            if(message){
-                Bukkit.broadcastMessage("§7Gracz §b" + p.getKiller().getName() +"§f§l [§a§l"+ kkills+"§f§l/§4§l"+kdeath+"§f§l]"+" §7zabija §b" + p.getName() + "§4§l [" + (int)p.getKiller().getHealth() + "HP] §f§l[§a§l"+kills+"§f§l/§4§l"+death+"§f§l]");
+                if(message){
+                    Bukkit.broadcastMessage("§7Gracz §b" + p.getKiller().getName() +"§f§l [§a§l"+ kkills+"§f§l/§4§l"+kdeath+"§f§l]"+" §7zabija §b" + p.getName() + "§4§l [" + (int)p.getKiller().getHealth() + "HP] §f§l[§a§l"+kills+"§f§l/§4§l"+death+"§f§l]");
+                }
             }
-
         }
+
     }
 
     public void RandomTeleport(Player p) {
@@ -170,22 +199,6 @@ public class GroupFight implements Listener {
         locations.add(new Location(p.getWorld(), -86.0D, 121.0D, -260.0D));
         locations.add(new Location(p.getWorld(), -29.0D, 121.0D, -251.0D));
         p.teleport((Location)locations.get(rand));
-    }
-
-    public void resetPlayer(Player p) {
-        p.setHealth(20.0D);
-        p.setFoodLevel(20);
-        p.getInventory().clear();
-        Iterator var2 = p.getActivePotionEffects().iterator();
-
-        while(var2.hasNext()) {
-            PotionEffect t = (PotionEffect)var2.next();
-            p.removePotionEffect(t.getType());
-        }
-
-        Location loc = p.getWorld().getSpawnLocation();
-        loc.setYaw(180.0F);
-        p.teleport(loc);
     }
 
     @EventHandler

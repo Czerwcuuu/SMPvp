@@ -1,5 +1,6 @@
 package smpvp.smpvp.arenas;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import org.bukkit.Location;
@@ -12,7 +13,7 @@ public class Arena {
     public List<Location> spawnLocations;
     public String kitName;
     public ArenaStatus status;
-    private static HashMap<String, String> players = new HashMap();
+    public List<String> players = new ArrayList<String>();
 
     public Arena(int ID, String Name, int maxplayers, List<Location> loc, String kit) {
         this.ID = ID;

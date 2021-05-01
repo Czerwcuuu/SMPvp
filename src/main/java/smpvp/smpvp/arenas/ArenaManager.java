@@ -1,12 +1,14 @@
 package smpvp.smpvp.arenas;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.potion.PotionEffect;
 import smpvp.smpvp.kits.Kits;
 
 public class ArenaManager {
@@ -20,63 +22,126 @@ public class ArenaManager {
         return arena;
     }
 
-    public static boolean joinArena(Player p, String arenaName, Sign sign_) {
+
+    public static boolean joinArena(Player p, String arenaName, Sign sign_){
         Arena arena = (Arena)arenas.get(arenaName);
-        if (arena.status == ArenaStatus.STARTED) {
+        if(arena.status == ArenaStatus.STARTED){
+            p.sendMessage("§4§lArena jest już pełna!");
             return false;
-        } else {
-            arena.status = ArenaStatus.WAITING;
-            arenasSigns.put(arena, sign_);
-            if (arena.currentPlayers < arena.maxPlayers) {
-                PlayerInventory inv = p.getInventory();
+        }
+        else{
+            if(arena.players.size() == 0){
+                //Bukkit.broadcastMessage("WARUNEK1:");
+                //Bukkit.broadcastMessage("Liczba graczy na arenie:"+arena.players.size());
+                arena.status = ArenaStatus.WAITING;
+                arenasSigns.put(arena,sign_);
+                arena.players.add(p.getName());
+                ++arena.currentPlayers;
+                //Bukkit.broadcastMessage(String.valueOf(arena.currentPlayers));
+
+                //player conf
                 Kits.getKit(arena.kitName, p.getInventory());
                 playersInArenas.put(p.getName(), arena);
+                if (arena.spawnLocations.size() < arena.maxPlayers -1) {
+                    p.sendMessage(String.valueOf(arena.spawnLocations.size()));
+                    p.sendMessage("Brak dostępnych spawnów");
+                    return false;}
+                 else {
+                    p.teleport((Location)arena.spawnLocations.get(arena.currentPlayers-1));
+                    p.setHealth(20.0D);
+                    /*Bukkit.broadcastMessage("Na arenie są:");
+                    for (int i=0; i<arena.players.size(); i++){
+                        Bukkit.broadcastMessage(arena.players.get(i));
+                    }*/
+                    Bukkit.broadcastMessage("§b" + p.getName() + "§7 dołączył do §b" + arenaName + "§4 " + arena.players.size() + "/" + arena.maxPlayers);
+                    sign_.setLine(2, arena.players.size() + "/" + arena.maxPlayers);
+                    sign_.update();
+
+                }
+            }
+            else if(arena.players.size() < arena.maxPlayers){
+                //Bukkit.broadcastMessage("WARUNEK2:");
+                //Bukkit.broadcastMessage("Liczba graczy na arenie:"+arena.players.size());
+                Kits.getKit(arena.kitName, p.getInventory());
+                arena.players.add(p.getName());
+                playersInArenas.put(p.getName(), arena);
+
+                ++arena.currentPlayers;
+                //Bukkit.broadcastMessage(String.valueOf(arena.currentPlayers));
                 if (arena.spawnLocations.size() < arena.maxPlayers - 1) {
                     p.sendMessage(String.valueOf(arena.spawnLocations.size()));
                     p.sendMessage("Brak dostępnych spawnów");
-                    return false;
-                } else {
-                    p.teleport((Location)arena.spawnLocations.get(arena.currentPlayers));
+                    return false;}
+                else {
+                    p.teleport((Location)arena.spawnLocations.get(arena.currentPlayers-1));
                     p.setHealth(20.0D);
-                    ++arena.currentPlayers;
-                    Bukkit.broadcastMessage("§b" + p.getName() + "§7 dołączył do §b" + arenaName + "§4 " + arena.currentPlayers + "/" + arena.maxPlayers);
-                    sign_.setLine(2, arena.currentPlayers + "/" + arena.maxPlayers);
+                    /*Bukkit.broadcastMessage("Na arenie są:");
+                    for (int i=0; i<arena.players.size(); i++){
+                        Bukkit.broadcastMessage(arena.players.get(i));
+                    }*/
+                    Bukkit.broadcastMessage("§b" + p.getName() + "§7 dołączył do §b" + arenaName + "§4 " + arena.players.size() + "/" + arena.maxPlayers);
+                    sign_.setLine(2, arena.players.size() + "/" + arena.maxPlayers);
                     sign_.update();
-                    if (arena.currentPlayers == arena.maxPlayers) {
-                        arena.status = ArenaStatus.STARTED;
-                    }
 
-                    return true;
+                if (arena.currentPlayers == arena.maxPlayers) {
+                    arena.status = ArenaStatus.STARTED;
                 }
-            } else {
-                p.sendMessage("§4§lNie udało się dołączyć do areny! :c");
-                sign_.setLine(2, "PEŁNA");
-                sign_.update();
-                return false;
             }
+    }return true;
         }
-    }
+            }
 
     public static String arenaUpdate(Player p) {
         Arena arena = (Arena)playersInArenas.get(p.getName());
-        if (arena.currentPlayers > 1) {
-            --arena.currentPlayers;
-            playersInArenas.remove(p.getName());
-            return arena.arenaName;
-        } else if (arena.currentPlayers == 1) {
-            Sign sign = (Sign)arenasSigns.get(arena);
-            sign.setLine(2, "0/" + arena.maxPlayers);
-            sign.update();
-            arenasSigns.remove(sign);
+        if (arena.players.size() > 0){
+            for (int i=0; i<arena.players.size(); i++){
+                //Bukkit.broadcastMessage("Restartuje itemki gracza:"+arena.players.get(i));
+                try {
+                    resetPlayer(Bukkit.getPlayer(arena.players.get(i)));
+                    playersInArenas.remove(Bukkit.getPlayer(arena.players.get(i)));
+                }
+                catch(NullPointerException err){
+                    //Bukkit.broadcastMessage("Nie wykryto gracza");
+                }
+
+                //resetPlayer(Bukkit.getPlayer(arena.players.get(i)));
+            }
             arena.reset();
-            return arena.arenaName;
-        } else {
+            //Bukkit.broadcastMessage("Powinno ustawic 0 dla areny"+arena.arenaName);
+            Sign sign = (Sign)arenasSigns.get(arena);
+            sign.setLine(2, arena.currentPlayers + "/" + arena.maxPlayers);
+            sign.update();
             return arena.arenaName;
         }
+        return arena.arenaName;
     }
 
+    public static void resetPlayer(Player p) {
+        p.setHealth(20.0D);
+        p.setFoodLevel(20);
+        //Bukkit.broadcastMessage(p.getName()+"został zabity");
+        p.getInventory().clear();
+        Iterator var2 = p.getActivePotionEffects().iterator();
+
+        while(var2.hasNext()) {
+            PotionEffect t = (PotionEffect)var2.next();
+            p.removePotionEffect(t.getType());
+        }
+
+        Location loc = p.getWorld().getSpawnLocation();
+        loc.setYaw(180.0F);
+        p.teleport(loc);
+    }
+
+
     public static boolean playerIsInArena(Player p) {
-        Arena arena = (Arena)playersInArenas.get(p.getName());
-        return arena == null;
+        if(playersInArenas.get(p.getName())!= null)
+        {
+            return true;
+        }
+        else return false;
+
+
+
     }
 }
