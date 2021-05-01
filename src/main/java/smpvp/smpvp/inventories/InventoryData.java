@@ -16,14 +16,16 @@ import smpvp.smpvp.SMPvp;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
 public class InventoryData {
     static SMPvp plugin = SMPvp.getInstance();
     public String name = "test";
-    public static Inventory inv;
+    public Inventory inv;
     public Player p;
+    public static HashMap<Player,Inventory> inventories = new HashMap<>();
 
 
     public InventoryData(String name,Inventory inv,Player p) throws IOException {
@@ -38,7 +40,7 @@ public class InventoryData {
     void SaveInventory() throws IOException {
         YamlConfiguration c = new YamlConfiguration();
         c.set("inventory.content", inv.getContents());
-        c.save(new File(plugin.getDataFolder()+"/kits", p.getName()+name+".yml"));
+        c.save(new File(plugin.getDataFolder()+"/kits", name+".yml"));
 
         //debugs
         AllKits.AddKit(name,p.getName());
@@ -46,7 +48,7 @@ public class InventoryData {
     }
 
     @SuppressWarnings("unchecked")
-    public static Inventory RestoreInventory(String Name,Player p){
+    public static void RestoreInventory(String Name,Player p){
         Bukkit.broadcastMessage(Name+".yml");
         YamlConfiguration c = YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder()+"/kits", Name+".yml"));
         ItemStack[] content = ((List<ItemStack>) Objects.requireNonNull(c.get("inventory.content"))).toArray(new ItemStack[0]);
@@ -54,7 +56,7 @@ public class InventoryData {
         Bukkit.broadcastMessage(content[0].toString());
         Bukkit.broadcastMessage(String.valueOf(content.length));
 
-        inv = Bukkit.createInventory(null,45, ChatColor.GREEN+Name);
+        Inventory inv = Bukkit.createInventory(null,45, Name);
 
         for(int i=0; i<content.length; i++){
             inv.setItem(i,content[i]);
@@ -70,7 +72,7 @@ public class InventoryData {
             rest.set(i-19,inv.getItem(i));
         }
         */
-        return inv;
+        inventories.put(p,inv);
     }
 
 

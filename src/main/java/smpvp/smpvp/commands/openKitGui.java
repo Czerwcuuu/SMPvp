@@ -8,7 +8,9 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -21,7 +23,9 @@ import java.util.List;
 public class openKitGui implements CommandExecutor {
 
     SMPvp plugin = SMPvp.getInstance();
-    public static Inventory inv;
+    public static HashMap<Player,Inventory> inventories = new HashMap<>();
+
+    public Inventory inv;
 
     public boolean onCommand (CommandSender sender, Command cmd, String label, String[] arg){
 
@@ -32,21 +36,28 @@ public class openKitGui implements CommandExecutor {
             }
             Player player = (Player) sender;
             //Otwórz gui
-            createInv();
+            createInv(player);
+            player.openInventory(inv);
             openInventory(player);
 
 
         }
         return false;
     }
+    @EventHandler
+    public void onInventoryClick(final InventoryDragEvent e) {
+        if (e.getInventory() == inv) {
+            e.setCancelled(true);
+        }
+    }
 
     public void openInventory(final HumanEntity ent) {
         ent.openInventory(inv);
     }
 
-    public void createInv(){
+    public void createInv(Player p){
 
-        inv = Bukkit.createInventory(null,45, ChatColor.GREEN+"Kity");
+        inv = Bukkit.createInventory(null,45, ChatColor.GREEN+"Kit Generator |"+p.getName());
 
         ItemStack item = new ItemStack(Material.BLUE_STAINED_GLASS_PANE);
         ItemMeta meta = item.getItemMeta();
@@ -79,6 +90,14 @@ public class openKitGui implements CommandExecutor {
         item.setItemMeta(meta);
         inv.setItem(3,item);
 
+        //Nazwij kit
+        item.setType(Material.NAME_TAG);
+        meta.setDisplayName(ChatColor.DARK_BLUE + "NAZWIJ KIT");
+        lore.set(0,ChatColor.GRAY + "Kliknij, żeby wpisać nazwe kitu");
+        meta.setLore(lore);
+        item.setItemMeta(meta);
+        inv.setItem(4,item);
+
 
         //Reszta
         item.setType(Material.GREEN_STAINED_GLASS_PANE);
@@ -103,6 +122,8 @@ public class openKitGui implements CommandExecutor {
         meta.setLore(lore);
         item.setItemMeta(meta);
         inv.setItem(43,item);
+
+        inventories.put(p,inv);
     }
 
 

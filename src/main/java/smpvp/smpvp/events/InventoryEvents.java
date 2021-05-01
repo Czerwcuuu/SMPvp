@@ -10,6 +10,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import smpvp.smpvp.SMPvp;
 import smpvp.smpvp.commands.openKitGui;
 import smpvp.smpvp.inventories.InventoryData;
 
@@ -20,10 +21,12 @@ import java.util.Objects;
 
 public class InventoryEvents implements Listener {
 
+    SMPvp plugin = SMPvp.getInstance();
     //cancel drag
     @EventHandler
     public void onInventoryDrag (InventoryDragEvent e){
-        if(e.getInventory() == openKitGui.inv){
+        Inventory inv = openKitGui.inventories.get(e.getWhoClicked());
+        if(e.getInventory() == inv){
             if(Integer.parseInt(e.getInventorySlots().toString()) > 0){
                 e.setCancelled(true);
             }
@@ -32,9 +35,9 @@ public class InventoryEvents implements Listener {
 
     @EventHandler
     public void onInventoryClick (InventoryClickEvent e) throws IOException {
-        if (e.getInventory() != openKitGui.inv) return;
-
-        if(e.getRawSlot() < 4 || e.getRawSlot() == 18 || e.getRawSlot() == 43 || e.getRawSlot() == 44){
+        Inventory inv = openKitGui.inventories.get(e.getWhoClicked());
+        if (e.getInventory() != inv) return;
+        if(e.getRawSlot() < 5 || e.getRawSlot() == 18 || e.getRawSlot() == 43 || e.getRawSlot() == 44){
             e.setCancelled(true);
         }
         final ItemStack clickedItem = e.getCurrentItem();
@@ -47,10 +50,18 @@ public class InventoryEvents implements Listener {
 
 
         if(e.getRawSlot() == 44){
-            //zapisz ekwipunek
-            InventoryData inventoryData = new InventoryData("Test2",e.getInventory(),p);
-            inventoryData.Show();
+            String kitName;
+            if(plugin.kitlist.getConfig().contains(p.getName()+".name")){
+                List<String> ConfigList = plugin.kitlist.getConfig().getStringList(p.getName()+".name");
+                kitName = p.getName()+ ConfigList.size();
             }
+            else{
+                kitName = p.getName()+ 0;
+            }
+
+            InventoryData inventoryData = new InventoryData(kitName,e.getInventory(),p);
+            inventoryData.Show();
+        }
 
 
         p.sendMessage("Kliknąłeś slot " + e.getRawSlot());

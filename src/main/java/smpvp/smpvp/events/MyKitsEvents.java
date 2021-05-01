@@ -28,7 +28,8 @@ public class MyKitsEvents implements Listener {
 
     @EventHandler
     public void onInventoryClick (InventoryClickEvent e) throws IOException {
-        if (e.getInventory() != openMyKits.inv) return;
+        Inventory inv = openMyKits.inventories.get(e.getWhoClicked());
+        if (e.getInventory() != inv) return;
 
         e.setCancelled(true);
 
@@ -39,10 +40,22 @@ public class MyKitsEvents implements Listener {
 
         Player p = (Player) e.getWhoClicked();
         List<String> mykits = plugin.kitlist.getConfig().getStringList(p.getName()+".name");
+
+        String kitName;
+        if(plugin.kitlist.getConfig().contains(p.getName()+".name")){
+            List<String> ConfigList = plugin.kitlist.getConfig().getStringList(p.getName()+".name");
+            kitName = p.getName()+ (ConfigList.size()-1);
+        }
+        else{
+            kitName = p.getName()+ 0;
+        }
+
+
         if(e.getRawSlot() < mykits.size()){
             p.sendMessage("Kliknąłeś slot " + e.getRawSlot());
             p.closeInventory();
-            newInv = InventoryData.RestoreInventory(Objects.requireNonNull(clickedItem.getItemMeta()).getDisplayName(),p);
+            InventoryData.RestoreInventory(kitName,p);
+            newInv = InventoryData.inventories.get(p);
             p.openInventory(newInv);
         }
 
@@ -51,9 +64,10 @@ public class MyKitsEvents implements Listener {
 
     @EventHandler
     public void onEditInventory (InventoryClickEvent e) throws IOException {
+        newInv = InventoryData.inventories.get(e.getView().getPlayer());
         if (e.getInventory() != newInv) return;
 
-        if(e.getRawSlot() < 4 || e.getRawSlot() == 18 || e.getRawSlot() == 43 || e.getRawSlot() == 44){
+        if(e.getRawSlot() < 5 || e.getRawSlot() == 18 || e.getRawSlot() == 43 || e.getRawSlot() == 44){
             e.setCancelled(true);
         }
         final ItemStack clickedItem = e.getCurrentItem();
@@ -64,41 +78,14 @@ public class MyKitsEvents implements Listener {
 
 
 
-
         if(e.getRawSlot() == 44){
-            //zapisz ekwipunek
-            /*
-            Inventory inv;
-            ItemStack helmet = new ItemStack(Material.AIR);
-            ItemStack chestplate = new ItemStack(Material.AIR);
-            ItemStack leggins = new ItemStack(Material.AIR);
-            ItemStack boots = new ItemStack(Material.AIR);
-            List<ItemStack> rest = new ArrayList<ItemStack>();
-
-            if(IsEquipable(Objects.requireNonNull(e.getInventory().getItem(9)))){
-                helmet = e.getInventory().getItem(9);
-            }
-            if(IsEquipable(Objects.requireNonNull(e.getInventory().getItem(10)))){
-                leggins = e.getInventory().getItem(10);
-            }
-            if(IsEquipable(Objects.requireNonNull(e.getInventory().getItem(11)))){
-                chestplate = e.getInventory().getItem(11);
-            }
-            if(IsEquipable(Objects.requireNonNull(e.getInventory().getItem(12)))){
-                boots = e.getInventory().getItem(12);
-            }
-
-            for(int i=19; i<27; i++ ){
-                rest.add(e.getInventory().getItem(i));
-            }*/
-
-            InventoryData inventoryData = new InventoryData("Test2",e.getInventory(),p);
+            InventoryData inventoryData = new InventoryData(e.getView().getTitle(),e.getInventory(),p);
             inventoryData.Show();
         }
 
-
         p.sendMessage("Kliknąłeś slot " + e.getRawSlot());
-    }
+        }
+
 
     boolean IsEquipable(ItemStack i)
     {

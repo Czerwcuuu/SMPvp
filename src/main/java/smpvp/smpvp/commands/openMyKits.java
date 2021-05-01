@@ -8,18 +8,23 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import smpvp.smpvp.SMPvp;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class openMyKits implements CommandExecutor {
 
     SMPvp plugin = SMPvp.getInstance();
-    public static Inventory inv;
+    public static HashMap<Player,Inventory> inventories = new HashMap<>();
+
+    public Inventory inv;
 
     public boolean onCommand (CommandSender sender, Command cmd, String label, String[] arg){
 
@@ -42,8 +47,15 @@ public class openMyKits implements CommandExecutor {
         ent.openInventory(inv);
     }
 
+    @EventHandler
+    public void onInventoryClick(final InventoryDragEvent e) {
+        if (e.getInventory() == inv) {
+            e.setCancelled(true);
+        }
+    }
+
     public void createInv(Player p){
-        inv = Bukkit.createInventory(null,27, ChatColor.GREEN+"Moje Kity");
+        inv = Bukkit.createInventory(null,27, ChatColor.GREEN+"Kity "+ p.getName());
 
         List<String> mykits = plugin.kitlist.getConfig().getStringList(p.getName()+".name");
         ItemStack item = new ItemStack(Material.BLUE_STAINED_GLASS_PANE);
@@ -54,6 +66,8 @@ public class openMyKits implements CommandExecutor {
             item.setItemMeta(meta);
             inv.setItem(i,item);
         }
+
+        inventories.put(p,inv);
 
     }
 
