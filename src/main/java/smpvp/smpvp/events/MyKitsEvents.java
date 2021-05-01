@@ -41,6 +41,7 @@ public class MyKitsEvents implements Listener {
         Player p = (Player) e.getWhoClicked();
         List<String> mykits = plugin.kitlist.getConfig().getStringList(p.getName()+".name");
 
+        /*
         String kitName;
         if(plugin.kitlist.getConfig().contains(p.getName()+".name")){
             List<String> ConfigList = plugin.kitlist.getConfig().getStringList(p.getName()+".name");
@@ -48,13 +49,13 @@ public class MyKitsEvents implements Listener {
         }
         else{
             kitName = p.getName()+ 0;
-        }
+        }*/
 
 
         if(e.getRawSlot() < mykits.size()){
             p.sendMessage("Kliknąłeś slot " + e.getRawSlot());
             p.closeInventory();
-            InventoryData.RestoreInventory(kitName,p);
+            InventoryData.RestoreInventory(clickedItem.getItemMeta().getDisplayName(),p);
             newInv = InventoryData.inventories.get(p);
             p.openInventory(newInv);
         }
