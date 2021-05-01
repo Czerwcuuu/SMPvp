@@ -7,3 +7,7 @@ website: stylowamc.pl
 commands:
   pvp:
     description: Zarządzanie arenami
+  kit:
+    description: Utwórz swój własny kit
+  mojekity:
+    description: Sprawdź swoje kity
