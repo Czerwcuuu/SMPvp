@@ -8,11 +8,13 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import smpvp.smpvp.SMPvp;
 import smpvp.smpvp.Statics;
 import smpvp.smpvp.arenas.Arena;
+import smpvp.smpvp.arenas.ArenaManager;
 import smpvp.smpvp.arenas.NewArenas;
 import smpvp.smpvp.commands.fight;
 import smpvp.smpvp.inventories.InventoryData;
@@ -54,14 +56,31 @@ public class FightEventsGUI implements Listener {
         if(e.getRawSlot() < mykits.size()){
             p.sendMessage("Kliknąłeś slot " + e.getRawSlot());
             Player target = Bukkit.getPlayer(targetName);
-            Bukkit.broadcastMessage(target.getName());
-            Bukkit.broadcastMessage(p.getName());
-            Bukkit.broadcastMessage(inv.getItem(1).getItemMeta().getDisplayName());
+            if(NewArenas.playerIsInCustomArena(target) != null) {
+                p.sendMessage("Przeciwnik już walczy!");
+                return;
+            }
+            if(ArenaManager.playerIsInArena(p)){
+                p.sendMessage("Przeciwnik już walczy!");
+                return;
+            }
+            if(target.getOpenInventory().getType() != InventoryType.CRAFTING)
+            {
+                p.sendMessage("Przeciwnik jest zajęty!");
+                return;
+            }
+            if(target.getInventory().isEmpty()){
+                fight.acceptationInv(target,p,clickedItem.getItemMeta().getDisplayName());
+                Inventory acceptinv =  fight.inventories.get(target);
+                openInventory(target,acceptinv);
+                p.closeInventory();
+                Bukkit.broadcastMessage(target.getName());
+                Bukkit.broadcastMessage(p.getName());
+                Bukkit.broadcastMessage(clickedItem.getItemMeta().getDisplayName());
 
-            fight.acceptationInv(target,p,inv.getItem(1).getItemMeta().getDisplayName());
-            Inventory acceptinv =  fight.inventories.get(target);
-            openInventory(target,acceptinv);
-            p.closeInventory();
+            }
+
+
             /*
             TODO:
             -sprawdzenie czy gracz nie jest w trakcie walki
