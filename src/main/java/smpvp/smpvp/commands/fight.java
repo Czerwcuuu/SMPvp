@@ -13,6 +13,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import smpvp.smpvp.SMPvp;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -25,45 +26,99 @@ public class fight implements CommandExecutor {
 
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] arg) {
 
-        if(sender instanceof Player){
+        if(sender instanceof Player) {
             Player player = (Player) sender;
 
-            if (arg.length==0) {
+            if (arg.length == 0) {
                 player.sendMessage("Wprowadź nick gracza");
-            }
-            else{
+            } else {
                 Player target = Bukkit.getPlayerExact(arg[0]);
-                if(target != null){
-
-                }
-                else{
+                if (target != null) {
+                    createInv(player,target);
+                    openInventory(player);
+                } else {
                     player.sendMessage("Nie ma takiego gracza!");
                 }
             }
-        }
 
+        }
         return false;
     }
+
+
+
 
 
     public void openInventory(final HumanEntity ent) {
         ent.openInventory(inv);
     }
 
-    public void createInv(Player p){
-        inv = Bukkit.createInventory(null,27, ChatColor.GREEN+"Kity "+ p.getName());
+    public void createInv(Player p, Player target){
+        inv = Bukkit.createInventory(null,36, ChatColor.GREEN+"Wyzwij gracza "+ target.getName());
 
         List<String> mykits = plugin.kitlist.getConfig().getStringList(p.getName()+".name");
         ItemStack item = new ItemStack(Material.BLUE_STAINED_GLASS_PANE);
         ItemMeta meta = item.getItemMeta();
 
         for(int i=0; i<mykits.size(); i++){
-            meta.setDisplayName(mykits.get(i));
-            item.setItemMeta(meta);
-            inv.setItem(i,item);
+                meta.setDisplayName(mykits.get(i));
+                item.setItemMeta(meta);
+                inv.setItem(i,item);
         }
 
+        meta = item.getItemMeta();
+        meta.setDisplayName(target.getName());
+        List<String> lore = new ArrayList<String>();
+        lore.add(ChatColor.GREEN + "Gracz którego wyzwałeś na pojedynek");
+        meta.setLore(lore);
+        item.setItemMeta(meta);
+        inv.setItem(35,item);
+
         inventories.put(p,inv);
+
+    }
+
+    //W momencie wybrania areny
+    public static void acceptationInv(Player target,Player player,String arenaName) {
+        Inventory inv = Bukkit.createInventory(null,9, ChatColor.GREEN+"Akceptuj wyzwanie "+ player.getName());
+
+        ItemStack item = new ItemStack(Material.PLAYER_HEAD);
+        ItemMeta meta = item.getItemMeta();
+
+        meta.setDisplayName(player.getName());
+        List<String> lore = new ArrayList<String>();
+        lore.add(ChatColor.GREEN + "Twój przeciwnik");
+        lore.add(ChatColor.GREEN + "Zabójstwa: 0");
+        lore.add(ChatColor.GREEN + "Smierci: 0");
+        meta.setLore(lore);
+        item.setItemMeta(meta);
+        inv.setItem(0,item);
+        lore.remove(2);
+        lore.remove(1);
+
+        meta.setDisplayName(arenaName);
+        lore.set(0,ChatColor.GREEN + "Wybrana Arena");
+        meta.setLore(lore);
+        item.setItemMeta(meta);
+        inv.setItem(1,item);
+
+        item.setType(Material.GREEN_STAINED_GLASS_PANE);
+        meta = item.getItemMeta();
+        meta.setDisplayName("AKCEPTUJ");
+        lore.set(0,ChatColor.GREEN + "Akceptuj wyzwanie");
+        meta.setLore(lore);
+        item.setItemMeta(meta);
+        inv.setItem(3,item);
+
+        item.setType(Material.RED_STAINED_GLASS_PANE);
+        meta = item.getItemMeta();
+        meta.setDisplayName("ODRZUC");
+        lore.set(0,ChatColor.RED + "Odrzuć wyzwanie");
+        meta.setLore(lore);
+        item.setItemMeta(meta);
+        inv.setItem(5,item);
+
+        inventories.put(target,inv);
 
     }
 }

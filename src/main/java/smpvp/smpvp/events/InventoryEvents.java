@@ -51,15 +51,11 @@ public class InventoryEvents implements Listener {
 
 
         if(e.getRawSlot() == Statics.SAVE_BUTTON){
-            String kitName;
+            String kitName = p.getName()+"new";
             if(plugin.kitlist.getConfig().contains(p.getName()+".name")){
                 List<String> ConfigList = plugin.kitlist.getConfig().getStringList(p.getName()+".name");
                 kitName = p.getName()+ ConfigList.size();
             }
-            else{
-                kitName = p.getName()+ 0;
-            }
-
             InventoryData inventoryData = new InventoryData(kitName,e.getInventory(),p);
             inventoryData.Show();
             p.closeInventory();

@@ -95,6 +95,8 @@ public class MyKitsEvents implements Listener {
         p.sendMessage("Kliknąłeś slot " + e.getRawSlot());
         }
 
+
+
     public static Kit getCustomKit(Player p,Inventory inv) {
         PlayerInventory playerInv = p.getInventory();
         List<ItemStack> inventoryList = new ArrayList<>();

@@ -38,7 +38,7 @@ public class openKitGui implements CommandExecutor {
             Player player = (Player) sender;
             //Otwórz gui
             createInv(player);
-            player.openInventory(inv);
+            //player.openInventory(inv);
             openInventory(player);
 
 

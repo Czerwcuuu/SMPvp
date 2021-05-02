@@ -22,6 +22,12 @@ public class ArenaManager {
         return arena;
     }
 
+    public static Arena createArena(int ID, String name,int currentPlayers, int maxPlayers, List<Location> loc,Player p, Player t) {
+        Arena arena = new Arena(ID, name,currentPlayers,maxPlayers,loc, p, t);
+        arenas.put(name, arena);
+        return arena;
+    }
+
 
     public static boolean joinArena(Player p, String arenaName, Sign sign_){
         Arena arena = (Arena)arenas.get(arenaName);
@@ -111,6 +117,29 @@ public class ArenaManager {
             Sign sign = (Sign)arenasSigns.get(arena);
             sign.setLine(2, arena.currentPlayers + "/" + arena.maxPlayers);
             sign.update();
+            return arena.arenaName;
+        }
+        return arena.arenaName;
+    }
+
+    public static String customArenaUpdate(Player p) {
+        Arena arena = NewArenas.customArenas.get(p);
+        Bukkit.broadcastMessage("Restartuje customową arene");
+        if (arena.players.size() > 0){
+            for (int i=0; i<arena.players.size(); i++){
+                //Bukkit.broadcastMessage("Restartuje itemki gracza:"+arena.players.get(i));
+                try {
+                    resetPlayer(Bukkit.getPlayer(arena.players.get(i)));
+                    NewArenas.customArenas.remove(Bukkit.getPlayer(arena.players.get(i)));
+                }
+                catch(NullPointerException err){
+                    //Bukkit.broadcastMessage("Nie wykryto gracza");
+                }
+
+                //resetPlayer(Bukkit.getPlayer(arena.players.get(i)));
+            }
+            arena.reset();
+            //Bukkit.broadcastMessage("Powinno ustawic 0 dla areny"+arena.arenaName);
             return arena.arenaName;
         }
         return arena.arenaName;

@@ -19,6 +19,7 @@ import org.bukkit.potion.PotionEffect;
 import smpvp.smpvp.SMPvp;
 import smpvp.smpvp.arenas.Arena;
 import smpvp.smpvp.arenas.ArenaManager;
+import smpvp.smpvp.arenas.NewArenas;
 import smpvp.smpvp.kits.Kits;
 
 public class GroupFight implements Listener {
@@ -110,11 +111,18 @@ public class GroupFight implements Listener {
             //Bukkit.broadcastMessage("Zabójca nie istnieje");
             Player player = e.getEntity();
             if(ArenaManager.playersInArenas.get(player.getName()).currentPlayers < 2){
+                Bukkit.broadcastMessage("Samobojstwo, zwykła arena");
                 //jezeli zabojca nie istnieje, a gracz jest na arenie restartuj tylko jego i arene
                 ArenaManager.resetPlayer(player);
                 ArenaManager.arenaUpdate(player);
             }
+            if(NewArenas.playerIsInCustomArena(player) != null){
+                Bukkit.broadcastMessage("Samobojstwo, customowa arena");
+                ArenaManager.resetPlayer(player);
+                ArenaManager.customArenaUpdate(player);
+            }
             else{
+                Bukkit.broadcastMessage("Samobojstwo, gracza nie ma na arenie");
                 //jezeli zabojca nie istnieje, a gracz nie jest na arenie, restartuj tylko jego
                 ArenaManager.resetPlayer(player);
             }
@@ -128,6 +136,11 @@ public class GroupFight implements Listener {
         if(ArenaManager.playerIsInArena(p)){
             //Jezeli gracz byl na arenie - restart areny i gracza
             ArenaManager.arenaUpdate(p);
+            ArenaManager.resetPlayer(p);
+        }
+        else if(NewArenas.customArenas.get(p)!=null){
+            //Jezeli gracz byl na arenie - restart areny i gracza
+            ArenaManager.customArenaUpdate(p);
             ArenaManager.resetPlayer(p);
         }
         else{
@@ -145,7 +158,16 @@ public class GroupFight implements Listener {
             arena.reset();
             ArenaManager.arenaUpdate(p);
 
-        } else {
+        }
+        else if(NewArenas.playerIsInCustomArena(p) != null){
+            ArenaManager.customArenaUpdate(p);
+            Arena a = NewArenas.playerIsInCustomArena(p);
+            a.reset();
+            ArenaManager.resetPlayer(p);
+
+        }
+
+        else {
             try {
                 ArenaManager.resetPlayer(p);
             } catch (NullPointerException var4) {
