@@ -11,6 +11,7 @@ import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import smpvp.smpvp.SMPvp;
+import smpvp.smpvp.Statics;
 import smpvp.smpvp.commands.openKitGui;
 import smpvp.smpvp.inventories.InventoryData;
 
@@ -37,7 +38,7 @@ public class InventoryEvents implements Listener {
     public void onInventoryClick (InventoryClickEvent e) throws IOException {
         Inventory inv = openKitGui.inventories.get(e.getWhoClicked());
         if (e.getInventory() != inv) return;
-        if(e.getRawSlot() < 5 || e.getRawSlot() == 18 || e.getRawSlot() == 43 || e.getRawSlot() == 44){
+        if(e.getRawSlot() < Statics.EQUIPABLE_SLOTS || e.getRawSlot() == 18 || e.getRawSlot() == 43 || e.getRawSlot() == 44){
             e.setCancelled(true);
         }
         final ItemStack clickedItem = e.getCurrentItem();
@@ -49,7 +50,7 @@ public class InventoryEvents implements Listener {
 
 
 
-        if(e.getRawSlot() == 44){
+        if(e.getRawSlot() == Statics.SAVE_BUTTON){
             String kitName;
             if(plugin.kitlist.getConfig().contains(p.getName()+".name")){
                 List<String> ConfigList = plugin.kitlist.getConfig().getStringList(p.getName()+".name");
@@ -61,10 +62,18 @@ public class InventoryEvents implements Listener {
 
             InventoryData inventoryData = new InventoryData(kitName,e.getInventory(),p);
             inventoryData.Show();
+            p.closeInventory();
+        }
+        else if(e.getRawSlot() == Statics.CANCEL_BUTTON){
+            p.closeInventory();
         }
 
 
         p.sendMessage("Kliknąłeś slot " + e.getRawSlot());
+    }
+
+    public void getKit(String kitName,Player p){
+
     }
 
 

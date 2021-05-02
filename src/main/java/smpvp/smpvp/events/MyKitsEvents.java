@@ -10,11 +10,15 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.potion.PotionType;
 import smpvp.smpvp.SMPvp;
+import smpvp.smpvp.Statics;
 import smpvp.smpvp.commands.openKitGui;
 import smpvp.smpvp.commands.openMyKits;
 import smpvp.smpvp.inventories.AllKits;
 import smpvp.smpvp.inventories.InventoryData;
+import smpvp.smpvp.kits.Kit;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -24,6 +28,7 @@ import java.util.Objects;
 public class MyKitsEvents implements Listener {
     SMPvp plugin = SMPvp.getInstance();
     Inventory newInv;
+
 
 
     @EventHandler
@@ -41,17 +46,6 @@ public class MyKitsEvents implements Listener {
         Player p = (Player) e.getWhoClicked();
         List<String> mykits = plugin.kitlist.getConfig().getStringList(p.getName()+".name");
 
-        /*
-        String kitName;
-        if(plugin.kitlist.getConfig().contains(p.getName()+".name")){
-            List<String> ConfigList = plugin.kitlist.getConfig().getStringList(p.getName()+".name");
-            kitName = p.getName()+ (ConfigList.size()-1);
-        }
-        else{
-            kitName = p.getName()+ 0;
-        }*/
-
-
         if(e.getRawSlot() < mykits.size()){
             p.sendMessage("Kliknąłeś slot " + e.getRawSlot());
             p.closeInventory();
@@ -68,7 +62,7 @@ public class MyKitsEvents implements Listener {
         newInv = InventoryData.inventories.get(e.getView().getPlayer());
         if (e.getInventory() != newInv) return;
 
-        if(e.getRawSlot() < 5 || e.getRawSlot() == 18 || e.getRawSlot() == 43 || e.getRawSlot() == 44){
+        if(e.getRawSlot() < Statics.EQUIPABLE_SLOTS|| e.getRawSlot() == 18 || e.getRawSlot() >= Statics.BUTTONS_MIN){
             e.setCancelled(true);
         }
         final ItemStack clickedItem = e.getCurrentItem();
@@ -79,14 +73,42 @@ public class MyKitsEvents implements Listener {
 
 
 
-        if(e.getRawSlot() == 44){
+        if(e.getRawSlot() == Statics.SAVE_BUTTON){
             InventoryData inventoryData = new InventoryData(e.getView().getTitle(),e.getInventory(),p);
             inventoryData.Show();
+            p.closeInventory();
+        }
+        else if(e.getRawSlot() == Statics.GETKIT_BUTTON){
+            //Nadaj kit
+            getCustomKit(p,newInv);
+        }
+
+        else if(e.getRawSlot() == Statics.DELETE_BUTTON){
+            InventoryData.RemoveKit(e.getView().getTitle(),p);
+            p.closeInventory();
+        }
+
+        else if(e.getRawSlot() == Statics.CANCEL_BUTTON){
+            p.closeInventory();
         }
 
         p.sendMessage("Kliknąłeś slot " + e.getRawSlot());
         }
 
+    public static Kit getCustomKit(Player p,Inventory inv) {
+        PlayerInventory playerInv = p.getInventory();
+        List<ItemStack> inventoryList = new ArrayList<>();
+
+        for (int i=Statics.EQREST_MIN; i<Statics.EQREST_MAX; i++){
+            if(inv.getItem(i) != null){
+                inventoryList.add(inv.getItem(i));
+                Bukkit.broadcastMessage(inv.getItem(i).toString());
+            }
+
+        }
+
+        return new Kit(playerInv,inv.getItem(12), inv.getItem(9), inv.getItem(10), inv.getItem(11),inventoryList);
+    }
 
     boolean IsEquipable(ItemStack i)
     {

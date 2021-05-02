@@ -8,40 +8,43 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import smpvp.smpvp.SMPvp;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class openMyKits implements CommandExecutor {
+public class fight implements CommandExecutor {
 
     SMPvp plugin = SMPvp.getInstance();
-    public static HashMap<Player,Inventory> inventories = new HashMap<>();
+    public static HashMap<Player, Inventory> inventories = new HashMap<>();
 
     public Inventory inv;
 
-    public boolean onCommand (CommandSender sender, Command cmd, String label, String[] arg){
+    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] arg) {
 
-        if(label.equalsIgnoreCase("mojekity")){
-            if(!(sender instanceof Player)){
-                sender.sendMessage("Musisz być graczem!");
-                return true;
-            }
+        if(sender instanceof Player){
             Player player = (Player) sender;
-            //Otwórz gui z kitami
-            createInv(player);
-            openInventory(player);
 
+            if (arg.length==0) {
+                player.sendMessage("Wprowadź nick gracza");
+            }
+            else{
+                Player target = Bukkit.getPlayerExact(arg[0]);
+                if(target != null){
 
+                }
+                else{
+                    player.sendMessage("Nie ma takiego gracza!");
+                }
+            }
         }
+
         return false;
     }
+
 
     public void openInventory(final HumanEntity ent) {
         ent.openInventory(inv);
@@ -63,6 +66,4 @@ public class openMyKits implements CommandExecutor {
         inventories.put(p,inv);
 
     }
-
-
 }

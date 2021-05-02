@@ -2,6 +2,8 @@ package smpvp.smpvp.kits;
 
 import java.util.Iterator;
 import java.util.List;
+
+import org.bukkit.Bukkit;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
@@ -24,19 +26,29 @@ public class Kit {
         this.items = items;
         this.giveItems();
     }
+    public Kit(PlayerInventory inventory, ItemStack boots, ItemStack helmet, ItemStack chestplate, ItemStack leggins, List<ItemStack> items) {
+        this.inv = inventory;
+        this.boots = boots;
+        this.chestplate = chestplate;
+        this.helmet = helmet;
+        this.leggins = leggins;
+        this.items = items;
+        this.giveItems();
+    }
+
 
     public void giveItems() {
         this.inv.setBoots(this.boots);
         this.inv.setChestplate(this.chestplate);
         this.inv.setHelmet(this.helmet);
         this.inv.setLeggings(this.leggins);
-        this.inv.addItem(new ItemStack[]{this.hand});
-        Iterator var1 = this.items.iterator();
-
-        while(var1.hasNext()) {
-            ItemStack i = (ItemStack)var1.next();
-            this.inv.addItem(new ItemStack[]{i});
+        Bukkit.broadcastMessage("HEHEEHE");
+        if(hand != null){
+            this.inv.addItem(new ItemStack[]{this.hand});
         }
-
+        for(ItemStack i: items){
+            this.inv.addItem(i);
+            Bukkit.broadcastMessage(i.toString());
+        }
     }
 }

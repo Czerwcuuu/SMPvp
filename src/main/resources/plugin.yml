@@ -11,3 +11,5 @@ commands:
     description: Utwórz swój własny kit
   mojekity:
     description: Sprawdź swoje kity
+  pojedynek:
+    description: Zawalcz z innym graczem!

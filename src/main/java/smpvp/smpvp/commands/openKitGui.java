@@ -15,6 +15,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import smpvp.smpvp.SMPvp;
+import smpvp.smpvp.Statics;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -90,14 +91,6 @@ public class openKitGui implements CommandExecutor {
         item.setItemMeta(meta);
         inv.setItem(3,item);
 
-        //Nazwij kit
-        item.setType(Material.NAME_TAG);
-        meta.setDisplayName(ChatColor.DARK_BLUE + "NAZWIJ KIT");
-        lore.set(0,ChatColor.GRAY + "Kliknij, żeby wpisać nazwe kitu");
-        meta.setLore(lore);
-        item.setItemMeta(meta);
-        inv.setItem(4,item);
-
 
         //Reszta
         item.setType(Material.GREEN_STAINED_GLASS_PANE);
@@ -113,7 +106,7 @@ public class openKitGui implements CommandExecutor {
         lore.set(0,ChatColor.GRAY + "Zapisz swój kit");
         meta.setLore(lore);
         item.setItemMeta(meta);
-        inv.setItem(44,item);
+        inv.setItem(Statics.SAVE_BUTTON,item);
 
         //Anuluj
         item.setType(Material.RED_GLAZED_TERRACOTTA);
@@ -121,7 +114,7 @@ public class openKitGui implements CommandExecutor {
         lore.set(0,ChatColor.GRAY + "Anuluj tworzenie kitu");
         meta.setLore(lore);
         item.setItemMeta(meta);
-        inv.setItem(43,item);
+        inv.setItem(Statics.CANCEL_BUTTON,item);
 
         inventories.put(p,inv);
     }

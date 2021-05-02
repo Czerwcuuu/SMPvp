@@ -3,6 +3,7 @@ package smpvp.smpvp;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
+import smpvp.smpvp.commands.fightTabCompletion;
 import smpvp.smpvp.commands.openKitGui;
 import smpvp.smpvp.commands.openMyKits;
 import smpvp.smpvp.commands.setupArena;
@@ -25,6 +26,8 @@ public final class SMPvp extends JavaPlugin implements Listener {
         this.getCommand("pvp").setExecutor(new setupArena());
         this.getCommand("kit").setExecutor(new openKitGui());
         this.getCommand("mojekity").setExecutor(new openMyKits());
+        this.getCommand("pojedynek").setExecutor(new openMyKits());
+        this.getCommand("pojedynek").setTabCompleter(new fightTabCompletion());
         this.getConfig().options().copyDefaults(true);
         this.saveConfig();
 
