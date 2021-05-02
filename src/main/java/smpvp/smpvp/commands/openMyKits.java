@@ -14,6 +14,8 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import smpvp.smpvp.SMPvp;
+import smpvp.smpvp.arenas.ArenaManager;
+import smpvp.smpvp.arenas.NewArenas;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,12 +30,20 @@ public class openMyKits implements CommandExecutor {
 
     public boolean onCommand (CommandSender sender, Command cmd, String label, String[] arg){
 
-        if(label.equalsIgnoreCase("mojekity")){
+        Player player = (Player) sender;
+        if(NewArenas.playerIsInCustomArena(player)!=null) {
+            player.sendMessage("Nie możesz tego użyć podczas walki|customowa");
+            return false;
+        }
+        else if(ArenaManager.playerIsInArena(player)) {
+            player.sendMessage("Nie możesz tego użyć podczas walki|zwykla");
+            return false;
+        }
+        else if(label.equalsIgnoreCase("mojekity")){
             if(!(sender instanceof Player)){
                 sender.sendMessage("Musisz być graczem!");
                 return true;
             }
-            Player player = (Player) sender;
             //Otwórz gui z kitami
             createInv(player);
             openInventory(player);

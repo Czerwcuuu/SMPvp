@@ -12,6 +12,8 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import smpvp.smpvp.SMPvp;
+import smpvp.smpvp.arenas.ArenaManager;
+import smpvp.smpvp.arenas.NewArenas;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,10 +30,18 @@ public class fight implements CommandExecutor {
 
         if(sender instanceof Player) {
             Player player = (Player) sender;
-
-            if (arg.length == 0) {
+            if(NewArenas.playerIsInCustomArena(player)!=null) {
+                player.sendMessage("Nie możesz tego użyć podczas walki|customowa");
+                return false;
+            }
+            else if(ArenaManager.playerIsInArena(player)) {
+                player.sendMessage("Nie możesz tego użyć podczas walki|zwykla");
+                return false;
+            }
+            else if (arg.length == 0) {
                 player.sendMessage("Wprowadź nick gracza");
-            } else {
+            }
+            else {
                 Player target = Bukkit.getPlayerExact(arg[0]);
                 if (target != null) {
                     createInv(player,target);
