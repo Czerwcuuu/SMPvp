@@ -9,8 +9,6 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -22,10 +20,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class openMyKits implements CommandExecutor {
-
+public class MainGUI implements CommandExecutor {
     SMPvp plugin = SMPvp.getInstance();
-    public static HashMap<Player,Inventory> inventories = new HashMap<>();
+    public static HashMap<Player, Inventory> inventories = new HashMap<>();
 
     public Inventory inv;
 
@@ -40,10 +37,7 @@ public class openMyKits implements CommandExecutor {
             player.sendMessage("Nie możesz tego użyć podczas walki|zwykla");
             return false;
         }
-        else if(player.getGameMode() != GameMode.CREATIVE){
-            player.sendMessage("Musisz być w trybie tworzenia!");
-        }
-        else if(label.equalsIgnoreCase("mojekity")){
+        else if(label.equalsIgnoreCase("pvp")){
             if(!(sender instanceof Player)){
                 sender.sendMessage("Musisz być graczem!");
                 return true;
@@ -62,21 +56,56 @@ public class openMyKits implements CommandExecutor {
     }
 
     public void createInv(Player p){
-        inv = Bukkit.createInventory(null,27, ChatColor.GREEN+"Kity "+ p.getName());
+        inv = Bukkit.createInventory(null,27, ChatColor.BLUE+"SMPVP");
 
         List<String> mykits = plugin.kitlist.getConfig().getStringList(p.getName()+".name");
         ItemStack item = new ItemStack(Material.BLUE_STAINED_GLASS_PANE);
         ItemMeta meta = item.getItemMeta();
 
-        for(int i=0; i<mykits.size(); i++){
-            meta.setDisplayName(mykits.get(i));
-            item.setItemMeta(meta);
-            inv.setItem(i,item);
-        }
+        //Tryb Tworzenia
+        meta.setDisplayName(ChatColor.RED + "TRYB TWORZENIA");
+        List<String> lore = new ArrayList<String>();
+        lore.add(ChatColor.GRAY + "Kliknij żeby przenieść się do areny tworzenia!");
+        meta.setLore(lore);
+        item.setItemMeta(meta);
+        inv.setItem(11,item);
+
+        //Twórz Kit
+        meta.setDisplayName(ChatColor.RED + "UTWÓRZ KIT");
+        lore.set(0,ChatColor.GRAY + "Kliknij, żeby utworzyć własny kit!");
+        meta.setLore(lore);
+        item.setItemMeta(meta);
+        inv.setItem(12,item);
+
+        //Edytuj Kit
+        meta.setDisplayName(ChatColor.RED + "EDYTUJ KIT");
+        lore.set(0,ChatColor.GRAY + "Kliknij, żeby edytować jeden ze swoich kitów");
+        meta.setLore(lore);
+        item.setItemMeta(meta);
+        inv.setItem(13,item);
+
+        //Anuluj
+        meta.setDisplayName(ChatColor.RED + "ANULUJ");
+        lore.set(0,ChatColor.GRAY + "§a§lWpisz §4§l/pojedynek <nick>");
+        meta.setLore(lore);
+        item.setItemMeta(meta);
+        inv.setItem(26,item);
+
+        //Wyzwyij na pojedynek
+        meta.setDisplayName(ChatColor.RED + "POJEDYNEK");
+        lore.set(0,ChatColor.GRAY + "Wpisz /pojedynek <nick>");
+        lore.add(ChatColor.GRAY + "żeby walczyć z innym graczem!");
+        lore.add(ChatColor.GRAY + "TYLKO POZA TRYBEM TWORZENIA");
+        meta.setLore(lore);
+        item.setItemMeta(meta);
+        inv.setItem(14,item);
+
+
+
+
+
 
         inventories.put(p,inv);
 
     }
-
-
 }

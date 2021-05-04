@@ -6,10 +6,7 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 import smpvp.smpvp.SMPvp;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 public class NewArenas {
     static SMPvp  plugin = SMPvp.getInstance();
@@ -54,6 +51,11 @@ public class NewArenas {
     }
 
     public static Arena playerIsInCustomArena(Player p) {
+        Bukkit.broadcastMessage("CUSTOMOWA:");
+        for (Map.Entry me : customArenas.entrySet()) {
+            Bukkit.broadcastMessage("Key: "+me.getKey() + " & Value: " + me.getValue());
+        }
+
         if((Arena)customArenas.get(p)!= null)
         {
             Bukkit.broadcastMessage(customArenas.get(p).arenaName);

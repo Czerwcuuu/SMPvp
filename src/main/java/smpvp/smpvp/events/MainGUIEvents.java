@@ -1,6 +1,5 @@
 package smpvp.smpvp.events;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -12,16 +11,14 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import smpvp.smpvp.SMPvp;
 import smpvp.smpvp.Statics;
+import smpvp.smpvp.commands.MainGUI;
 import smpvp.smpvp.commands.openKitGui;
 import smpvp.smpvp.inventories.InventoryData;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
-public class InventoryEvents implements Listener {
-
+public class MainGUIEvents implements Listener {
     SMPvp plugin = SMPvp.getInstance();
     //cancel drag
     @EventHandler
@@ -36,11 +33,10 @@ public class InventoryEvents implements Listener {
 
     @EventHandler
     public void onInventoryClick (InventoryClickEvent e) throws IOException {
-        Inventory inv = openKitGui.inventories.get(e.getWhoClicked());
+        Inventory inv = MainGUI.inventories.get(e.getWhoClicked());
         if (e.getInventory() != inv) return;
-        if(e.getRawSlot() < Statics.EQUIPABLE_SLOTS || e.getRawSlot() == 18 || e.getRawSlot() == 43 || e.getRawSlot() == 44){
-            e.setCancelled(true);
-        }
+        e.setCancelled(true);
+
         final ItemStack clickedItem = e.getCurrentItem();
 
         // verify current item is not null
@@ -50,17 +46,19 @@ public class InventoryEvents implements Listener {
 
 
 
-        if(e.getRawSlot() == Statics.SAVE_BUTTON){
-            String kitName = p.getName()+"new";
-            if(plugin.kitlist.getConfig().contains(p.getName()+".name")){
-                List<String> ConfigList = plugin.kitlist.getConfig().getStringList(p.getName()+".name");
-                kitName = p.getName()+ ConfigList.size();
-            }
-            InventoryData inventoryData = new InventoryData(kitName,e.getInventory(),p,false);
-            inventoryData.Show();
-            p.closeInventory();
+        if(e.getRawSlot() == 11){
+            //Przenieś do trybu tworzenia
         }
-        else if(e.getRawSlot() == Statics.CANCEL_BUTTON){
+        if(e.getRawSlot() == 12){
+            ((Player) e.getWhoClicked()).performCommand("kit");
+        }
+        if(e.getRawSlot() == 13){
+            ((Player) e.getWhoClicked()).performCommand("mojekity");
+        }
+        if(e.getRawSlot() == 14){
+            ((Player) e.getWhoClicked()).sendMessage("§a§lWpisz §4§l/pojedynek <nick>");
+        }
+        else if(e.getRawSlot() == 26){
             p.closeInventory();
         }
 

@@ -28,13 +28,16 @@ public class InventoryData {
     public Inventory inv;
     public Player p;
     public static HashMap<Player,Inventory> inventories = new HashMap<>();
+    public boolean editing = false;
 
 
 
-    public InventoryData(String name,Inventory inv,Player p) throws IOException {
+    public InventoryData(String name,Inventory inv,Player p, boolean editing) throws IOException {
         this.name = name;
         this.inv = inv;
         this.p = p;
+        this.editing = editing;
+
 
         SaveInventory();
     }
@@ -45,8 +48,15 @@ public class InventoryData {
         c.set("inventory.content", inv.getContents());
 
         List<String> ConfigList = plugin.kitlist.getConfig().getStringList(p.getName()+".name");
+
         if(ConfigList.contains(name)){
+            if(!editing){
+            Bukkit.broadcastMessage("W konfigu jest już taki kit");
             name = name+1;
+            }
+            else{
+                Bukkit.broadcastMessage("Edytujesz, zapisz z tą samą nazwą!");
+            }
         }
         c.save(new File(plugin.getDataFolder()+"/kits", name+".yml"));
 

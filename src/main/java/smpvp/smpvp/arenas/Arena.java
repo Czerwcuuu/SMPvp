@@ -70,13 +70,12 @@ public class Arena {
                 InventoryData.RestoreInventory(invToGetName,p);
                 Inventory inv = InventoryData.inventories.get(p);
                 //daj ekwipunek
-                //TODO:
                 MyKitsEvents.getCustomKit(p, inv);
                 MyKitsEvents.getCustomKit(t, inv);
 
 
-                ArenaManager.playersInArenas.put(p.getName(), this);
-                ArenaManager.playersInArenas.put(t.getName(), this);
+                NewArenas.customArenas.put(p, this);
+                NewArenas.customArenas.put(t, this);
 
                 if (spawnLocations.size() < maxPlayers - 1) {
                     p.sendMessage(String.valueOf(spawnLocations.size()));

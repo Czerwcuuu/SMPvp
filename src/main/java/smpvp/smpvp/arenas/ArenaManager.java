@@ -3,6 +3,8 @@ package smpvp.smpvp.arenas;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Sign;
@@ -104,7 +106,8 @@ public class ArenaManager {
                 //Bukkit.broadcastMessage("Restartuje itemki gracza:"+arena.players.get(i));
                 try {
                     resetPlayer(Bukkit.getPlayer(arena.players.get(i)));
-                    playersInArenas.remove(Bukkit.getPlayer(arena.players.get(i)));
+                    Bukkit.broadcastMessage(Bukkit.getPlayer(arena.players.get(i)).getName());
+                    playersInArenas.remove(Bukkit.getPlayer(arena.players.get(i)).getName());
                 }
                 catch(NullPointerException err){
                     //Bukkit.broadcastMessage("Nie wykryto gracza");
@@ -130,7 +133,8 @@ public class ArenaManager {
                 //Bukkit.broadcastMessage("Restartuje itemki gracza:"+arena.players.get(i));
                 try {
                     resetPlayer(Bukkit.getPlayer(arena.players.get(i)));
-                    NewArenas.customArenas.remove(Bukkit.getPlayer(arena.players.get(i)));
+                    Bukkit.broadcastMessage(Bukkit.getPlayer(arena.players.get(i)).getName());
+                    NewArenas.customArenas.remove(Bukkit.getPlayer(arena.players.get(i)),arena);
                 }
                 catch(NullPointerException err){
                     //Bukkit.broadcastMessage("Nie wykryto gracza");
@@ -164,6 +168,11 @@ public class ArenaManager {
 
 
     public static boolean playerIsInArena(Player p) {
+        Bukkit.broadcastMessage("ZWYKLA:");
+        for (Map.Entry me : playersInArenas.entrySet()) {
+            Bukkit.broadcastMessage("Key: "+me.getKey() + " & Value: " + me.getValue());
+        }
+
         if(playersInArenas.get(p.getName())!= null)
         {
             return true;

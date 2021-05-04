@@ -74,7 +74,7 @@ public class MyKitsEvents implements Listener {
 
 
         if(e.getRawSlot() == Statics.SAVE_BUTTON){
-            InventoryData inventoryData = new InventoryData(e.getView().getTitle(),e.getInventory(),p);
+            InventoryData inventoryData = new InventoryData(e.getView().getTitle(),e.getInventory(),p,true);
             inventoryData.Show();
             p.closeInventory();
         }

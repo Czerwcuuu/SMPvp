@@ -2,6 +2,7 @@ package smpvp.smpvp.commands;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -40,6 +41,9 @@ public class fight implements CommandExecutor {
             }
             else if (arg.length == 0) {
                 player.sendMessage("Wprowadź nick gracza");
+            }
+            else if(player.getGameMode() != GameMode.SURVIVAL){
+                player.sendMessage("Nie możesz tego użyć w trybie tworzenia!");
             }
             else {
                 Player target = Bukkit.getPlayerExact(arg[0]);

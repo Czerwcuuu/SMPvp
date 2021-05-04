@@ -8,10 +8,7 @@ import smpvp.smpvp.configs.Config;
 import smpvp.smpvp.data.CustomArenas;
 import smpvp.smpvp.data.DataManager;
 import smpvp.smpvp.data.KitLists;
-import smpvp.smpvp.events.FightEventsGUI;
-import smpvp.smpvp.events.GroupFight;
-import smpvp.smpvp.events.InventoryEvents;
-import smpvp.smpvp.events.MyKitsEvents;
+import smpvp.smpvp.events.*;
 
 public final class SMPvp extends JavaPlugin implements Listener {
     private static SMPvp plugin;
@@ -21,16 +18,8 @@ public final class SMPvp extends JavaPlugin implements Listener {
 
     /*
     TODO:
-    - sprawdz czy gracz jest na arenie podczas wysylania zaproszenia
     - mozliwosc ignorowania zaproszen
-    - mozliwosc wybrania areny pod wybraniu kitu
     po zaakcpetowaniu areny:
-        - znajdz dostepna arene z listy
-        - teleportuje na spawny na arenie
-        - dodaj do listy graczy na arenach
-        - walka
-        - po zakonczeniu usun z listy graczy na arenach
-        - ustaw arene na dostepna
 
 
 
@@ -42,10 +31,11 @@ public final class SMPvp extends JavaPlugin implements Listener {
         this.data = new DataManager(this);
         this.kitlist = new KitLists(this);
         this.freearenas = new CustomArenas(this);
-        this.getCommand("pvp").setExecutor(new setupArena());
+        this.getCommand("smpvp").setExecutor(new setupArena());
         this.getCommand("kit").setExecutor(new openKitGui());
         this.getCommand("mojekity").setExecutor(new openMyKits());
         this.getCommand("pojedynek").setExecutor(new fight());
+        this.getCommand("pvp").setExecutor(new MainGUI());
         this.getCommand("pojedynek").setTabCompleter(new fightTabCompletion());
         this.getConfig().options().copyDefaults(true);
         this.saveConfig();
@@ -56,6 +46,7 @@ public final class SMPvp extends JavaPlugin implements Listener {
         Bukkit.getPluginManager().registerEvents(new FightEventsGUI(), this);
         Bukkit.getPluginManager().registerEvents(new InventoryEvents(), this);
         Bukkit.getPluginManager().registerEvents(new MyKitsEvents(), this);
+        Bukkit.getPluginManager().registerEvents(new MainGUIEvents(), this);
     }
 
     public void onDisable() {

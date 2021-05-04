@@ -2,6 +2,7 @@ package smpvp.smpvp.commands;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -39,6 +40,9 @@ public class openKitGui implements CommandExecutor {
         else if(ArenaManager.playerIsInArena(player)) {
             player.sendMessage("Nie możesz tego użyć podczas walki|zwykla");
             return false;
+        }
+        else if(player.getGameMode() != GameMode.CREATIVE){
+            player.sendMessage("Musisz być w trybie tworzenia!");
         }
         else if(label.equalsIgnoreCase("kit")){
             if(!(sender instanceof Player)){
