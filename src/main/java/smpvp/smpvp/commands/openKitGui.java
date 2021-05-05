@@ -34,19 +34,19 @@ public class openKitGui implements CommandExecutor {
     public boolean onCommand (CommandSender sender, Command cmd, String label, String[] arg){
         Player player = (Player) sender;
         if(NewArenas.playerIsInCustomArena(player)!=null) {
-            player.sendMessage("Nie możesz tego użyć podczas walki|customowa");
+            player.sendMessage("§4§lNie możesz tego użyć podczas walki");
             return false;
         }
         else if(ArenaManager.playerIsInArena(player)) {
-            player.sendMessage("Nie możesz tego użyć podczas walki|zwykla");
+            player.sendMessage("§4§lNie możesz tego użyć podczas walki|zwykla");
             return false;
         }
         else if(player.getGameMode() != GameMode.CREATIVE){
-            player.sendMessage("Musisz być w trybie tworzenia!");
+            player.sendMessage("§4§lMusisz być w trybie tworzenia!");
         }
         else if(label.equalsIgnoreCase("kit")){
             if(!(sender instanceof Player)){
-                sender.sendMessage("Musisz być graczem!");
+                sender.sendMessage("§4§lMusisz być graczem!");
                 return true;
             }
             //Otwórz gui
@@ -71,7 +71,7 @@ public class openKitGui implements CommandExecutor {
 
     public void createInv(Player p){
 
-        inv = Bukkit.createInventory(null,45, ChatColor.GREEN+"Kit Generator |"+p.getName());
+        inv = Bukkit.createInventory(null,45, ChatColor.DARK_BLUE+"Kit Generator | "+p.getName());
 
         ItemStack item = new ItemStack(Material.BLUE_STAINED_GLASS_PANE);
         ItemMeta meta = item.getItemMeta();
@@ -128,6 +128,31 @@ public class openKitGui implements CommandExecutor {
         meta.setLore(lore);
         item.setItemMeta(meta);
         inv.setItem(Statics.CANCEL_BUTTON,item);
+
+        for (int i=4; i<9; i++){
+            item.setType(Material.BLACK_STAINED_GLASS_PANE);
+            meta.setDisplayName(ChatColor.BLACK + "X");
+            lore.set(0,ChatColor.GRAY + "X");
+            meta.setLore(lore);
+            item.setItemMeta(meta);
+            inv.setItem(i,item);
+        }
+        for (int i=13; i<18; i++){
+            item.setType(Material.BLACK_STAINED_GLASS_PANE);
+            meta.setDisplayName(ChatColor.BLACK + "X");
+            lore.set(0,ChatColor.GRAY + "X");
+            meta.setLore(lore);
+            item.setItemMeta(meta);
+            inv.setItem(i,item);
+        }
+        for (int i=36; i<43; i++){
+            item.setType(Material.BLACK_STAINED_GLASS_PANE);
+            meta.setDisplayName(ChatColor.BLACK + "X");
+            lore.set(0,ChatColor.GRAY + "X");
+            meta.setLore(lore);
+            item.setItemMeta(meta);
+            inv.setItem(i,item);
+        }
 
         inventories.put(p,inv);
     }

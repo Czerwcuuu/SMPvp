@@ -47,11 +47,11 @@ public class Arena {
 
     public void reset() {
         this.currentPlayers = 0;
-        Bukkit.broadcastMessage("Arena ID"+ID);
-        Bukkit.broadcastMessage(String.valueOf(plugin.freearenas.getConfig().getInt(ID + ".currentplayer")));
+        //Bukkit.broadcastMessage("Arena ID"+ID);
+        //Bukkit.broadcastMessage(String.valueOf(plugin.freearenas.getConfig().getInt(ID + ".currentplayer")));
         plugin.freearenas.getConfig().set(ID + ".currentplayer",0);
         plugin.freearenas.saveConfig();
-        Bukkit.broadcastMessage(String.valueOf(plugin.freearenas.getConfig().getInt(ID + ".currentplayer")));
+        //Bukkit.broadcastMessage(String.valueOf(plugin.freearenas.getConfig().getInt(ID + ".currentplayer")));
         players.clear();
         this.status = ArenaStatus.NOTSTARTED;
     }
@@ -59,7 +59,7 @@ public class Arena {
     public void startArena(Player p, Player t,String invToGetName) {
 
             if (players.size() < maxPlayers) {
-                Bukkit.broadcastMessage(arenaName);
+                //Bukkit.broadcastMessage(arenaName);
                 //Bukkit.broadcastMessage("WARUNEK1:");
                 //Bukkit.broadcastMessage("Liczba graczy na arenie:"+arena.players.size());
                 status = ArenaStatus.STARTED;
@@ -81,10 +81,16 @@ public class Arena {
                     p.sendMessage(String.valueOf(spawnLocations.size()));
                     p.sendMessage("Brak dostępnych spawnów");
                 } else {
-                    p.teleport((Location) spawnLocations.get(currentPlayers - 1));
-                    p.setHealth(20.0D);
-                    t.teleport((Location) spawnLocations.get(currentPlayers - 1));
-                    t.setHealth(20.0D);
+                    for(int i=0; i<currentPlayers; i++){
+                        if(i==0){
+                            p.teleport((Location) spawnLocations.get(i));
+                            p.setHealth(20.0D);
+                        }
+                        if(i==1){
+                            t.teleport((Location) spawnLocations.get(i));
+                            t.setHealth(20.0D);
+                        }
+                    }
                     /*Bukkit.broadcastMessage("Na arenie są:");
                     for (int i=0; i<arena.players.size(); i++){
                         Bukkit.broadcastMessage(arena.players.get(i));

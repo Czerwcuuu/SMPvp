@@ -49,13 +49,17 @@ public class InventoryData {
 
         List<String> ConfigList = plugin.kitlist.getConfig().getStringList(p.getName()+".name");
 
+        if(plugin.kitlist.getConfig().getStringList(p.getName()+".name").size()>=26)
+        {
+            p.sendMessage("§4§lNie możesz zapisać więcej kitów!");
+        }
+
         if(ConfigList.contains(name)){
             if(!editing){
-            Bukkit.broadcastMessage("W konfigu jest już taki kit");
             name = name+1;
             }
             else{
-                Bukkit.broadcastMessage("Edytujesz, zapisz z tą samą nazwą!");
+                p.sendMessage("§a§lZapisano pomyślnie!");
             }
         }
         c.save(new File(plugin.getDataFolder()+"/kits", name+".yml"));
@@ -82,12 +86,12 @@ public class InventoryData {
 
     @SuppressWarnings("unchecked")
     public static void RestoreInventory(String Name,Player p){
-        Bukkit.broadcastMessage(Name+".yml");
+        //Bukkit.broadcastMessage(Name+".yml");
         YamlConfiguration c = YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder()+"/kits", Name+".yml"));
         ItemStack[] content = ((List<ItemStack>) Objects.requireNonNull(c.get("inventory.content"))).toArray(new ItemStack[0]);
 
-        Bukkit.broadcastMessage(content[0].toString());
-        Bukkit.broadcastMessage(String.valueOf(content.length));
+        //Bukkit.broadcastMessage(content[0].toString());
+        //Bukkit.broadcastMessage(String.valueOf(content.length));
 
         Inventory inv = Bukkit.createInventory(null,45, Name);
         ItemStack item = new ItemStack(Material.PURPLE_STAINED_GLASS_PANE);
@@ -126,8 +130,8 @@ public class InventoryData {
 
 
     public void Show(){
-        Bukkit.broadcastMessage(String.valueOf(inv.getSize()));
-        Bukkit.broadcastMessage(inv.getItem(0).toString());
+        //Bukkit.broadcastMessage(String.valueOf(inv.getSize()));
+        //Bukkit.broadcastMessage(inv.getItem(0).toString());
 
     }
 

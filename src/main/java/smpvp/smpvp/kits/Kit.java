@@ -42,13 +42,13 @@ public class Kit {
         this.inv.setChestplate(this.chestplate);
         this.inv.setHelmet(this.helmet);
         this.inv.setLeggings(this.leggins);
-        Bukkit.broadcastMessage("HEHEEHE");
+        //Bukkit.broadcastMessage("HEHEEHE");
         if(hand != null){
             this.inv.addItem(new ItemStack[]{this.hand});
         }
         for(ItemStack i: items){
             this.inv.addItem(i);
-            Bukkit.broadcastMessage(i.toString());
+            //Bukkit.broadcastMessage(i.toString());
         }
     }
 }

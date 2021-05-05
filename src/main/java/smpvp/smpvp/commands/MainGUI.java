@@ -63,6 +63,7 @@ public class MainGUI implements CommandExecutor {
         ItemMeta meta = item.getItemMeta();
 
         //Tryb Tworzenia
+        item.setType(Material.DIAMOND_BLOCK);
         meta.setDisplayName(ChatColor.RED + "TRYB TWORZENIA");
         List<String> lore = new ArrayList<String>();
         lore.add(ChatColor.GRAY + "Kliknij żeby przenieść się do areny tworzenia!");
@@ -71,6 +72,7 @@ public class MainGUI implements CommandExecutor {
         inv.setItem(11,item);
 
         //Twórz Kit
+        item.setType(Material.IRON_AXE);
         meta.setDisplayName(ChatColor.RED + "UTWÓRZ KIT");
         lore.set(0,ChatColor.GRAY + "Kliknij, żeby utworzyć własny kit!");
         meta.setLore(lore);
@@ -78,6 +80,7 @@ public class MainGUI implements CommandExecutor {
         inv.setItem(12,item);
 
         //Edytuj Kit
+        item.setType(Material.CRAFTING_TABLE);
         meta.setDisplayName(ChatColor.RED + "EDYTUJ KIT");
         lore.set(0,ChatColor.GRAY + "Kliknij, żeby edytować jeden ze swoich kitów");
         meta.setLore(lore);
@@ -85,13 +88,23 @@ public class MainGUI implements CommandExecutor {
         inv.setItem(13,item);
 
         //Anuluj
+        item.setType(Material.RED_STAINED_GLASS_PANE);
         meta.setDisplayName(ChatColor.RED + "ANULUJ");
-        lore.set(0,ChatColor.GRAY + "§a§lWpisz §4§l/pojedynek <nick>");
+        lore.set(0,ChatColor.GRAY + "Anuluj tworzenie kitu");
         meta.setLore(lore);
         item.setItemMeta(meta);
         inv.setItem(26,item);
 
+        //Wyjście
+        item.setType(Material.SKELETON_SKULL);
+        meta.setDisplayName(ChatColor.RED + "WYJDZ Z TRYBU TWORZENIA");
+        lore.set(0,ChatColor.GRAY + "Lub wpisz /kill");
+        meta.setLore(lore);
+        item.setItemMeta(meta);
+        inv.setItem(15,item);
+
         //Wyzwyij na pojedynek
+        item.setType(Material.DIAMOND_SWORD);
         meta.setDisplayName(ChatColor.RED + "POJEDYNEK");
         lore.set(0,ChatColor.GRAY + "Wpisz /pojedynek <nick>");
         lore.add(ChatColor.GRAY + "żeby walczyć z innym graczem!");

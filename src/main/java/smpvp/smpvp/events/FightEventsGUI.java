@@ -54,19 +54,19 @@ public class FightEventsGUI implements Listener {
 
 
         if(e.getRawSlot() < mykits.size()){
-            p.sendMessage("Kliknąłeś slot " + e.getRawSlot());
+            //p.sendMessage("Kliknąłeś slot " + e.getRawSlot());
             Player target = Bukkit.getPlayer(targetName);
             if(NewArenas.playerIsInCustomArena(target) != null) {
-                p.sendMessage("Przeciwnik już walczy!");
+                p.sendMessage("§4§lPrzeciwnik już walczy!");
                 return;
             }
             if(ArenaManager.playerIsInArena(p)){
-                p.sendMessage("Przeciwnik już walczy!");
+                p.sendMessage("§4§lPrzeciwnik już walczy!");
                 return;
             }
             if(target.getOpenInventory().getType() != InventoryType.CRAFTING)
             {
-                p.sendMessage("Przeciwnik jest zajęty!");
+                p.sendMessage("§4§lPrzeciwnik jest zajęty!");
                 return;
             }
             if(target.getInventory().isEmpty()){
@@ -74,9 +74,9 @@ public class FightEventsGUI implements Listener {
                 Inventory acceptinv =  fight.inventories.get(target);
                 openInventory(target,acceptinv);
                 p.closeInventory();
-                Bukkit.broadcastMessage(target.getName());
-                Bukkit.broadcastMessage(p.getName());
-                Bukkit.broadcastMessage(clickedItem.getItemMeta().getDisplayName());
+                //Bukkit.broadcastMessage(target.getName());
+                //Bukkit.broadcastMessage(p.getName());
+                //Bukkit.broadcastMessage(clickedItem.getItemMeta().getDisplayName());
 
             }
 
@@ -86,7 +86,7 @@ public class FightEventsGUI implements Listener {
             -sprawdzenie czy gracz nie jest w trakcie walki
             -czy gracz nie ignoruje zaproszen
              */
-            p.sendMessage("Wyzwałeś swojego przeciwnika na walke");
+            p.sendMessage("§2§lWyzwałeś swojego przeciwnika na walke");
 
         }
 
@@ -111,14 +111,14 @@ public class FightEventsGUI implements Listener {
         }
         else if(e.getRawSlot() == 3){
             //Teleportuj na dostępną arene
-            Bukkit.broadcastMessage("Grasz arene:"+inv.getItem(1).getItemMeta().getDisplayName());
-            Bukkit.broadcastMessage("Wyzwał Cię:"+inv.getItem(0).getItemMeta().getDisplayName());
+            //Bukkit.broadcastMessage("Grasz arene:"+inv.getItem(1).getItemMeta().getDisplayName());
+            //Bukkit.broadcastMessage("Wyzwał Cię:"+inv.getItem(0).getItemMeta().getDisplayName());
 
             NewArenas.CheckArenas(inv.getItem(1).getItemMeta().getDisplayName(),p,Bukkit.getPlayer(inv.getItem(0).getItemMeta().getDisplayName()));
         }
 
 
-        p.sendMessage("Kliknąłeś slot " + e.getRawSlot());
+        //p.sendMessage("Kliknąłeś slot " + e.getRawSlot());
     }
 
     public void openInventory(final HumanEntity ent, Inventory inv) {

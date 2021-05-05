@@ -106,7 +106,7 @@ public class ArenaManager {
                 //Bukkit.broadcastMessage("Restartuje itemki gracza:"+arena.players.get(i));
                 try {
                     resetPlayer(Bukkit.getPlayer(arena.players.get(i)));
-                    Bukkit.broadcastMessage(Bukkit.getPlayer(arena.players.get(i)).getName());
+                    //Bukkit.broadcastMessage(Bukkit.getPlayer(arena.players.get(i)).getName());
                     playersInArenas.remove(Bukkit.getPlayer(arena.players.get(i)).getName());
                 }
                 catch(NullPointerException err){
@@ -127,13 +127,13 @@ public class ArenaManager {
 
     public static String customArenaUpdate(Player p) {
         Arena arena = NewArenas.customArenas.get(p);
-        Bukkit.broadcastMessage("Restartuje customową arene");
+        //Bukkit.broadcastMessage("Restartuje customową arene");
         if (arena.players.size() > 0){
             for (int i=0; i<arena.players.size(); i++){
                 //Bukkit.broadcastMessage("Restartuje itemki gracza:"+arena.players.get(i));
                 try {
                     resetPlayer(Bukkit.getPlayer(arena.players.get(i)));
-                    Bukkit.broadcastMessage(Bukkit.getPlayer(arena.players.get(i)).getName());
+                    //Bukkit.broadcastMessage(Bukkit.getPlayer(arena.players.get(i)).getName());
                     NewArenas.customArenas.remove(Bukkit.getPlayer(arena.players.get(i)),arena);
                 }
                 catch(NullPointerException err){
@@ -168,10 +168,10 @@ public class ArenaManager {
 
 
     public static boolean playerIsInArena(Player p) {
-        Bukkit.broadcastMessage("ZWYKLA:");
-        for (Map.Entry me : playersInArenas.entrySet()) {
+        //Bukkit.broadcastMessage("ZWYKLA:");
+        /*for (Map.Entry me : playersInArenas.entrySet()) {
             Bukkit.broadcastMessage("Key: "+me.getKey() + " & Value: " + me.getValue());
-        }
+        }*/
 
         if(playersInArenas.get(p.getName())!= null)
         {

@@ -33,19 +33,19 @@ public class openMyKits implements CommandExecutor {
 
         Player player = (Player) sender;
         if(NewArenas.playerIsInCustomArena(player)!=null) {
-            player.sendMessage("Nie możesz tego użyć podczas walki|customowa");
+            player.sendMessage("§4§lNie możesz tego użyć podczas walki");
             return false;
         }
         else if(ArenaManager.playerIsInArena(player)) {
-            player.sendMessage("Nie możesz tego użyć podczas walki|zwykla");
+            player.sendMessage("§4§lNie możesz tego użyć podczas walki");
             return false;
         }
         else if(player.getGameMode() != GameMode.CREATIVE){
-            player.sendMessage("Musisz być w trybie tworzenia!");
+            player.sendMessage("§4§lMusisz być w trybie tworzenia!");
         }
         else if(label.equalsIgnoreCase("mojekity")){
             if(!(sender instanceof Player)){
-                sender.sendMessage("Musisz być graczem!");
+                sender.sendMessage("§4§lMusisz być graczem!");
                 return true;
             }
             //Otwórz gui z kitami
@@ -62,7 +62,7 @@ public class openMyKits implements CommandExecutor {
     }
 
     public void createInv(Player p){
-        inv = Bukkit.createInventory(null,27, ChatColor.GREEN+"Kity "+ p.getName());
+        inv = Bukkit.createInventory(null,27, ChatColor.DARK_BLUE+"Kity "+ p.getName());
 
         List<String> mykits = plugin.kitlist.getConfig().getStringList(p.getName()+".name");
         ItemStack item = new ItemStack(Material.BLUE_STAINED_GLASS_PANE);

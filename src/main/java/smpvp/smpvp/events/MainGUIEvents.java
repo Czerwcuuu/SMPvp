@@ -1,5 +1,8 @@
 package smpvp.smpvp.events;
 
+import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -11,6 +14,8 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import smpvp.smpvp.SMPvp;
 import smpvp.smpvp.Statics;
+import smpvp.smpvp.arenas.ArenaManager;
+import smpvp.smpvp.arenas.NewArenas;
 import smpvp.smpvp.commands.MainGUI;
 import smpvp.smpvp.commands.openKitGui;
 import smpvp.smpvp.inventories.InventoryData;
@@ -47,7 +52,19 @@ public class MainGUIEvents implements Listener {
 
 
         if(e.getRawSlot() == 11){
-            //Przenieś do trybu tworzenia
+            //Przenieś do trybu tworzenia x:-18 y:199 z:-239
+            if(NewArenas.playerIsInCustomArena(p)!=null) {
+                p.sendMessage("§4§lNie możesz tego użyć podczas walki");
+                return;
+            }
+            else if(ArenaManager.playerIsInArena(p)) {
+                p.sendMessage("§4§lNie możesz tego użyć podczas walki|zwykla");
+                return;
+            }
+            else{
+                p.teleport(new Location(p.getWorld(),-18,199,-239));
+            }
+
         }
         if(e.getRawSlot() == 12){
             ((Player) e.getWhoClicked()).performCommand("kit");
@@ -58,12 +75,16 @@ public class MainGUIEvents implements Listener {
         if(e.getRawSlot() == 14){
             ((Player) e.getWhoClicked()).sendMessage("§a§lWpisz §4§l/pojedynek <nick>");
         }
+        if(e.getRawSlot() == 15){
+            p.setHealth(0);
+            ArenaManager.resetPlayer(p);
+        }
         else if(e.getRawSlot() == 26){
             p.closeInventory();
         }
 
 
-        p.sendMessage("Kliknąłeś slot " + e.getRawSlot());
+        //p.sendMessage("Kliknąłeś slot " + e.getRawSlot());
     }
 
     public void getKit(String kitName,Player p){

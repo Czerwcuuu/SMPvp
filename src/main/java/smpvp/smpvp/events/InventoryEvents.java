@@ -38,7 +38,12 @@ public class InventoryEvents implements Listener {
     public void onInventoryClick (InventoryClickEvent e) throws IOException {
         Inventory inv = openKitGui.inventories.get(e.getWhoClicked());
         if (e.getInventory() != inv) return;
-        if(e.getRawSlot() < Statics.EQUIPABLE_SLOTS || e.getRawSlot() == 18 || e.getRawSlot() == 43 || e.getRawSlot() == 44){
+        if(e.getRawSlot() < Statics.EQUIPABLE_SLOTS || e.getRawSlot() == 18 || e.getRawSlot() == 43 || e.getRawSlot() == 44 ||
+                (e.getRawSlot() >= 4 && e.getRawSlot() <=8) ||
+                (e.getRawSlot() >= 13 && e.getRawSlot() <=17) ||
+                (e.getRawSlot() >= 36 && e.getRawSlot() <43))
+        {
+
             e.setCancelled(true);
         }
         final ItemStack clickedItem = e.getCurrentItem();
@@ -65,7 +70,7 @@ public class InventoryEvents implements Listener {
         }
 
 
-        p.sendMessage("Kliknąłeś slot " + e.getRawSlot());
+        //p.sendMessage("Kliknąłeś slot " + e.getRawSlot());
     }
 
     public void getKit(String kitName,Player p){

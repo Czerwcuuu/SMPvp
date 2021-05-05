@@ -32,18 +32,18 @@ public class fight implements CommandExecutor {
         if(sender instanceof Player) {
             Player player = (Player) sender;
             if(NewArenas.playerIsInCustomArena(player)!=null) {
-                player.sendMessage("Nie możesz tego użyć podczas walki|customowa");
+                player.sendMessage("§4§lNie możesz tego użyć podczas walki|customowa");
                 return false;
             }
             else if(ArenaManager.playerIsInArena(player)) {
-                player.sendMessage("Nie możesz tego użyć podczas walki|zwykla");
+                player.sendMessage("§4§lNie możesz tego użyć podczas walki|zwykla");
                 return false;
             }
             else if (arg.length == 0) {
-                player.sendMessage("Wprowadź nick gracza");
+                player.sendMessage("§4§lWprowadź nick gracza");
             }
             else if(player.getGameMode() != GameMode.SURVIVAL){
-                player.sendMessage("Nie możesz tego użyć w trybie tworzenia!");
+                player.sendMessage("§4§lNie możesz tego użyć w trybie tworzenia!");
             }
             else {
                 Player target = Bukkit.getPlayerExact(arg[0]);
@@ -51,7 +51,7 @@ public class fight implements CommandExecutor {
                     createInv(player,target);
                     openInventory(player);
                 } else {
-                    player.sendMessage("Nie ma takiego gracza!");
+                    player.sendMessage("§4§lNie ma takiego gracza!");
                 }
             }
 
@@ -68,7 +68,7 @@ public class fight implements CommandExecutor {
     }
 
     public void createInv(Player p, Player target){
-        inv = Bukkit.createInventory(null,36, ChatColor.GREEN+"Wyzwij gracza "+ target.getName());
+        inv = Bukkit.createInventory(null,36, ChatColor.DARK_BLUE+"Wyzwij gracza "+ target.getName());
 
         List<String> mykits = plugin.kitlist.getConfig().getStringList(p.getName()+".name");
         ItemStack item = new ItemStack(Material.BLUE_STAINED_GLASS_PANE);

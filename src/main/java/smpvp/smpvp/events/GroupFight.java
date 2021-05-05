@@ -115,18 +115,18 @@ public class GroupFight implements Listener {
             //Bukkit.broadcastMessage("Zabójca nie istnieje");
             Player player = e.getEntity();
             if(ArenaManager.playerIsInArena(player)){
-                Bukkit.broadcastMessage("Samobojstwo, zwykła arena");
+                //Bukkit.broadcastMessage("Samobojstwo, zwykła arena");
                 //jezeli zabojca nie istnieje, a gracz jest na arenie restartuj tylko jego i arene
                 ArenaManager.resetPlayer(player);
                 ArenaManager.arenaUpdate(player);
             }
             else if(NewArenas.playerIsInCustomArena(player) != null){
-                Bukkit.broadcastMessage("Samobojstwo, customowa arena");
+                //Bukkit.broadcastMessage("Samobojstwo, customowa arena");
                 ArenaManager.resetPlayer(player);
                 ArenaManager.customArenaUpdate(player);
             }
             else{
-                Bukkit.broadcastMessage("Samobojstwo, gracza nie ma na arenie");
+                //Bukkit.broadcastMessage("Samobojstwo, gracza nie ma na arenie");
                 //jezeli zabojca nie istnieje, a gracz nie jest na arenie, restartuj tylko jego
                 ArenaManager.resetPlayer(player);
             }

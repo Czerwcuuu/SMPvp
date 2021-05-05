@@ -47,14 +47,14 @@ public class MyKitsEvents implements Listener {
         List<String> mykits = plugin.kitlist.getConfig().getStringList(p.getName()+".name");
 
         if(e.getRawSlot() < mykits.size()){
-            p.sendMessage("Kliknąłeś slot " + e.getRawSlot());
+            //p.sendMessage("Kliknąłeś slot " + e.getRawSlot());
             p.closeInventory();
             InventoryData.RestoreInventory(clickedItem.getItemMeta().getDisplayName(),p);
             newInv = InventoryData.inventories.get(p);
             p.openInventory(newInv);
         }
 
-        p.sendMessage("Kliknąłeś slot " + e.getRawSlot());
+        //p.sendMessage("Kliknąłeś slot " + e.getRawSlot());
     }
 
     @EventHandler
@@ -62,7 +62,12 @@ public class MyKitsEvents implements Listener {
         newInv = InventoryData.inventories.get(e.getView().getPlayer());
         if (e.getInventory() != newInv) return;
 
-        if(e.getRawSlot() < Statics.EQUIPABLE_SLOTS|| e.getRawSlot() == 18 || e.getRawSlot() >= Statics.BUTTONS_MIN){
+        if(e.getRawSlot() < Statics.EQUIPABLE_SLOTS || e.getRawSlot() == 18 || e.getRawSlot() == 43 || e.getRawSlot() == 44 ||
+                (e.getRawSlot() >= 4 && e.getRawSlot() <=8) ||
+                (e.getRawSlot() >= 13 && e.getRawSlot() <=17) ||
+                (e.getRawSlot() >= 36 && e.getRawSlot() <43))
+        {
+
             e.setCancelled(true);
         }
         final ItemStack clickedItem = e.getCurrentItem();
@@ -80,6 +85,7 @@ public class MyKitsEvents implements Listener {
         }
         else if(e.getRawSlot() == Statics.GETKIT_BUTTON){
             //Nadaj kit
+
             getCustomKit(p,newInv);
         }
 
@@ -92,7 +98,7 @@ public class MyKitsEvents implements Listener {
             p.closeInventory();
         }
 
-        p.sendMessage("Kliknąłeś slot " + e.getRawSlot());
+        //p.sendMessage("Kliknąłeś slot " + e.getRawSlot());
         }
 
 
@@ -104,28 +110,12 @@ public class MyKitsEvents implements Listener {
         for (int i=Statics.EQREST_MIN; i<Statics.EQREST_MAX; i++){
             if(inv.getItem(i) != null){
                 inventoryList.add(inv.getItem(i));
-                Bukkit.broadcastMessage(inv.getItem(i).toString());
+                //Bukkit.broadcastMessage(inv.getItem(i).toString());
             }
 
         }
 
         return new Kit(playerInv,inv.getItem(12), inv.getItem(9), inv.getItem(10), inv.getItem(11),inventoryList);
-    }
-
-    boolean IsEquipable(ItemStack i)
-    {
-        ItemStack test = new ItemStack(i.getType());
-
-        try
-        {
-            test.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
-        }
-        catch(IllegalArgumentException e)
-        {
-            return false;
-        }
-
-        return true;
     }
 
 
