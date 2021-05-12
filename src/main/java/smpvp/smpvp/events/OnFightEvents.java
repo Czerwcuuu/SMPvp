@@ -22,7 +22,7 @@ import smpvp.smpvp.arenas.ArenaManager;
 import smpvp.smpvp.arenas.NewArenas;
 import smpvp.smpvp.kits.Kits;
 
-public class GroupFight implements Listener {
+public class OnFightEvents implements Listener {
 
     SMPvp plugin = SMPvp.getInstance();
 

@@ -34,17 +34,17 @@ public final class SMPvp extends JavaPlugin implements Listener {
         this.getCommand("smpvp").setExecutor(new setupArena());
         this.getCommand("kit").setExecutor(new openKitGui());
         this.getCommand("mojekity").setExecutor(new openMyKits());
-        this.getCommand("pojedynek").setExecutor(new fight());
-        this.getCommand("pvp").setExecutor(new MainGUI());
-        this.getCommand("pojedynek").setTabCompleter(new fightTabCompletion());
+        this.getCommand("pojedynek").setExecutor(new acceptationGUI());
+        this.getCommand("pvp").setExecutor(new PvpGUI());
+        this.getCommand("pojedynek").setTabCompleter(new acceptationTabCompletion());
         this.getConfig().options().copyDefaults(true);
         this.saveConfig();
 
 
         Config.setup();
-        Bukkit.getPluginManager().registerEvents(new GroupFight(), this);
-        Bukkit.getPluginManager().registerEvents(new FightEventsGUI(), this);
-        Bukkit.getPluginManager().registerEvents(new InventoryEvents(), this);
+        Bukkit.getPluginManager().registerEvents(new OnFightEvents(), this);
+        Bukkit.getPluginManager().registerEvents(new AcceptationEvents(), this);
+        Bukkit.getPluginManager().registerEvents(new KitCreationINV_Events(), this);
         Bukkit.getPluginManager().registerEvents(new MyKitsEvents(), this);
         Bukkit.getPluginManager().registerEvents(new MainGUIEvents(), this);
     }

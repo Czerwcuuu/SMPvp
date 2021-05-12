@@ -1,7 +1,5 @@
 package smpvp.smpvp.events;
 
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -13,15 +11,12 @@ import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import smpvp.smpvp.SMPvp;
-import smpvp.smpvp.Statics;
 import smpvp.smpvp.arenas.ArenaManager;
 import smpvp.smpvp.arenas.NewArenas;
-import smpvp.smpvp.commands.MainGUI;
+import smpvp.smpvp.commands.PvpGUI;
 import smpvp.smpvp.commands.openKitGui;
-import smpvp.smpvp.inventories.InventoryData;
 
 import java.io.IOException;
-import java.util.List;
 
 public class MainGUIEvents implements Listener {
     SMPvp plugin = SMPvp.getInstance();
@@ -38,7 +33,7 @@ public class MainGUIEvents implements Listener {
 
     @EventHandler
     public void onInventoryClick (InventoryClickEvent e) throws IOException {
-        Inventory inv = MainGUI.inventories.get(e.getWhoClicked());
+        Inventory inv = PvpGUI.inventories.get(e.getWhoClicked());
         if (e.getInventory() != inv) return;
         e.setCancelled(true);
 

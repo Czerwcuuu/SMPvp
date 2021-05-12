@@ -63,7 +63,7 @@ public class InventoryData {
             }
         }
         c.save(new File(plugin.getDataFolder()+"/kits", name+".yml"));
-
+        p.sendMessage("§a§lZapisano pomyślnie!");
         //debugs
         AllKits.AddKit(name,p.getName());
         //Bukkit.broadcastMessage("Kit gracza:"+AllKits.getKitName(p.getName()));

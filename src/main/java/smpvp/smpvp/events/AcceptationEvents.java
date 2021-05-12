@@ -7,28 +7,24 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import smpvp.smpvp.SMPvp;
-import smpvp.smpvp.Statics;
-import smpvp.smpvp.arenas.Arena;
 import smpvp.smpvp.arenas.ArenaManager;
 import smpvp.smpvp.arenas.NewArenas;
-import smpvp.smpvp.commands.fight;
-import smpvp.smpvp.inventories.InventoryData;
+import smpvp.smpvp.commands.acceptationGUI;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
-public class FightEventsGUI implements Listener {
+public class AcceptationEvents implements Listener {
     SMPvp plugin = SMPvp.getInstance();
 
     @EventHandler
     public void onInventoryClick (InventoryClickEvent e) throws IOException {
-        Inventory inv = fight.inventories.get(e.getWhoClicked());
+        Inventory inv = acceptationGUI.inventories.get(e.getWhoClicked());
 
         //anuluj przeciagnie
         if (e.getInventory() != inv) return;
@@ -70,8 +66,8 @@ public class FightEventsGUI implements Listener {
                 return;
             }
             if(target.getInventory().isEmpty()){
-                fight.acceptationInv(target,p,clickedItem.getItemMeta().getDisplayName());
-                Inventory acceptinv =  fight.inventories.get(target);
+                acceptationGUI.acceptationInv(target,p,clickedItem.getItemMeta().getDisplayName());
+                Inventory acceptinv =  acceptationGUI.inventories.get(target);
                 openInventory(target,acceptinv);
                 p.closeInventory();
                 //Bukkit.broadcastMessage(target.getName());
@@ -94,7 +90,7 @@ public class FightEventsGUI implements Listener {
 
     @EventHandler
     public void onAcceptEvent (InventoryClickEvent e) throws IOException {
-        Inventory inv = fight.inventories.get(e.getWhoClicked());
+        Inventory inv = acceptationGUI.inventories.get(e.getWhoClicked());
         if (e.getInventory() != inv) return;
         e.setCancelled(true);
 
@@ -103,18 +99,19 @@ public class FightEventsGUI implements Listener {
         // verify current item is not null
         if (clickedItem == null || clickedItem.getType() == Material.AIR) return;
         final Player p = (Player) e.getWhoClicked();
-
+        final Player t = Bukkit.getPlayer(inv.getItem(0).getItemMeta().getDisplayName());
 
 
         if(e.getRawSlot() == 5){
             p.closeInventory();
+            t.sendMessage("§4§lPrzeciwnik odrzucił propozycje!");
         }
         else if(e.getRawSlot() == 3){
             //Teleportuj na dostępną arene
             //Bukkit.broadcastMessage("Grasz arene:"+inv.getItem(1).getItemMeta().getDisplayName());
             //Bukkit.broadcastMessage("Wyzwał Cię:"+inv.getItem(0).getItemMeta().getDisplayName());
 
-            NewArenas.CheckArenas(inv.getItem(1).getItemMeta().getDisplayName(),p,Bukkit.getPlayer(inv.getItem(0).getItemMeta().getDisplayName()));
+            NewArenas.CheckArenas(inv.getItem(1).getItemMeta().getDisplayName(),p,t);
         }
 
 

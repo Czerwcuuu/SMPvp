@@ -60,7 +60,7 @@ public class Kits {
         List<ItemStack> list = new ArrayList();
         list.add(new ItemStack(enchantItem(Material.DIAMOND_SWORD, Enchantment.DAMAGE_ALL, 5)));
 
-        for(int i = 0; i < 17; ++i) {
+        for (int i = 0; i < 17; ++i) {
             list.add(new ItemStack(createPotion(PotionType.INSTANT_HEAL, 2, true).toItemStack(1)));
         }
 
@@ -85,7 +85,7 @@ public class Kits {
         list.add(new ItemStack(createPotion(PotionType.POISON, 1, true).toItemStack(2)));
         list.add(new ItemStack(Material.COOKED_BEEF, 64));
 
-        for(int i = 0; i < 22; ++i) {
+        for (int i = 0; i < 22; ++i) {
             list.add(new ItemStack(createPotion(PotionType.INSTANT_HEAL, 2, true).toItemStack(1)));
         }
 
@@ -93,81 +93,72 @@ public class Kits {
         return new Kit(inv, new ItemStack(twoEnchants(Material.NETHERITE_BOOTS, Enchantment.PROTECTION_ENVIRONMENTAL, Enchantment.DURABILITY, 4, 3)), new ItemStack(twoEnchants(Material.NETHERITE_HELMET, Enchantment.PROTECTION_ENVIRONMENTAL, Enchantment.DURABILITY, 4, 3)), new ItemStack(twoEnchants(Material.NETHERITE_CHESTPLATE, Enchantment.PROTECTION_ENVIRONMENTAL, Enchantment.DURABILITY, 4, 3)), new ItemStack(twoEnchants(Material.NETHERITE_LEGGINGS, Enchantment.PROTECTION_ENVIRONMENTAL, Enchantment.DURABILITY, 4, 3)), new ItemStack(twoEnchants(Material.NETHERITE_SWORD, Enchantment.DAMAGE_ALL, Enchantment.FIRE_ASPECT, 5, 2)), list);
     }
 
-    public static Kit getKit(String kitName, PlayerInventory inv) {
-        byte var3 = -1;
-        switch(kitName.hashCode()) {
-            case -1649392549:
-                if (kitName.equals("szlachic")) {
-                    var3 = 4;
-                }
-                break;
-            case -1392494084:
-                if (kitName.equals("bestia")) {
-                    var3 = 1;
-                }
-                break;
-            case -1102475803:
-                if (kitName.equals("litwin")) {
-                    var3 = 6;
-                }
-                break;
-            case -799045229:
-                if (kitName.equals("paladyn")) {
-                    var3 = 8;
-                }
-                break;
-            case -189451818:
-                if (kitName.equals("wojownik")) {
-                    var3 = 2;
-                }
-                break;
-            case 95865748:
-                if (kitName.equals("drwal")) {
-                    var3 = 9;
-                }
-                break;
-            case 103164594:
-                if (kitName.equals("lowca")) {
-                    var3 = 5;
-                }
-                break;
-            case 510932560:
-                if (kitName.equals("lucznik")) {
-                    var3 = 0;
-                }
-                break;
-            case 1104784079:
-                if (kitName.equals("egzorcysta")) {
-                    var3 = 7;
-                }
-                break;
-            case 1864997861:
-                if (kitName.equals("samuraj")) {
-                    var3 = 3;
-                }
-        }
+    public static Kit diax(PlayerInventory inv) {
+        List<ItemStack> list = new ArrayList();
+        list.add(new ItemStack(Material.GOLDEN_APPLE, 3));
 
-        switch(var3) {
-            case 0:
-                return lucznik(inv);
-            case 1:
-                return bestia(inv);
-            case 2:
-                return wojownik(inv);
-            case 3:
-                return samuraj(inv);
-            case 4:
+        return new Kit(inv, new ItemStack(twoEnchants(Material.DIAMOND_BOOTS, Enchantment.PROTECTION_ENVIRONMENTAL, Enchantment.DURABILITY, 4, 3)), new ItemStack(twoEnchants(Material.DIAMOND_HELMET, Enchantment.PROTECTION_ENVIRONMENTAL, Enchantment.DURABILITY, 4, 3)), new ItemStack(twoEnchants(Material.DIAMOND_CHESTPLATE, Enchantment.PROTECTION_ENVIRONMENTAL, Enchantment.DURABILITY, 4, 3)), new ItemStack(twoEnchants(Material.DIAMOND_LEGGINGS, Enchantment.PROTECTION_ENVIRONMENTAL, Enchantment.DURABILITY, 4, 3)), new ItemStack(twoEnchants(Material.DIAMOND_SWORD, Enchantment.DAMAGE_ALL, Enchantment.DURABILITY, 4, 3)), list);
+    }
+
+    public static Kit szaleniec(PlayerInventory inv) {
+        List<ItemStack> list = new ArrayList();
+        list.add(new ItemStack(Material.GOLDEN_APPLE, 3));
+        for (int i = 0; i < 9; ++i) {
+            list.add(new ItemStack(createPotion(PotionType.INSTANT_HEAL, 2, true).toItemStack(1)));
+        }
+        list.add(new ItemStack(createPotion(PotionType.POISON, 2, true).toItemStack(2)));
+        list.add(new ItemStack(createPotion(PotionType.INSTANT_DAMAGE, 2, true).toItemStack(2)));
+        list.add(new ItemStack(createPotion(PotionType.SLOWNESS, 1, true).toItemStack(1)));
+        return new Kit(inv, new ItemStack(twoEnchants(Material.DIAMOND_BOOTS, Enchantment.PROTECTION_ENVIRONMENTAL, Enchantment.DURABILITY, 4, 3)), new ItemStack(twoEnchants(Material.DIAMOND_HELMET, Enchantment.PROTECTION_ENVIRONMENTAL, Enchantment.DURABILITY, 4, 3)), new ItemStack(twoEnchants(Material.DIAMOND_CHESTPLATE, Enchantment.PROTECTION_ENVIRONMENTAL, Enchantment.DURABILITY, 4, 3)), new ItemStack(twoEnchants(Material.DIAMOND_LEGGINGS, Enchantment.PROTECTION_ENVIRONMENTAL, Enchantment.DURABILITY, 4, 3)), new ItemStack(twoEnchants(Material.DIAMOND_SWORD, Enchantment.DAMAGE_ALL, Enchantment.DURABILITY, 4, 3)), list);
+    }
+
+    public static Kit lapy(PlayerInventory inv) {
+        List<ItemStack> list = new ArrayList();
+        list.add(new ItemStack(createPotion(PotionType.SPEED, 2, false).toItemStack(3)));
+        return new Kit(inv, new ItemStack(Material.CREEPER_HEAD), new ItemStack(Material.AIR), new ItemStack(Material.AIR), new ItemStack(Material.AIR), new ItemStack(Material.AIR), list);
+    }
+
+    public static Kit getKit(String kitName, PlayerInventory inv) {
+        switch (kitName) {
+            case "szlachcic": {
                 return szlachic(inv);
-            case 5:
-                return lowca(inv);
-            case 6:
+            }
+            case "bestia": {
+                return bestia(inv);
+            }
+            case "litwin": {
                 return litwin(inv);
-            case 7:
-                return egzorcysta(inv);
-            case 8:
+            }
+            case "paladyn": {
                 return paladyn(inv);
-            case 9:
+            }
+            case "wojownik": {
+                return wojownik(inv);
+            }
+            case "drwal": {
                 return drwal(inv);
+            }
+            case "lowca": {
+                return lowca(inv);
+            }
+            case "lucznik": {
+                return lucznik(inv);
+            }
+            case "egzorcysta": {
+                return egzorcysta(inv);
+            }
+            case "samuraj": {
+                return samuraj(inv);
+            }
+            case "diax": {
+                return diax(inv);
+            }
+            case "lapy": {
+                return lapy(inv);
+            }
+            case "szaleniec": {
+                return szaleniec(inv);
+            }
             default:
                 return bestia(inv);
         }

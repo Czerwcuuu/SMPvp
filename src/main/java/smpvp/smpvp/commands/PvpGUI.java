@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class MainGUI implements CommandExecutor {
+public class PvpGUI implements CommandExecutor {
     SMPvp plugin = SMPvp.getInstance();
     public static HashMap<Player, Inventory> inventories = new HashMap<>();
 

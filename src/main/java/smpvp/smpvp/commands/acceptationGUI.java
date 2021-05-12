@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class fight implements CommandExecutor {
+public class acceptationGUI implements CommandExecutor {
 
     SMPvp plugin = SMPvp.getInstance();
     public static HashMap<Player, Inventory> inventories = new HashMap<>();
@@ -101,9 +101,11 @@ public class fight implements CommandExecutor {
 
         meta.setDisplayName(player.getName());
         List<String> lore = new ArrayList<String>();
+        int kills = SMPvp.getInstance().data.getConfig().getInt("kda."+player.getUniqueId().toString()+".kills");
+        int death = SMPvp.getInstance().data.getConfig().getInt("kda."+player.getUniqueId().toString()+".death");
         lore.add(ChatColor.GREEN + "Twój przeciwnik");
-        lore.add(ChatColor.GREEN + "Zabójstwa: 0");
-        lore.add(ChatColor.GREEN + "Smierci: 0");
+        lore.add(ChatColor.GREEN + "Zabójstwa: "+kills);
+        lore.add(ChatColor.GREEN + "Smierci: "+death);
         meta.setLore(lore);
         item.setItemMeta(meta);
         inv.setItem(0,item);
