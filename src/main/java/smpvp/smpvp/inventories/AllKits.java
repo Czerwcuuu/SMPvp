@@ -1,14 +1,8 @@
 package smpvp.smpvp.inventories;
 
-import org.bukkit.Bukkit;
-import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Player;
 import smpvp.smpvp.SMPvp;
-import smpvp.smpvp.configs.Config;
 
-import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 //Dodaje do listy kitów w pliku kits.yml

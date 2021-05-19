@@ -4,16 +4,12 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.HumanEntity;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import smpvp.smpvp.SMPvp;
 import smpvp.smpvp.Statics;
-import smpvp.smpvp.configs.Config;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,6 +24,8 @@ public class InventoryData {
     public Inventory inv;
     public Player p;
     public static HashMap<Player,Inventory> inventories = new HashMap<>();
+    public static HashMap<Player,Inventory> admininventories = new HashMap<>();
+    public static HashMap<String,Inventory> arenasinventories = new HashMap<>();
     public boolean editing = false;
 
 
@@ -41,32 +39,41 @@ public class InventoryData {
         SaveInventory(custom);
     }
 
-
+    //new InventoryData(e.getView().getTitle(),e.getInventory(),p,true,false);
     void SaveInventory(boolean custom) throws IOException {
         YamlConfiguration c = new YamlConfiguration();
         c.set("inventory.content", inv.getContents());
 
-        List<String> ConfigList = plugin.kitlist.getConfig().getStringList(p.getName()+".name");
-
-        if(plugin.kitlist.getConfig().getStringList(p.getName()+".name").size()>=26)
-        {
-            p.sendMessage("§4§lNie możesz zapisać więcej kitów!");
-        }
-
-        if(ConfigList.contains(name)){
-            if(!editing){
-            name = name+1;
-            }
-            else{
-                p.sendMessage("§a§lZapisano pomyślnie!");
-            }
-        }
         if(custom){
+            List<String> ConfigList = plugin.kitlist.getConfig().getStringList(p.getName()+".name");
+
+            if(plugin.kitlist.getConfig().getStringList(p.getName()+".name").size()>=26)
+            {
+                p.sendMessage("§4§lNie możesz zapisać więcej kitów!");
+            }
+
+            if(ConfigList.contains(name)){
+                if(!editing){
+                    name = name+1;
+                }
+            }
             c.save(new File(plugin.getDataFolder()+"/kits", name+".yml"));
             AllKits.AddKit(name,p.getName());
             p.sendMessage("§a§lZapisano pomyślnie!");
         }
-        else{
+        if(!custom){
+            List<String> ConfigList = plugin.adminKitList.getConfig().getStringList("name");
+
+            if(plugin.adminKitList.getConfig().getStringList("name").size()>=26)
+            {
+                p.sendMessage("§4§lNie możesz zapisać więcej kitów!");
+            }
+
+            if(ConfigList.contains(name)){
+                if(!editing){
+                    name = name+1;
+                }
+            }
             c.save(new File(plugin.getDataFolder()+"/adminkits", name+".yml"));
             AdminAllKits.AddKit(name);
             p.sendMessage("§a§lZapisano pomyślnie, zmień nazwę w kitu w configu. Inaczej będzie:"+name);
@@ -90,7 +97,6 @@ public class InventoryData {
         plugin.kitlist.saveConfig();
 
     }
-
     @SuppressWarnings("unchecked")
     public static void RestoreInventory(String Name,Player p,boolean custom){
         //Bukkit.broadcastMessage(Name+".yml");
@@ -139,7 +145,17 @@ public class InventoryData {
             }
 
         }
-        inventories.put(p,inv);
+        if(custom){
+            Bukkit.broadcastMessage("put into inventories");
+            inventories.put(p,inv);
+        }
+        if(!custom){
+            Bukkit.broadcastMessage("put into admininventories");
+            admininventories.put(p,inv);
+            arenasinventories.put(Name,inv);
+        }
+        Bukkit.broadcastMessage(admininventories.toString());
+        Bukkit.broadcastMessage(inventories.toString());
     }
 
 

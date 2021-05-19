@@ -74,6 +74,7 @@ public class PlayerKitsEvents implements Listener {
         if(e.getRawSlot() == Statics.SAVE_BUTTON){
             InventoryData inventoryData = new InventoryData(e.getView().getTitle(),e.getInventory(),p,true,true);
             p.closeInventory();
+            p.sendMessage("ekwipunek playerkitevents");
         }
         else if(e.getRawSlot() == Statics.GETKIT_BUTTON){
             //Nadaj kit

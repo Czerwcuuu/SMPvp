@@ -1,7 +1,7 @@
 package smpvp.smpvp.events;
 
 import java.util.ArrayList;
-import java.util.Iterator;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
@@ -15,12 +15,10 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.PlayerInventory;
-import org.bukkit.potion.PotionEffect;
 import smpvp.smpvp.SMPvp;
 import smpvp.smpvp.arenas.Arena;
 import smpvp.smpvp.arenas.ArenaManager;
 import smpvp.smpvp.arenas.NewArenas;
-import smpvp.smpvp.kits.Kits;
 
 public class OnFightEvents implements Listener {
 
@@ -54,12 +52,13 @@ public class OnFightEvents implements Listener {
                     if (line0.equals("1 VS 1") && line2.equals("[WCISNIJ]")) {
                         p.teleport(lobbyAllLocation);
                     }
-
-                    if (ArenaManager.arenas.containsKey(line1)) {
-                        ArenaManager.joinArena(p, line1, sign);
+                    else{
+                        ArenaManager.joinArena(p,line1,sign);
                     }
+                        //ArenaManager.joinArena(p, line1, sign);
 
-                    if (line1.equals("BESTIA")) {
+
+                    /*if (line1.equals("BESTIA")) {
                         Kits.bestia(inv);
                         this.RandomTeleport(p);
                     }
@@ -77,7 +76,7 @@ public class OnFightEvents implements Listener {
                     if (line1.equals("SAMURAJ")) {
                         Kits.samuraj(inv);
                         this.RandomTeleport(p);
-                    }
+                    }*/
                 }
             }
         } catch (NullPointerException var11) {

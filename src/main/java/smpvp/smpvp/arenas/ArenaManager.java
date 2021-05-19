@@ -1,22 +1,28 @@
 package smpvp.smpvp.arenas;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.potion.PotionEffect;
-import smpvp.smpvp.kits.Kits;
+import smpvp.smpvp.SMPvp;
+import smpvp.smpvp.Statics;
+import smpvp.smpvp.events.playerkits.PlayerKitsEvents;
+import smpvp.smpvp.inventories.InventoryData;
+import smpvp.smpvp.kits.Kit;
 
 public class ArenaManager {
     public static HashMap<String, Arena> arenas = new HashMap();
     public static HashMap<String, Arena> playersInArenas = new HashMap();
     public static HashMap<Arena, Sign> arenasSigns = new HashMap();
+    private static SMPvp plugin = SMPvp.getInstance();
+
 
     public static Arena createArena(int ID, String name, int maxPlayers, List<Location> loc, String kit) {
         Arena arena = new Arena(ID, name, maxPlayers, loc, kit);
@@ -30,9 +36,83 @@ public class ArenaManager {
         return arena;
     }
 
+    public static List<Location> getFreeLocation(){
+        Location loc = null;
+        boolean found = false;
+        for(int i = 0; i < plugin.freearenas.getConfig().getKeys(false).size(); i++) {
+            //Bukkit.broadcastMessage("Sprawdzam arene:"+i);
+            float yaw = (float)plugin.freearenas.getConfig().getLong(i + ".look");
+            int currentPlayer = plugin.freearenas.getConfig().getInt(i + ".currentplayer");
+            World world = Bukkit.getWorld("world");
+            List<Location> allSpawnLocations = new ArrayList();
+            List<String> locationList = plugin.freearenas.getConfig().getStringList(i + ".location");
+
+            /*for(String s: locationList) {
+
+                String x = s.split("\\.")[0];
+                String y = s.split("\\.")[1];
+                String z = s.split("\\.")[2];
+                Bukkit.broadcastMessage(String.valueOf(yaw));
+                yaw = -yaw;
+                allSpawnLocations.add(new Location(world, (double)Integer.parseInt(x), (double)Integer.parseInt(y), (double)Integer.parseInt(z), yaw, 0.0F));
+                Bukkit.getLogger().info("NOWE"+x + " " + y + " " + z);
+            }*/
+            for(Iterator var8 = locationList.iterator(); var8.hasNext(); yaw = -yaw) {
+                String s = (String)var8.next();
+                String x = s.split("\\.")[0];
+                String y = s.split("\\.")[1];
+                String z = s.split("\\.")[2];
+                //Bukkit.broadcastMessage(String.valueOf(yaw));
+                allSpawnLocations.add(new Location(world, (double)Integer.parseInt(x), (double)Integer.parseInt(y), (double)Integer.parseInt(z), yaw, 0.0F));
+                Bukkit.getLogger().info(x + " " + y + " " + z);
+            }
+            int maxPlayers = plugin.freearenas.getConfig().getInt(i + ".maxplayers");
+            if(currentPlayer==0){
+                found= true;
+                return allSpawnLocations;
+            }
+            else{
+                Bukkit.broadcastMessage("Arena jest zajęta");
+            }
+        }
+        if(!found){
+            Bukkit.broadcastMessage("Nie znaleziono wolnej areny!");
+        }
+        return null;
+    }
+
+    public static Kit getCustomKit(Player p, Inventory inv) {
+        PlayerInventory playerInv = p.getInventory();
+        List<ItemStack> inventoryList = new ArrayList<>();
+
+        for (int i = Statics.EQREST_MIN; i<Statics.EQREST_MAX; i++){
+            if(inv.getItem(i) != null){
+                inventoryList.add(inv.getItem(i));
+                //Bukkit.broadcastMessage(inv.getItem(i).toString());
+            }
+
+        }
+        return new Kit(playerInv,inv.getItem(12), inv.getItem(9), inv.getItem(10), inv.getItem(11),inventoryList);
+    }
+
+
 
     public static boolean joinArena(Player p, String arenaName, Sign sign_){
-        Arena arena = (Arena)arenas.get(arenaName);
+        Arena arena;
+        Inventory inv;
+        if(arenas.containsKey(arenaName)){
+            arena = arenas.get(arenaName);
+            InventoryData.RestoreInventory(arenaName,p,false);
+            inv = InventoryData.arenasinventories.get(arenaName);
+        }
+        else{
+            arena = createArena(0,arenaName,2,getFreeLocation(),arenaName);
+            arenas.put(arenaName,arena);
+            InventoryData.RestoreInventory(arenaName,p,false);
+            inv = InventoryData.arenasinventories.get(arenaName);
+        }
+
+
         if(arena.status == ArenaStatus.STARTED){
             p.sendMessage("§4§lArena jest już pełna!");
             return false;
@@ -48,7 +128,8 @@ public class ArenaManager {
                 //Bukkit.broadcastMessage(String.valueOf(arena.currentPlayers));
 
                 //player conf
-                Kits.getKit(arena.kitName, p.getInventory());
+                p.sendMessage("Otrzymales ekwipunek g1");
+                getCustomKit(p,inv);
                 playersInArenas.put(p.getName(), arena);
                 if (arena.spawnLocations.size() < arena.maxPlayers -1) {
                     p.sendMessage(String.valueOf(arena.spawnLocations.size()));
@@ -70,7 +151,8 @@ public class ArenaManager {
             else if(arena.players.size() < arena.maxPlayers){
                 //Bukkit.broadcastMessage("WARUNEK2:");
                 //Bukkit.broadcastMessage("Liczba graczy na arenie:"+arena.players.size());
-                Kits.getKit(arena.kitName, p.getInventory());
+                p.sendMessage("Otrzymales ekwipunek g2");
+                getCustomKit(p,inv);
                 arena.players.add(p.getName());
                 playersInArenas.put(p.getName(), arena);
 

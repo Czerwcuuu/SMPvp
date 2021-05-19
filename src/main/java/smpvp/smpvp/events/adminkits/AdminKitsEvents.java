@@ -37,13 +37,13 @@ public class AdminKitsEvents implements Listener {
         if (clickedItem == null || clickedItem.getType() == Material.AIR) return;
 
         Player p = (Player) e.getWhoClicked();
-        List<String> mykits = plugin.kitlist.getConfig().getStringList(p.getName()+".name");
+        List<String> mykits = plugin.adminKitList.getConfig().getStringList("name");
 
         if(e.getRawSlot() < mykits.size()){
             //p.sendMessage("Kliknąłeś slot " + e.getRawSlot());
             p.closeInventory();
             InventoryData.RestoreInventory(clickedItem.getItemMeta().getDisplayName(),p,false);
-            newInv = InventoryData.inventories.get(p);
+            newInv = InventoryData.admininventories.get(p);
             p.openInventory(newInv);
         }
 
@@ -52,7 +52,7 @@ public class AdminKitsEvents implements Listener {
 
     @EventHandler
     public void onEditInventory (InventoryClickEvent e) throws IOException {
-        newInv = InventoryData.inventories.get(e.getView().getPlayer());
+        newInv = InventoryData.admininventories.get(e.getView().getPlayer());
         if (e.getInventory() != newInv) return;
 
         if(e.getRawSlot() < Statics.EQUIPABLE_SLOTS || e.getRawSlot() == 18 || e.getRawSlot() == 43 || e.getRawSlot() == 44 ||
@@ -74,6 +74,7 @@ public class AdminKitsEvents implements Listener {
         if(e.getRawSlot() == Statics.SAVE_BUTTON){
             new InventoryData(e.getView().getTitle(),e.getInventory(),p,true,false);
             p.closeInventory();
+            p.sendMessage("ekwipunek adminkitevents");
         }
         else if(e.getRawSlot() == Statics.GETKIT_BUTTON){
             //Nadaj kit

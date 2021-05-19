@@ -4,7 +4,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import smpvp.smpvp.commands.*;
-import smpvp.smpvp.configs.Config;
 import smpvp.smpvp.data.AdminKitList;
 import smpvp.smpvp.data.CustomArenas;
 import smpvp.smpvp.data.DataManager;
@@ -51,8 +50,6 @@ public final class SMPvp extends JavaPlugin implements Listener {
         this.getConfig().options().copyDefaults(true);
         this.saveConfig();
 
-
-        Config.setup();
         Bukkit.getPluginManager().registerEvents(new OnFightEvents(), this);
         Bukkit.getPluginManager().registerEvents(new AcceptationEvents(), this);
         Bukkit.getPluginManager().registerEvents(new NewKitsEvents(), this);

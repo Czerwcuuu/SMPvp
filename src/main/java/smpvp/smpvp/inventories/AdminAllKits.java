@@ -10,7 +10,7 @@ public class AdminAllKits {
 
     public static void AddKit(String name){
         if(plugin.adminKitList.getConfig().contains("name")){
-            List<String> ConfigList = plugin.kitlist.getConfig().getStringList("name");
+            List<String> ConfigList = plugin.adminKitList.getConfig().getStringList("name");
             if(ConfigList.contains(name)){
                 return;
             }
