@@ -10,7 +10,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import smpvp.smpvp.SMPvp;
 import smpvp.smpvp.Statics;
-import smpvp.smpvp.commands.openAdminKitGui;
+import smpvp.smpvp.commands.openAdminKitsList;
 import smpvp.smpvp.inventories.InventoryData;
 import smpvp.smpvp.kits.Kit;
 
@@ -26,7 +26,7 @@ public class AdminKitsEvents implements Listener {
 
     @EventHandler
     public void onInventoryClick (InventoryClickEvent e) throws IOException {
-        Inventory inv = openAdminKitGui.inventories.get(e.getWhoClicked());
+        Inventory inv = openAdminKitsList.inventories.get(e.getWhoClicked());
         if (e.getInventory() != inv) return;
 
         e.setCancelled(true);

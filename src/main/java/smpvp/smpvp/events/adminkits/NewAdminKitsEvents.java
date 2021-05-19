@@ -20,15 +20,6 @@ import java.util.List;
 public class NewAdminKitsEvents implements Listener {
     SMPvp plugin = SMPvp.getInstance();
     //cancel drag
-    @EventHandler
-    public void onInventoryDrag (InventoryDragEvent e){
-        Inventory inv = openPlayerKitGui.inventories.get(e.getWhoClicked());
-        if(e.getInventory() == inv){
-            if(Integer.parseInt(e.getInventorySlots().toString()) > 0){
-                e.setCancelled(true);
-            }
-        }
-    }
 
     @EventHandler
     public void onInventoryClick (InventoryClickEvent e) throws IOException {
@@ -63,5 +54,6 @@ public class NewAdminKitsEvents implements Listener {
         else if(e.getRawSlot() == Statics.CANCEL_BUTTON){
             p.closeInventory();
         }
+        p.sendMessage("Kliknąłeś slot " + e.getRawSlot());
     }
 }

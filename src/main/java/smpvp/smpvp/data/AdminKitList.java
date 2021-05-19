@@ -29,7 +29,7 @@ public class AdminKitList {
 
         this.dataConfig = YamlConfiguration.loadConfiguration(this.configFile);
 
-        InputStream defaultStream = this.plugin.getResource("kits.yml");
+        InputStream defaultStream = this.plugin.getResource("adminkits.yml");
         if(defaultStream != null){
             YamlConfiguration defaultConfig = YamlConfiguration.loadConfiguration(new InputStreamReader(defaultStream));
             this.dataConfig.setDefaults(defaultConfig);
@@ -59,10 +59,10 @@ public class AdminKitList {
 
     public void saveDefaultConfig(){
         if (this.configFile == null){
-            this.configFile = new File(this.plugin.getDataFolder(),"kits.yml");
+            this.configFile = new File(this.plugin.getDataFolder(),"adminkits.yml");
         }
         if (!this.configFile.exists()){
-            this.plugin.saveResource("kits.yml",false);
+            this.plugin.saveResource("adminkits.yml",false);
         }
     }
 }

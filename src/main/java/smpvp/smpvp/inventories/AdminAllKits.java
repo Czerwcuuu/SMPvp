@@ -9,20 +9,20 @@ public class AdminAllKits {
     static SMPvp plugin = SMPvp.getInstance();
 
     public static void AddKit(String name){
-        if(plugin.kitlist.getConfig().contains("name")){
+        if(plugin.adminKitList.getConfig().contains("name")){
             List<String> ConfigList = plugin.kitlist.getConfig().getStringList("name");
             if(ConfigList.contains(name)){
                 return;
             }
             ConfigList.add(name);
-            plugin.kitlist.getConfig().set("name",ConfigList);
-            plugin.kitlist.saveConfig();
+            plugin.adminKitList.getConfig().set("name",ConfigList);
+            plugin.adminKitList.saveConfig();
         }
         else{
             List<String> ConfigList = new ArrayList<String>();
             ConfigList.add(name);
-            plugin.kitlist.getConfig().set("name",ConfigList);
-            plugin.kitlist.saveConfig();
+            plugin.adminKitList.getConfig().set("name",ConfigList);
+            plugin.adminKitList.saveConfig();
         }
     }
 }

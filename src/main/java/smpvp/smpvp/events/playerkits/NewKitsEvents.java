@@ -65,7 +65,7 @@ public class NewKitsEvents implements Listener {
         }
 
 
-        //p.sendMessage("Kliknąłeś slot " + e.getRawSlot());
+        p.sendMessage("Kliknąłeś slot " + e.getRawSlot());
     }
 
 }
