@@ -2,7 +2,6 @@ package smpvp.smpvp.events;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -14,7 +13,7 @@ import smpvp.smpvp.SMPvp;
 import smpvp.smpvp.arenas.ArenaManager;
 import smpvp.smpvp.arenas.NewArenas;
 import smpvp.smpvp.commands.PvpGUI;
-import smpvp.smpvp.commands.openKitGui;
+import smpvp.smpvp.commands.openPlayerKitGui;
 
 import java.io.IOException;
 
@@ -23,7 +22,7 @@ public class MainGUIEvents implements Listener {
     //cancel drag
     @EventHandler
     public void onInventoryDrag (InventoryDragEvent e){
-        Inventory inv = openKitGui.inventories.get(e.getWhoClicked());
+        Inventory inv = openPlayerKitGui.inventories.get(e.getWhoClicked());
         if(e.getInventory() == inv){
             if(Integer.parseInt(e.getInventorySlots().toString()) > 0){
                 e.setCancelled(true);
@@ -80,26 +79,5 @@ public class MainGUIEvents implements Listener {
 
 
         //p.sendMessage("Kliknąłeś slot " + e.getRawSlot());
-    }
-
-    public void getKit(String kitName,Player p){
-
-    }
-
-
-    boolean IsEquipable(ItemStack i)
-    {
-        ItemStack test = new ItemStack(i.getType());
-
-        try
-        {
-            test.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
-        }
-        catch(IllegalArgumentException e)
-        {
-            return false;
-        }
-
-        return true;
     }
 }

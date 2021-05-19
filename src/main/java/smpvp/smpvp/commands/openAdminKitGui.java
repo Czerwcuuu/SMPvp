@@ -10,7 +10,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -24,10 +23,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class openKitGui implements CommandExecutor {
-
+public class openAdminKitGui implements CommandExecutor {
     SMPvp plugin = SMPvp.getInstance();
-    public static HashMap<Player,Inventory> inventories = new HashMap<>();
+    public static HashMap<Player, Inventory> inventories = new HashMap<>();
 
     public Inventory inv;
 
@@ -43,8 +41,12 @@ public class openKitGui implements CommandExecutor {
         }
         else if(player.getGameMode() != GameMode.CREATIVE){
             player.sendMessage("§4§lMusisz być w trybie tworzenia!");
+            return false;
         }
-        else if(label.equalsIgnoreCase("kit")){
+        else if(!player.isOp()){
+            player.sendMessage("§4§lTa komenda zarezerwowana jest dla Administracji!");
+        }
+        else if(label.equalsIgnoreCase("adminkit")){
             if(!(sender instanceof Player)){
                 sender.sendMessage("§4§lMusisz być graczem!");
                 return true;
@@ -57,12 +59,6 @@ public class openKitGui implements CommandExecutor {
 
         }
         return false;
-    }
-    @EventHandler
-    public void onInventoryClick(final InventoryDragEvent e) {
-        if (e.getInventory() == inv) {
-            e.setCancelled(true);
-        }
     }
 
     public void openInventory(final HumanEntity ent) {
@@ -156,6 +152,4 @@ public class openKitGui implements CommandExecutor {
 
         inventories.put(p,inv);
     }
-
-
 }

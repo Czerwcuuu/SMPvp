@@ -1,8 +1,6 @@
-package smpvp.smpvp.events;
+package smpvp.smpvp.events.playerkits;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -12,21 +10,19 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import smpvp.smpvp.SMPvp;
 import smpvp.smpvp.Statics;
-import smpvp.smpvp.commands.openKitGui;
+import smpvp.smpvp.commands.openPlayerKitGui;
 import smpvp.smpvp.inventories.InventoryData;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
-public class KitCreationINV_Events implements Listener {
+public class NewKitsEvents implements Listener {
 
     SMPvp plugin = SMPvp.getInstance();
     //cancel drag
     @EventHandler
     public void onInventoryDrag (InventoryDragEvent e){
-        Inventory inv = openKitGui.inventories.get(e.getWhoClicked());
+        Inventory inv = openPlayerKitGui.inventories.get(e.getWhoClicked());
         if(e.getInventory() == inv){
             if(Integer.parseInt(e.getInventorySlots().toString()) > 0){
                 e.setCancelled(true);
@@ -36,7 +32,7 @@ public class KitCreationINV_Events implements Listener {
 
     @EventHandler
     public void onInventoryClick (InventoryClickEvent e) throws IOException {
-        Inventory inv = openKitGui.inventories.get(e.getWhoClicked());
+        Inventory inv = openPlayerKitGui.inventories.get(e.getWhoClicked());
         if (e.getInventory() != inv) return;
         if(e.getRawSlot() < Statics.EQUIPABLE_SLOTS || e.getRawSlot() == 18 || e.getRawSlot() == 43 || e.getRawSlot() == 44 ||
                 (e.getRawSlot() >= 4 && e.getRawSlot() <=8) ||
@@ -61,8 +57,7 @@ public class KitCreationINV_Events implements Listener {
                 List<String> ConfigList = plugin.kitlist.getConfig().getStringList(p.getName()+".name");
                 kitName = p.getName()+ ConfigList.size();
             }
-            InventoryData inventoryData = new InventoryData(kitName,e.getInventory(),p,false);
-            inventoryData.Show();
+            new InventoryData(kitName,e.getInventory(),p,false,true);
             p.closeInventory();
         }
         else if(e.getRawSlot() == Statics.CANCEL_BUTTON){
@@ -73,24 +68,4 @@ public class KitCreationINV_Events implements Listener {
         //p.sendMessage("Kliknąłeś slot " + e.getRawSlot());
     }
 
-    public void getKit(String kitName,Player p){
-
-    }
-
-
-    boolean IsEquipable(ItemStack i)
-    {
-        ItemStack test = new ItemStack(i.getType());
-
-        try
-        {
-            test.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
-        }
-        catch(IllegalArgumentException e)
-        {
-            return false;
-        }
-
-        return true;
-    }
 }

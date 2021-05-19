@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+//Dodaje do listy kitów w pliku kits.yml
 public class AllKits {
      static SMPvp plugin = SMPvp.getInstance();
 

@@ -15,3 +15,7 @@ commands:
     description: Zawalcz z innym graczem!
   smpvp:
     description: Zarządzanie arenami
+  adminkit:
+    description: Tworzenie kitu Administratora
+  adminkitlist:
+    description: Lista kitów Administratora/Edycja

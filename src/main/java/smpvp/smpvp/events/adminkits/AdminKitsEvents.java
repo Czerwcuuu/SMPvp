@@ -1,9 +1,6 @@
-package smpvp.smpvp.events;
+package smpvp.smpvp.events.adminkits;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -11,29 +8,25 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
-import org.bukkit.potion.PotionType;
 import smpvp.smpvp.SMPvp;
 import smpvp.smpvp.Statics;
-import smpvp.smpvp.commands.openKitGui;
-import smpvp.smpvp.commands.openMyKits;
-import smpvp.smpvp.inventories.AllKits;
+import smpvp.smpvp.commands.openAdminKitGui;
 import smpvp.smpvp.inventories.InventoryData;
 import smpvp.smpvp.kits.Kit;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
-public class MyKitsEvents implements Listener {
+//Eventy dla tworzenia kitu/edycji Admina
+public class AdminKitsEvents implements Listener {
     SMPvp plugin = SMPvp.getInstance();
     Inventory newInv;
 
 
-
     @EventHandler
     public void onInventoryClick (InventoryClickEvent e) throws IOException {
-        Inventory inv = openMyKits.inventories.get(e.getWhoClicked());
+        Inventory inv = openAdminKitGui.inventories.get(e.getWhoClicked());
         if (e.getInventory() != inv) return;
 
         e.setCancelled(true);
@@ -49,7 +42,7 @@ public class MyKitsEvents implements Listener {
         if(e.getRawSlot() < mykits.size()){
             //p.sendMessage("Kliknąłeś slot " + e.getRawSlot());
             p.closeInventory();
-            InventoryData.RestoreInventory(clickedItem.getItemMeta().getDisplayName(),p);
+            InventoryData.RestoreInventory(clickedItem.getItemMeta().getDisplayName(),p,false);
             newInv = InventoryData.inventories.get(p);
             p.openInventory(newInv);
         }
@@ -79,8 +72,7 @@ public class MyKitsEvents implements Listener {
 
 
         if(e.getRawSlot() == Statics.SAVE_BUTTON){
-            InventoryData inventoryData = new InventoryData(e.getView().getTitle(),e.getInventory(),p,true);
-            inventoryData.Show();
+            new InventoryData(e.getView().getTitle(),e.getInventory(),p,true,false);
             p.closeInventory();
         }
         else if(e.getRawSlot() == Statics.GETKIT_BUTTON){
@@ -99,11 +91,11 @@ public class MyKitsEvents implements Listener {
         }
 
         //p.sendMessage("Kliknąłeś slot " + e.getRawSlot());
-        }
+    }
 
 
 
-    public static Kit getCustomKit(Player p,Inventory inv) {
+    public static Kit getCustomKit(Player p, Inventory inv) {
         PlayerInventory playerInv = p.getInventory();
         List<ItemStack> inventoryList = new ArrayList<>();
 
@@ -117,6 +109,4 @@ public class MyKitsEvents implements Listener {
 
         return new Kit(playerInv,inv.getItem(12), inv.getItem(9), inv.getItem(10), inv.getItem(11),inventoryList);
     }
-
-
 }

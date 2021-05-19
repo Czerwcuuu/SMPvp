@@ -1,18 +1,15 @@
 package smpvp.smpvp.arenas;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import smpvp.smpvp.SMPvp;
-import smpvp.smpvp.events.MyKitsEvents;
+import smpvp.smpvp.events.playerkits.PlayerKitsEvents;
 import smpvp.smpvp.inventories.InventoryData;
-import smpvp.smpvp.kits.Kits;
 
 public class Arena {
     public int ID;
@@ -67,11 +64,11 @@ public class Arena {
                 players.add(t.getName());
                 currentPlayers = 2;
                 //Bukkit.broadcastMessage(String.valueOf(arena.currentPlayers));
-                InventoryData.RestoreInventory(invToGetName,p);
+                InventoryData.RestoreInventory(invToGetName,p,true);
                 Inventory inv = InventoryData.inventories.get(p);
                 //daj ekwipunek
-                MyKitsEvents.getCustomKit(p, inv);
-                MyKitsEvents.getCustomKit(t, inv);
+                PlayerKitsEvents.getCustomKit(p, inv);
+                PlayerKitsEvents.getCustomKit(t, inv);
 
 
                 NewArenas.customArenas.put(p, this);

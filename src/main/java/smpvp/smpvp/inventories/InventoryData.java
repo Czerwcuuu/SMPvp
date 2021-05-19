@@ -31,19 +31,18 @@ public class InventoryData {
     public boolean editing = false;
 
 
-
-    public InventoryData(String name,Inventory inv,Player p, boolean editing) throws IOException {
+    public InventoryData(String name,Inventory inv,Player p, boolean editing, boolean custom) throws IOException {
         this.name = name;
         this.inv = inv;
         this.p = p;
         this.editing = editing;
 
 
-        SaveInventory();
+        SaveInventory(custom);
     }
 
 
-    void SaveInventory() throws IOException {
+    void SaveInventory(boolean custom) throws IOException {
         YamlConfiguration c = new YamlConfiguration();
         c.set("inventory.content", inv.getContents());
 
@@ -62,10 +61,18 @@ public class InventoryData {
                 p.sendMessage("§a§lZapisano pomyślnie!");
             }
         }
-        c.save(new File(plugin.getDataFolder()+"/kits", name+".yml"));
-        p.sendMessage("§a§lZapisano pomyślnie!");
+        if(custom){
+            c.save(new File(plugin.getDataFolder()+"/kits", name+".yml"));
+            AllKits.AddKit(name,p.getName());
+            p.sendMessage("§a§lZapisano pomyślnie!");
+        }
+        else{
+            c.save(new File(plugin.getDataFolder()+"/adminkits", name+".yml"));
+            AdminAllKits.AddKit(name);
+            p.sendMessage("§a§lZapisano pomyślnie, zmień nazwę w kitu w configu. Inaczej będzie:"+name);
+
+        }
         //debugs
-        AllKits.AddKit(name,p.getName());
         //Bukkit.broadcastMessage("Kit gracza:"+AllKits.getKitName(p.getName()));
     }
 
@@ -85,9 +92,17 @@ public class InventoryData {
     }
 
     @SuppressWarnings("unchecked")
-    public static void RestoreInventory(String Name,Player p){
+    public static void RestoreInventory(String Name,Player p,boolean custom){
         //Bukkit.broadcastMessage(Name+".yml");
-        YamlConfiguration c = YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder()+"/kits", Name+".yml"));
+        YamlConfiguration c;
+        //pobieranie wartosci zależnie czy kit customowy/adminowski
+        if(custom){//customowy (tworzony przez graczy)
+            c = YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder()+"/kits", Name+".yml"));
+        }
+        else{//adminowski
+            c = YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder()+"/adminkits", Name+".yml"));
+        }
+
         ItemStack[] content = ((List<ItemStack>) Objects.requireNonNull(c.get("inventory.content"))).toArray(new ItemStack[0]);
 
         //Bukkit.broadcastMessage(content[0].toString());
@@ -127,13 +142,6 @@ public class InventoryData {
         inventories.put(p,inv);
     }
 
-
-
-    public void Show(){
-        //Bukkit.broadcastMessage(String.valueOf(inv.getSize()));
-        //Bukkit.broadcastMessage(inv.getItem(0).toString());
-
-    }
 
 
 }

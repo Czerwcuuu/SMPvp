@@ -1,4 +1,4 @@
-package smpvp.smpvp.events;
+package smpvp.smpvp.events.playerkits;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;

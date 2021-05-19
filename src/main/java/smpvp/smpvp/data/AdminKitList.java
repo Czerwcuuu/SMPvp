@@ -10,13 +10,12 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.logging.Level;
 
-public class KitLists {
-
+public class AdminKitList {
     private SMPvp plugin;
     private FileConfiguration dataConfig = null;
     private File configFile = null;
 
-    public KitLists(SMPvp plugin){
+    public AdminKitList(SMPvp plugin){
         this.plugin = plugin;
         //saves/initials
         saveDefaultConfig();
@@ -25,7 +24,7 @@ public class KitLists {
 
     public void reloadConfig(){
         if (this.configFile == null){
-            this.configFile =  new File(plugin.getDataFolder(), "kits.yml");
+            this.configFile =  new File(plugin.getDataFolder(), "adminkits.yml");
         }
 
         this.dataConfig = YamlConfiguration.loadConfiguration(this.configFile);
@@ -66,6 +65,4 @@ public class KitLists {
             this.plugin.saveResource("kits.yml",false);
         }
     }
-
 }
-

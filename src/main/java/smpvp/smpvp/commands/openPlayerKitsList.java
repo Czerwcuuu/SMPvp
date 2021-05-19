@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class openMyKits implements CommandExecutor {
+public class openPlayerKitsList implements CommandExecutor {
 
     SMPvp plugin = SMPvp.getInstance();
     public static HashMap<Player,Inventory> inventories = new HashMap<>();
