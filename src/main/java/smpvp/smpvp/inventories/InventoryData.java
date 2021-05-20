@@ -146,16 +146,16 @@ public class InventoryData {
 
         }
         if(custom){
-            Bukkit.broadcastMessage("put into inventories");
+            //Bukkit.broadcastMessage("put into inventories");
             inventories.put(p,inv);
         }
         if(!custom){
-            Bukkit.broadcastMessage("put into admininventories");
+            //Bukkit.broadcastMessage("put into admininventories");
             admininventories.put(p,inv);
             arenasinventories.put(Name,inv);
         }
-        Bukkit.broadcastMessage(admininventories.toString());
-        Bukkit.broadcastMessage(inventories.toString());
+        //Bukkit.broadcastMessage(admininventories.toString());
+        //Bukkit.broadcastMessage(inventories.toString());
     }
 
 

@@ -47,16 +47,6 @@ public class ArenaManager {
             List<Location> allSpawnLocations = new ArrayList();
             List<String> locationList = plugin.freearenas.getConfig().getStringList(i + ".location");
 
-            /*for(String s: locationList) {
-
-                String x = s.split("\\.")[0];
-                String y = s.split("\\.")[1];
-                String z = s.split("\\.")[2];
-                Bukkit.broadcastMessage(String.valueOf(yaw));
-                yaw = -yaw;
-                allSpawnLocations.add(new Location(world, (double)Integer.parseInt(x), (double)Integer.parseInt(y), (double)Integer.parseInt(z), yaw, 0.0F));
-                Bukkit.getLogger().info("NOWE"+x + " " + y + " " + z);
-            }*/
             for(Iterator var8 = locationList.iterator(); var8.hasNext(); yaw = -yaw) {
                 String s = (String)var8.next();
                 String x = s.split("\\.")[0];
@@ -69,14 +59,17 @@ public class ArenaManager {
             int maxPlayers = plugin.freearenas.getConfig().getInt(i + ".maxplayers");
             if(currentPlayer==0){
                 found= true;
+                //Bukkit.broadcastMessage("Znaleziono wolną arene nr"+i);
+                plugin.freearenas.getConfig().set(i + ".currentplayer",2);
+                plugin.freearenas.saveConfig();
                 return allSpawnLocations;
             }
             else{
-                Bukkit.broadcastMessage("Arena jest zajęta");
+                //Bukkit.broadcastMessage("Arena jest zajęta");
             }
         }
         if(!found){
-            Bukkit.broadcastMessage("Nie znaleziono wolnej areny!");
+            //Bukkit.broadcastMessage("Nie znaleziono wolnej areny!");
         }
         return null;
     }
@@ -125,10 +118,9 @@ public class ArenaManager {
                 arenasSigns.put(arena,sign_);
                 arena.players.add(p.getName());
                 ++arena.currentPlayers;
-                //Bukkit.broadcastMessage(String.valueOf(arena.currentPlayers));
-
+                //Bukkit.broadcastMessage(String.valueOf(arena.currentPlayers))
                 //player conf
-                p.sendMessage("Otrzymales ekwipunek g1");
+                //p.sendMessage("Otrzymales ekwipunek g1");
                 getCustomKit(p,inv);
                 playersInArenas.put(p.getName(), arena);
                 if (arena.spawnLocations.size() < arena.maxPlayers -1) {
@@ -151,7 +143,7 @@ public class ArenaManager {
             else if(arena.players.size() < arena.maxPlayers){
                 //Bukkit.broadcastMessage("WARUNEK2:");
                 //Bukkit.broadcastMessage("Liczba graczy na arenie:"+arena.players.size());
-                p.sendMessage("Otrzymales ekwipunek g2");
+                //p.sendMessage("Otrzymales ekwipunek g2");
                 getCustomKit(p,inv);
                 arena.players.add(p.getName());
                 playersInArenas.put(p.getName(), arena);
