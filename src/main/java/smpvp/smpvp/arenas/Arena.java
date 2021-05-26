@@ -29,6 +29,7 @@ public class Arena {
         this.spawnLocations = loc;
         this.kitName = kit;
         this.status = ArenaStatus.NOTSTARTED;
+        //Bukkit.broadcastMessage("TWORZE ARENE "+ID);
 
     }
 
@@ -40,17 +41,19 @@ public class Arena {
         this.currentPlayers = currentPlayers;
         this.status = ArenaStatus.NOTSTARTED;
         startArena(p,t,Name);
+        //Bukkit.broadcastMessage("TWORZE ARENE "+ID);
     }
 
     public void reset() {
         this.currentPlayers = 0;
         //Bukkit.broadcastMessage("Arena ID"+ID);
-        //Bukkit.broadcastMessage(String.valueOf(plugin.freearenas.getConfig().getInt(ID + ".currentplayer")));
+        ///Bukkit.broadcastMessage(String.valueOf(plugin.freearenas.getConfig().getInt(ID + ".currentplayer")));
         plugin.freearenas.getConfig().set(ID + ".currentplayer",0);
         plugin.freearenas.saveConfig();
         //Bukkit.broadcastMessage(String.valueOf(plugin.freearenas.getConfig().getInt(ID + ".currentplayer")));
         players.clear();
         this.status = ArenaStatus.NOTSTARTED;
+        //Bukkit.broadcastMessage("RESTARTUJE ARENE"+ID);
     }
 
     public void startArena(Player p, Player t,String invToGetName) {

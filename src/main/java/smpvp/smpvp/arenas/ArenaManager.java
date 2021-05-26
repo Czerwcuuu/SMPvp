@@ -36,7 +36,7 @@ public class ArenaManager {
         return arena;
     }
 
-    public static List<Location> getFreeLocation(){
+    public static Arena getFreeArena(String arenaName){
         Location loc = null;
         boolean found = false;
         for(int i = 0; i < plugin.freearenas.getConfig().getKeys(false).size(); i++) {
@@ -62,7 +62,8 @@ public class ArenaManager {
                 //Bukkit.broadcastMessage("Znaleziono wolną arene nr"+i);
                 plugin.freearenas.getConfig().set(i + ".currentplayer",2);
                 plugin.freearenas.saveConfig();
-                return allSpawnLocations;
+                Arena arena = createArena(i,arenaName,2,allSpawnLocations,arenaName);
+                return arena;
             }
             else{
                 //Bukkit.broadcastMessage("Arena jest zajęta");
@@ -95,22 +96,26 @@ public class ArenaManager {
         Inventory inv;
         if(arenas.containsKey(arenaName)){
             arena = arenas.get(arenaName);
+            if(arena.status == ArenaStatus.STARTED){
+                p.sendMessage("§4§lArena jest już pełna!");
+                return false;
+            }
+            //Bukkit.broadcastMessage("Dołączam do istniejącej już areny:"+arena.arenaName + arena.ID);
             InventoryData.RestoreInventory(arenaName,p,false);
             inv = InventoryData.arenasinventories.get(arenaName);
         }
         else{
-            arena = createArena(0,arenaName,2,getFreeLocation(),arenaName);
+            arena = getFreeArena(arenaName);
+            //Bukkit.broadcastMessage("Tworze arene,"+p.getName()+" dołącza jako pierwszy");
+            if(arena.status == ArenaStatus.STARTED){
+                p.sendMessage("§4§lArena jest już pełna!");
+                return false;
+            }
             arenas.put(arenaName,arena);
             InventoryData.RestoreInventory(arenaName,p,false);
             inv = InventoryData.arenasinventories.get(arenaName);
         }
 
-
-        if(arena.status == ArenaStatus.STARTED){
-            p.sendMessage("§4§lArena jest już pełna!");
-            return false;
-        }
-        else{
             if(arena.players.size() == 0){
                 //Bukkit.broadcastMessage("WARUNEK1:");
                 //Bukkit.broadcastMessage("Liczba graczy na arenie:"+arena.players.size());
@@ -171,16 +176,20 @@ public class ArenaManager {
             }
     }return true;
         }
-            }
 
     public static String arenaUpdate(Player p) {
         Arena arena = (Arena)playersInArenas.get(p.getName());
+        //Bukkit.broadcastMessage("Aktualne areny:");
+        //Bukkit.broadcastMessage(arenas.toString());
+        arenas.remove(arena.arenaName);
         if (arena.players.size() > 0){
             for (int i=0; i<arena.players.size(); i++){
                 //Bukkit.broadcastMessage("Restartuje itemki gracza:"+arena.players.get(i));
                 try {
                     resetPlayer(Bukkit.getPlayer(arena.players.get(i)));
-                    //Bukkit.broadcastMessage(Bukkit.getPlayer(arena.players.get(i)).getName());
+                    //Bukkit.broadcastMessage("Usuwam arene z listy aren:"+arena.ID);
+                    //Bukkit.broadcastMessage("Aktualne areny po usunięciu:");
+                    //Bukkit.broadcastMessage(arenas.toString());
                     playersInArenas.remove(Bukkit.getPlayer(arena.players.get(i)).getName());
                 }
                 catch(NullPointerException err){
